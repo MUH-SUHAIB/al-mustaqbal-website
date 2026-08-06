@@ -1,0 +1,336 @@
+import { Facebook, Instagram, Phone, MessageCircle } from "lucide-react";
+import type {
+  HeroContent,
+  AboutContent,
+  ServicesContent,
+  DoctorsContent,
+  FacilitiesContent,
+  TestimonialsContent,
+  InsuranceContent,
+  FAQContent,
+  ContactContent,
+  FooterContent,
+} from "@/components/sections";
+
+/**
+ * TEMPORARY MOCK CONTENT — homepage placeholder data only.
+ *
+ * This file exists so `app/[locale]/page.tsx` can assemble every section
+ * with realistic content without hardcoding any of it into the section
+ * components themselves. Replace with real per-clinic content (ideally
+ * sourced from next-intl messages or a CMS) before shipping a specific
+ * clinic's site — nothing here is production copy.
+ */
+
+export const heroContent: HeroContent = {
+  badge: "Trusted Medical Center",
+  headline: "Baghdad Medical Center",
+  subtitle: "Trusted Multispecialty Medical Care in Al Madam, Sharjah",
+  description:
+    "Providing compassionate, modern healthcare for individuals and families with experienced doctors and quality medical services.",
+  primaryCta: {
+    label: "050 238 8626",
+    href: "tel:+971502388626",
+    icon: <Phone size={18} />,
+  },
+  secondaryCta: {
+    label: "056 356 4165",
+    href: "https://wa.me/971563564165",
+    icon: <MessageCircle size={18} />,
+  },
+  image: { src: "/baghdad/hero-reception.png", alt: "Reception area of Baghdad Medical Center" },
+};
+
+export const aboutContent: AboutContent = {
+  eyebrow: "ABOUT US",
+  title: "Compassionate Healthcare Built on Trust and Excellence",
+  paragraphs: [
+    "At Baghdad Medical Center, we believe that health is life's greatest wealth. Guided by the vision of our founder, Dr. Safaa Mohamed Hussein, we are committed to providing compassionate, patient-centered healthcare through experienced doctors, advanced medical technology, and modern facilities. Every patient is treated with professionalism, respect, and genuine care.",
+  ],
+  mission: {
+    title: "Our Mission",
+    description:
+      "To improve the health and well-being of our community by delivering compassionate, accessible, and high-quality healthcare supported by experienced medical professionals, advanced technology, and patient-focused care.",
+  },
+  vision: {
+    title: "Our Vision",
+    description:
+      "To be the trusted healthcare destination for families in Al Madam by combining medical excellence, modern facilities, and continuous innovation in patient care.",
+  },
+  image: { src: "/baghdad/about-founder-doctor.png", alt: "Dr. Safaa Mohamed Hussein, Founder of Baghdad Medical Center" },
+  founderQuote: {
+    quote:
+      "We believe that health is the greatest wealth a person can possess. Our goal is to help patients achieve the highest levels of health and well-being, and we work diligently to create a supportive and dedicated environment in their service.",
+    author: "Dr. Safaa Mohamed Hussein",
+    role: "Founder, Baghdad Medical Center",
+  },
+};
+
+export const servicesContent: ServicesContent = {
+  eyebrow: "OUR SERVICES",
+  title: "Comprehensive Healthcare for the Whole Family",
+  description:
+    "From everyday healthcare to specialized medical services, Baghdad Medical Center provides compassionate, high-quality care for every stage of life through experienced professionals and modern medical facilities.",
+  columns: 3,
+  services: [
+    {
+      image: { src: "/baghdad/services/general-practice.jpg", alt: "General Practice consultation room at Baghdad Medical Center" },
+      title: "General Practice",
+      description: "Comprehensive primary healthcare, preventive check-ups, diagnosis, and treatment for patients of all ages.",
+    },
+    {
+      image: { src: "/baghdad/services/pediatrics.jpg", alt: "Pediatric care at Baghdad Medical Center" },
+      title: "Pediatrics",
+      description: "Compassionate healthcare for infants, children, and adolescents in a safe and welcoming environment.",
+    },
+    {
+      image: { src: "/baghdad/services/obstetrics-gynecology.jpg", alt: "Obstetrics and gynecology care at Baghdad Medical Center" },
+      title: "Obstetrics & Gynecology",
+      description: "Specialized women's healthcare, pregnancy care, and lifelong medical support.",
+    },
+    {
+      image: { src: "/baghdad/services/dentistry.jpg", alt: "Dentistry services at Baghdad Medical Center" },
+      title: "Dentistry",
+      description: "Comprehensive dental care including preventive, restorative, cosmetic, and implant dentistry.",
+    },
+    {
+      image: { src: "/baghdad/services/skincare.jpg", alt: "Skin care and aesthetics treatment room at Baghdad Medical Center" },
+      title: "Skin Care & Aesthetics",
+      description: "Professional skincare, facial treatments, laser procedures, and aesthetic services tailored to your needs.",
+    },
+    {
+      image: { src: "/baghdad/services/hijama-prp.jpg", alt: "Hijama and PRP therapy room at Baghdad Medical Center" },
+      title: "Hijama & PRP Therapy",
+      description: "Traditional Hijama therapy together with advanced PRP treatments for wellness, skin rejuvenation, and hair restoration.",
+    },
+  ],
+};
+
+export const doctorsContent: DoctorsContent = {
+  eyebrow: "Our Doctors",
+  title: "Meet Our Medical Team",
+  description: "Board-certified specialists dedicated to your family's health.",
+  doctors: [
+    {
+      image: { src: "/baghdad/doctors/Safa.png", alt: "Dr. Safaa Mohamed Hussein" },
+      badge: "Founder",
+      name: "Dr. Safaa Mohamed Hussein",
+      specialization: "Dermatology Specialist",
+      description:
+        "Founder of Baghdad Medical Center. Specializes in dermatology, hair loss (alopecia), PRP therapy, skin health, diabetes management, and preventive healthcare.",
+    },
+    {
+      image: { src: "/baghdad/doctors/Jawad khan.jpg", alt: "Dr. Jawad Khan Jamil" },
+      name: "Dr. Jawad Khan Jamil",
+      specialization: "General Practitioner (GP)",
+      description:
+        "Provides comprehensive primary healthcare, diagnosis, preventive medicine, chronic disease management, and family healthcare.",
+    },
+    {
+      image: { src: "/baghdad/doctors/Abdullah.png", alt: "Dr. Abdullah" },
+      name: "Dr. Abdullah",
+      specialization: "Pediatric Specialist",
+      description:
+        "Provides specialized healthcare for infants, children, vaccinations, growth monitoring, and common childhood illnesses.",
+    },
+    {
+      image: { src: "/baghdad/doctors/bassam.png", alt: "Dr. Bassam Ibraheem" },
+      name: "Dr. Bassam Ibraheem",
+      specialization: "Orthodontic Specialist",
+      description: "More than 20 years of experience in braces, bite correction, teeth alignment, and orthodontic treatment.",
+    },
+    {
+      image: { src: "/baghdad/doctors/dentistry-room.png", alt: "Baghdad Medical Center Dentistry Department" },
+      name: "Dr. Rana Maryoosh",
+      specialization: "Dental Implant Specialist",
+      description: "Specialized in dental implants, restorative dentistry, and advanced cosmetic dental procedures.",
+    },
+    {
+      image: { src: "/baghdad/doctors/dentistry-room.png", alt: "Baghdad Medical Center Dentistry Department" },
+      name: "Dr. Rishika",
+      specialization: "General Dentist",
+      description: "Provides preventive, restorative, and cosmetic dental care for patients of all ages.",
+    },
+  ],
+};
+
+export const facilitiesContent: FacilitiesContent = {
+  eyebrow: "Our Facilities",
+  title: "Modern Equipment & Technology",
+  description: "Every visit is backed by reliable, up-to-date diagnostic equipment.",
+  facilities: [
+    {
+      image: { src: "/baghdad/facilities/Receptionist.png", alt: "Reception area at Baghdad Medical Center" },
+      label: "Modern Reception",
+      description: "Friendly reception and patient registration area designed to provide a welcoming healthcare experience.",
+    },
+    {
+      image: { src: "/baghdad/facilities/waiting-room.jpg", alt: "Waiting area at Baghdad Medical Center" },
+      label: "Comfortable Waiting Area",
+      description: "Clean and comfortable seating areas created to make every visit relaxing.",
+    },
+    {
+      image: { src: "/baghdad/facilities/dentist-waiting-room.png", alt: "Dental department waiting room at Baghdad Medical Center" },
+      label: "Advanced Dental Department",
+      description: "Modern dental facilities supporting preventive, restorative, cosmetic, and implant dentistry.",
+    },
+    {
+      image: { src: "/baghdad/facilities/GENTLEMAX-PRO-laser.png", alt: "GentleMax Pro laser equipment at Baghdad Medical Center" },
+      label: "Advanced Laser Technology",
+      description: "Professional laser equipment supporting dermatology and aesthetic treatments.",
+    },
+    {
+      image: { src: "/baghdad/facilities/iv-therapy.png", alt: "IV therapy room at Baghdad Medical Center" },
+      label: "IV Therapy",
+      description: "Dedicated treatment area for intravenous therapy and supportive medical care.",
+    },
+    {
+      image: { src: "/baghdad/facilities/relaxing-area.png", alt: "Patient relaxing area at Baghdad Medical Center" },
+      label: "Patient Comfort Area",
+      description: "Comfortable spaces designed to provide a calm healthcare environment.",
+    },
+  ],
+};
+
+export const testimonialsContent: TestimonialsContent = {
+  eyebrow: "Patient Stories",
+  title: "What Our Patients Say",
+  testimonials: [
+    {
+      name: "Muna Mohamed",
+      review:
+        "الدكتورة يارا متميزة جدًا في عملها، لديها خبرة عالية ودقة واضحة في التشخيص والعلاج. أسلوبها راقٍ وتعاملها لطيف جدًا ويمنح المريضة راحة وثقة. تشرح الحالة بشكل واضح وتهتم بكل التفاصيل، وهذا يدل على حرصها وإخلاصها في عملها. بصراحة، من أفضل الطبيبات اللاتي تعاملت معهن، وأنصح بها بشدة.",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2026-05-10",
+      rating: 5,
+    },
+    {
+      name: "جوجو الكعبي",
+      review:
+        "دكتورة يارا من أروع طبيبات التجميل، دقيقة في عملها وذوقها راقٍ جدًا. تهتم بأدق التفاصيل وتحرص على راحة المراجع. كانت تجربة أكثر من ممتازة، وأنصح الجميع بزيارتها. أسلوبها راقٍ وتعاملها لا يُعلى عليه. شكرًا دكتورة يارا، وإن شاء الله لي زيارات جديدة قادمة ❤️",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2026-04-02",
+      rating: 5,
+    },
+    {
+      name: "Sultan Harib",
+      review:
+        "أخذت باكيج جلسات عند الدكتورة يارا لعلاج الشعر، وما شاء الله خفّ تساقط الشعر وزادت كثافته، وسعر الجلسات مناسب.",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2026-01-20",
+      rating: 5,
+    },
+    {
+      name: "Ahmed Habib",
+      review:
+        "تجربتي عند دكتورة الأسنان كانت ممتازة بكل التفاصيل. تعاملها مع الأسنان احترافي ودقيق، وتشرح كل خطوة بطريقة تريح المريض. المكان نظيف جدًا ومرتب ويعطي انطباعًا بالثقة من أول ما تدخل. الموظفون محترمون، وتعاملهم لطيف وسريع، ويسهّلون جميع الإجراءات. بصراحة كانت تجربة رائعة وأنصح بها بكل تأكيد.",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2025-11-15",
+      rating: 5,
+    },
+    {
+      name: "Afreen Naz",
+      review:
+        "Amazing treatment. I recently had dental treatment with Dr. Rishika, and I must say it was an exceptional experience. From the very beginning, she made me feel comfortable and explained every step of the process. The treatment was smooth, painless, and very effective. Dr. Rishika's professionalism and gentle approach really stood out. I'm beyond happy with the results, and I highly recommend her to anyone looking for a skilled and caring dentist.",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2025-09-01",
+      rating: 5,
+    },
+    {
+      name: "Waqar Ahmad",
+      review: "Good.",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2025-01-18",
+      rating: 4,
+    },
+    {
+      name: 'MOHAMMAD "mmsir"',
+      review: "It's ok 👍",
+      // TODO: replace with the exact original Google review date once available.
+      date: "2024-06-10",
+      rating: 3,
+    },
+  ],
+  appointmentCta: {
+    label: "View More",
+    href: "https://www.google.com/maps/place/BAGHDAD+MEDICAL+CENTRE/@24.9146055,55.7731613,17z/data=!4m14!1m5!8m4!1e1!2s108076981700144378409!3m1!1e1!3m7!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!8m2!3d24.9146055!4d55.7757416!9m1!1b1!16s%2Fg%2F11clvpfq2k?hl=en-GB&entry=ttu",
+  },
+};
+
+export const insuranceContent: InsuranceContent = {
+  eyebrow: "Insurance",
+  title: "Accepted Insurance Providers",
+  description:
+    "We work with a range of trusted health insurance providers to help make your healthcare experience as convenient as possible.",
+  logos: [
+    { src: "/baghdad/insurance/al-madallah.svg", alt: "Al Madallah" },
+    { src: "/baghdad/insurance/lifeline.svg", alt: "Lifeline" },
+    { src: "/baghdad/insurance/fmc.svg", alt: "FMC" },
+    { src: "/baghdad/insurance/enaya.svg", alt: "Enaya" },
+    { src: "/baghdad/insurance/neuron.svg", alt: "Neuron" },
+    { src: "/baghdad/insurance/nextcare.svg", alt: "NextCare" },
+    { src: "/baghdad/insurance/al-buhaira.svg", alt: "Al Buhaira" },
+  ],
+};
+
+export const faqContent: FAQContent = {
+  eyebrow: "FAQ",
+  title: "Common Questions",
+  description: "Answers to what patients ask us most.",
+  items: [
+    { question: "Do I need an appointment?", answer: "Walk-ins are welcome, but booking ahead guarantees your preferred time slot." },
+    { question: "Do you accept insurance?", answer: "Yes — see our Insurance section above for a list of accepted providers." },
+    { question: "What are your working hours?", answer: "We're open Saturday through Thursday, 9:00 AM to 9:00 PM." },
+    { question: "Is parking available?", answer: "Yes, free parking is available directly in front of the clinic." },
+  ],
+};
+
+export const contactContent: ContactContent = {
+  eyebrow: "Contact Us",
+  title: "Get in Touch",
+  description:
+    "Have a question or need to schedule a visit? Our team is available by phone, WhatsApp, or email to assist you.",
+  phone: "06 886 1115",
+  phoneHref: "+97168861115",
+  mobile: "050 238 8626",
+  mobileHref: "+971502388626",
+  whatsapp: "971563564165",
+  whatsappLabel: "056 356 4165",
+  email: "info@baghdadmedicalcenter.ae",
+  address: "Al Madam, Sharjah — same building as First Abu Dhabi Bank (FAB), side entrance, First Floor.",
+  mapLink: "https://www.google.com/maps/place/BAGHDAD+MEDICAL+CENTRE/@24.9146055,55.7757416,17z",
+  workingHours: [
+    { days: "Sat – Thu", hours: "8:30 AM – 10:00 PM" },
+    { days: "Fri", hours: "8:30 AM – 11:00 AM, 3:00 PM – 10:00 PM" },
+  ],
+  mapEmbedSrc: "https://www.google.com/maps?q=24.914790376977315,55.77578987975816&hl=en&z=17&output=embed",
+};
+
+export const footerContent: FooterContent = {
+  clinicName: "Baghdad Medical Center",
+  logo: { src: "/baghdad/logo.png", alt: "Baghdad Medical Center" },
+  tagline: "Compassionate, patient-centered healthcare for individuals and families in Al Madam, Sharjah.",
+  quickLinks: [
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Doctors", href: "#doctors" },
+    { label: "Facilities", href: "#facilities" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "Insurance", href: "#insurance" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Contact", href: "#contact" },
+  ],
+  phone: "06 886 1115",
+  phoneHref: "+97168861115",
+  mobile: "050 238 8626",
+  mobileHref: "+971502388626",
+  email: "info@baghdadmedicalcenter.ae",
+  address: ["Al Madam, Sharjah", "First Abu Dhabi Bank (FAB) Building", "Side Entrance", "First Floor"],
+  socialLinks: [
+    // TODO: replace with the real Baghdad Medical Center Instagram URL once available.
+    { label: "Instagram", href: "#", icon: <Instagram size={16} /> },
+    // TODO: replace with the real Baghdad Medical Center Facebook URL once available.
+    { label: "Facebook", href: "#", icon: <Facebook size={16} /> },
+  ],
+  copyright: `© ${new Date().getFullYear()} Baghdad Medical Center. All rights reserved.`,
+};

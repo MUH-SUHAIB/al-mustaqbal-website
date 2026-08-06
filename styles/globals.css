@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN TOKENS
+   This is the ONLY place a new clinic needs to edit to re-skin
+   the entire site. Every component reads colors, radii, and
+   shadows from these variables — never hardcoded values.
+   ============================================================ */
+:root {
+  /* --- Color: surfaces --- */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a; /* near-black navy, softer than pure black */
+
+  /* --- Color: primary (clinic blue) --- */
+  --color-primary: #1361d8;
+  --color-primary-hover: #0f4fb0;
+  --color-primary-foreground: #ffffff;
+
+  /* --- Color: secondary (pale blue surface) --- */
+  --color-secondary: #eaf2fe;
+  --color-secondary-hover: #d7e7fd;
+  --color-secondary-foreground: #114487;
+
+  /* --- Color: muted (neutral surfaces / de-emphasized text) --- */
+  --color-muted: #f3f5f7;
+  --color-muted-foreground: #64748b;
+
+  /* --- Color: accent (clinic red — sparingly, for urgency/highlight) --- */
+  --color-accent: #d6455a;
+  --color-accent-hover: #b93347;
+  --color-accent-foreground: #ffffff;
+
+  --color-border: #e2e8f0;
+
+  /* --- Radius: soft, modern-medical --- */
+  --radius-button: 0.625rem; /* 10px */
+  --radius-card: 1rem;       /* 16px */
+  --radius-section: 1.75rem; /* 28px */
+
+  /* --- Shadow: soft, Apple/Stripe-style layered elevation --- */
+  --shadow-subtle: 0 1px 2px rgba(15, 23, 42, 0.04), 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 4px 12px rgba(15, 23, 42, 0.08), 0 12px 24px rgba(15, 23, 42, 0.06);
+  --shadow-elevated: 0 8px 24px rgba(15, 23, 42, 0.10), 0 24px 48px rgba(15, 23, 42, 0.08);
+}
+
+/* Dark mode — toggled by adding "dark" class on <html> */
+.dark {
+  --color-background: #0b1220;
+  --color-foreground: #f1f5f9;
+
+  --color-primary: #4c8dff;
+  --color-primary-hover: #6ea1ff;
+  --color-primary-foreground: #06122b;
+
+  --color-secondary: #101a2e;
+  --color-secondary-hover: #182746;
+  --color-secondary-foreground: #bfd7ff;
+
+  --color-muted: #121c2e;
+  --color-muted-foreground: #8b9ab3;
+
+  --color-accent: #ff6b81;
+  --color-accent-hover: #ff8a9b;
+  --color-accent-foreground: #1a0508;
+
+  --color-border: #1e293b;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 24px rgba(0, 0, 0, 0.25);
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.4), 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================================
+   TYPOGRAPHY BASE
+   Strong hierarchy for medical trust. Components/ui/typography.tsx
+   is the preferred way to consume these — these @layer rules are
+   a safety net for raw <h1>-<p> tags used outside that component.
+   ============================================================ */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl leading-tight; }
+  h2 { @apply text-3xl md:text-4xl leading-tight; }
+  h3 { @apply text-2xl md:text-3xl leading-snug; }
+  h4 { @apply text-xl md:text-2xl leading-snug; }
+  h5 { @apply text-lg md:text-xl leading-snug font-medium; }
+  h6 { @apply text-base md:text-lg leading-snug font-medium; }
+  p  { @apply text-base leading-relaxed; }
+}
+
+/*
+  RTL readiness:
+  dir="rtl"/"ltr" is set on <html> in app/[locale]/layout.tsx.
+  Components in this system use logical/flex-based spacing (gap-*,
+  flex-row + dir inheritance) instead of ml-, mr-, text-left, or text-right,
+  so layouts mirror automatically under RTL without extra CSS.
+*/

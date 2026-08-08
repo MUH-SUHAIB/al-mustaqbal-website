@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Header from "@/components/sections/header";
+
 import {
   Hero,
   About,
@@ -24,24 +26,16 @@ import {
   footerContent,
 } from "@/lib/mock-data/homepage";
 
-// Per-page metadata override — the root [locale] layout sets sane defaults;
-// this page can refine title/description once real clinic copy exists.
 export const metadata: Metadata = {
-  title: "Clinic Name — Compassionate Family Healthcare",
+  title: "Baghdad Medical Center — Compassionate Family Healthcare in Al Madam",
   description:
-    "Modern diagnostics, calm consultations, and a team that treats you like family. Book your appointment today.",
+    "Modern diagnostics, calm consultations, and expert doctors in Sharjah. Book your appointment with Baghdad Medical Center today.",
 };
 
-/**
- * Homepage — built entirely by assembling reusable section templates with
- * content data. No section receives hardcoded copy or business logic here;
- * all content lives in `lib/mock-data/homepage.tsx` and should be replaced
- * with real per-clinic content (ideally sourced from next-intl messages or
- * a CMS) before shipping a specific clinic's site.
- */
 export default function HomePage() {
   return (
-    <main>
+    <main className="min-h-screen pt-20">
+      <Header />
       <Hero {...heroContent} animate />
       <About {...aboutContent} id="about" animate />
       <Services {...servicesContent} id="services" animate />

@@ -2,10 +2,24 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { routing, getDirection, type Locale } from "@/i18n/routing";
+import {
+  NextIntlClientProvider,
+  hasLocale,
+} from "next-intl";
+import {
+  getMessages,
+  setRequestLocale,
+} from "next-intl/server";
+
+import {
+  routing,
+  getDirection,
+  type Locale,
+} from "@/i18n/routing";
+
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import Header from "@/components/sections/header";
+
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -14,17 +28,19 @@ const inter = Inter({
   display: "swap",
 });
 
-// Pre-renders /en and /ar at build time (SSG-friendly, SEO-friendly).
+// Pre-renders /en and /ar at build time
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// Placeholder metadata — override per-clinic in individual page files
-// or generate dynamically per-locale with generateMetadata later.
 export const metadata: Metadata = {
-  title: "Clinic Name",
-  description: "Clinic website powered by the reusable clinic website system.",
-  robots: { index: true, follow: true },
+  title: "Baghdad Medical Center",
+  description:
+    "Compassionate, patient-centered healthcare in Al Madam, Sharjah.",
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function LocaleLayout({
@@ -36,13 +52,12 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  // Guards against any locale segment outside our supported list
-  // (belt-and-suspenders alongside middleware matching).
+  // Make sure the locale is supported
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  // Enables static rendering for this locale on this request.
+  // Enables static rendering for this locale
   setRequestLocale(locale);
 
   const messages = await getMessages();
@@ -51,11 +66,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <Header />
             {children}
-          </NextIntlClientProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

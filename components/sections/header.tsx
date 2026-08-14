@@ -26,6 +26,24 @@ export default function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
@@ -39,15 +57,22 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md border-gray-200 py-3 shadow-sm"
-          : "bg-white border-transparent py-4"
+      className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        isScrolled 
+          ? "top-4 px-4 md:px-8" 
+          /* Dynamically matches the exact starting color of your hero gradient */
+          : "top-0 px-0 bg-[var(--color-secondary,#eaf0f6)]"
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center shrink-0">
+      <div
+        className={`container mx-auto flex items-center justify-between transition-all duration-500 ease-out ${
+          isScrolled
+            ? "bg-white/85 backdrop-blur-xl border border-blue-100/60 shadow-[0_8px_30px_-10px_rgba(59,130,246,0.15)] py-2.5 px-5 md:px-6 rounded-[2rem]"
+            : "bg-transparent border-transparent shadow-none py-4 md:py-5 px-5 md:px-8 rounded-none"
+        }`}
+      >
+        {/* Logo - Standard anchor tag forces a true browser refresh */}
+        <a href={`/${locale}`} className="flex items-center shrink-0 cursor-pointer">
           <Image
             src="/baghdad/logo.png"
             alt="Baghdad Medical Center"
@@ -56,27 +81,29 @@ export default function Header() {
             className="h-auto w-[110px] md:w-[130px]"
             priority
           />
-        </Link>
+        </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors"
+              className="relative text-slate-800 hover:text-blue-700 text-sm font-semibold transition-colors py-1 group"
             >
               {link.name}
+              {/* Animated Accent Underline */}
+              <span className="absolute inset-x-0 bottom-0 h-[2px] bg-red-400 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out rounded-full" />
             </Link>
           ))}
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden lg:flex items-center gap-3">
-          {/* Language */}
+        <div className="hidden lg:flex items-center gap-4">
+          {/* Language Switcher */}
           <Link
             href={`/${nextLocale}`}
-            className="text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-1 text-sm font-medium"
+            className="flex items-center gap-1 text-slate-600 hover:text-blue-700 text-sm font-semibold transition-colors"
           >
             <Globe className="w-4 h-4" />
             <span>{nextLocale === "ar" ? "عربي" : "English"}</span>
@@ -84,8 +111,8 @@ export default function Header() {
 
           {/* Call */}
           <a
-            href="tel:+971502388626"
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-full font-medium hover:bg-blue-700 transition-all text-sm"
+            href="tel:+97168861115"
+            className="flex items-center gap-2 bg-blue-700 text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-blue-700/20 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 hover:-translate-y-0.5 text-sm"
           >
             <Phone className="w-4 h-4" />
             <span>Call</span>
@@ -96,18 +123,21 @@ export default function Header() {
             href="https://wa.me/971563564165"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full font-medium hover:border-blue-300 hover:text-blue-600 transition-all text-sm"
+            className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-[#25D366]/20 hover:bg-[#20bd5a] hover:shadow-lg hover:shadow-[#25D366]/40 transition-all duration-300 hover:-translate-y-0.5 text-sm"
           >
             <MessageCircle className="w-4 h-4" />
             <span>WhatsApp</span>
           </a>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Button */}
         <button
-          className="lg:hidden p-2 text-gray-600"
+          type="button"
+          className="lg:hidden p-2 text-slate-800 hover:text-blue-700 transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle navigation menu"
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-nav-panel"
         >
           {isMobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -121,55 +151,57 @@ export default function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 shadow-xl py-4 px-4 flex flex-col gap-2 lg:hidden"
+            id="mobile-nav-panel"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="absolute top-[calc(100%+0.75rem)] left-4 right-4 bg-white/95 backdrop-blur-2xl border border-blue-100/60 shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)] py-5 px-4 flex flex-col gap-1.5 lg:hidden rounded-2xl origin-top"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-700 text-base font-medium p-3 hover:bg-gray-50 rounded-lg"
+                className="text-slate-800 text-base font-semibold p-3 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-all"
               >
                 {link.name}
               </Link>
             ))}
 
-            <div className="w-full h-px bg-gray-100 my-2" />
+            <div className="w-full h-px bg-blue-50 my-3" />
 
-            {/* Language */}
+            {/* Mobile Language Switcher */}
             <Link
               href={`/${nextLocale}`}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-gray-700 font-medium p-3 hover:bg-gray-50 rounded-lg"
+              className="flex items-center gap-2 text-slate-700 font-semibold p-3 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
             >
               <Globe className="w-5 h-5" />
-              <span>
-                {nextLocale === "ar" ? "العربية" : "English"}
-              </span>
+              <span>{nextLocale === "ar" ? "العربية" : "English"}</span>
             </Link>
 
-            {/* Call */}
-            <a
-              href="tel:+971502388626"
-              className="flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-xl font-medium w-full mt-2"
-            >
-              <Phone className="w-5 h-5" />
-              <span>Call</span>
-            </a>
+            <div className="flex flex-col gap-3 mt-2">
+              {/* Mobile Call */}
+              <a
+                href="tel:+97168861115"
+                className="flex items-center justify-center gap-2 bg-blue-700 text-white px-5 py-3.5 rounded-xl font-semibold w-full hover:bg-blue-800 shadow-md shadow-blue-700/20 active:scale-[0.98] transition-all duration-200"
+              >
+                <Phone className="w-5 h-5" />
+                <span>Call</span>
+              </a>
 
-            {/* WhatsApp */}
-            <a
-              href="https://wa.me/971563564165"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 px-5 py-3 rounded-xl font-medium w-full"
-            >
-              <MessageCircle className="w-5 h-5" />
-              <span>WhatsApp</span>
-            </a>
+              {/* Mobile WhatsApp */}
+              <a
+                href="https://wa.me/971563564165"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3.5 rounded-xl font-semibold w-full hover:bg-[#20bd5a] shadow-md shadow-[#25D366]/20 active:scale-[0.98] transition-all duration-200"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

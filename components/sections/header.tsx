@@ -78,7 +78,7 @@ export default function Header() {
             alt="Baghdad Medical Center"
             width={130}
             height={45}
-            className="h-auto w-[110px] md:w-[130px]"
+            className="h-auto w-[110px] md:w-[130px] rounded-xl md:rounded-2xl"
             priority
           />
         </a>

@@ -6,7 +6,7 @@ import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
 import type { ImageContent, IconContent } from "./types";
-import { staggerContainer, fadeIn, slideUp, duration, easing } from "@/lib/motion";
+import { staggerContainer, slideUp, fadeIn, duration, easing } from "@/lib/motion";
 
 export interface AboutHighlight {
   icon: IconContent;
@@ -40,140 +40,142 @@ export function About({
   image,
   highlights,
   founderQuote,
-  animate = true, // Defaulted to true to match Hero styling
+  animate = true,
 }: AboutContent) {
   const TextWrapper = animate ? motion.div : "div";
 
   return (
     <div className="relative overflow-hidden">
-      {/* 1. Soft Gradient Background Continuation */}
+      {/* Symmetric fade: background → secondary → background, so it blends
+          into whatever section comes before and after, no hard seam. */}
       <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)] opacity-40" />
-        <div className="absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-primary opacity-[0.04] blur-3xl" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
       </div>
 
       <Section id={id} className="py-xl md:py-2xl" align="start">
-        {/* 3. lg:items-stretch ensures both columns match heights automatically */}
-        <div className="grid grid-cols-1 gap-xl md:grid-cols-2 md:gap-2xl lg:items-stretch">
-          
-          {/* 4. IMAGE COLUMN (Forced to left on Desktop using md:order-1) */}
-          <div className="order-2 md:order-1 relative flex w-full h-full items-center justify-center">
-            {image && (
+        {/* md:items-stretch forces both columns to the SAME height on
+            desktop — the image+quote frame matches the text column exactly. */}
+        <div className="grid grid-cols-1 gap-xl md:grid-cols-2 md:gap-2xl md:items-stretch">
+          {/* IMAGE + QUOTE — one merged frame, stretched to match text column height */}
+          <div className="order-2 flex w-full md:order-1">
+            {image ? (
               <motion.div
-                initial={animate ? { opacity: 0, x: -20 } : undefined}
-                whileInView={animate ? { opacity: 1, x: 0 } : undefined}
+                variants={animate ? staggerContainer : undefined}
+                initial={animate ? "hidden" : undefined}
+                whileInView={animate ? "visible" : undefined}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: duration.slow, ease: easing }}
-                className="w-full h-full relative group"
+                className="flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle"
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  loading="lazy"
-                  className="w-full h-full min-h-[400px] object-cover rounded-[2rem] shadow-lg md:aspect-[4/5] lg:aspect-auto transition-transform duration-700 group-hover:scale-[1.01]"
-                />
-              </motion.div>
-            )}
+                {/* Mobile: min-h fallback so the photo has real height when the
+                    grid isn't stretching (single column below md).
+                    Desktop: min-h-0 + flex-1 lets md:items-stretch take over,
+                    so this slot takes exactly whatever space the quote block
+                    below it doesn't use. */}
+                <motion.div
+                  variants={animate ? fadeIn : undefined}
+                  className="relative min-h-[280px] flex-1 md:min-h-0"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  {founderQuote && (
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(to_bottom,transparent,var(--color-secondary))]"
+                      aria-hidden
+                    />
+                  )}
+                </motion.div>
 
-            {highlights && !image && (
-              <div className="grid grid-cols-2 gap-4 w-full h-full content-center">
+                {founderQuote && (
+                  <motion.div
+                    variants={animate ? slideUp : undefined}
+                    className="relative bg-secondary px-5 py-4 text-start sm:px-6 sm:py-5"
+                  >
+                    <Quote size={18} className="text-primary opacity-60" aria-hidden />
+                    <Text variant="small" className="mt-1.5 italic leading-snug text-secondary-foreground">
+                      “{founderQuote.quote}”
+                    </Text>
+                    <div className="mt-2 flex items-baseline gap-2">
+                      <Text variant="small" className="font-semibold text-secondary-foreground">
+                        {founderQuote.author}
+                      </Text>
+                      {founderQuote.role && <Text variant="caption">— {founderQuote.role}</Text>}
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            ) : highlights ? (
+              <div className="grid w-full grid-cols-2 content-start gap-4">
                 {highlights.map((h, i) => (
                   <div
                     key={i}
-                    className="flex flex-col items-start gap-2 rounded-[1.5rem] border border-border bg-muted/50 p-md text-start"
+                    className="flex flex-col items-start gap-2 rounded-card border border-border bg-muted p-md text-start"
                   >
-                    <span aria-hidden className="text-primary">{h.icon}</span>
-                    <Text variant="small" className="text-foreground font-medium">
+                    <span aria-hidden className="text-primary">
+                      {h.icon}
+                    </span>
+                    <Text variant="small" className="font-medium text-foreground">
                       {h.label}
                     </Text>
                   </div>
                 ))}
               </div>
-            )}
-
-            {!image && !highlights && (
+            ) : (
               <div
-                className="flex h-full min-h-[400px] w-full items-center justify-center rounded-[2rem] border-2 border-dashed border-border/60 bg-muted/30"
+                className="flex min-h-[400px] w-full items-center justify-center rounded-section border border-dashed border-border bg-muted"
                 aria-hidden
               >
-                <Text variant="caption">Founder / Clinic Image Placeholder</Text>
+                <Text variant="caption">Founder / Clinic Image</Text>
               </div>
             )}
           </div>
 
-          {/* TEXT COLUMN (Forced to right on Desktop using md:order-2) */}
+          {/* TEXT COLUMN */}
           <TextWrapper
             {...(animate
               ? { variants: staggerContainer, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-100px" } }
               : {})}
-            className="order-1 md:order-2 flex flex-col items-start gap-6 text-start py-4"
+            className="order-1 flex flex-col items-start gap-6 text-start md:order-2 md:py-4"
           >
-            {/* Header Content */}
-            <motion.div {...(animate ? { variants: slideUp } : {})} className="space-y-2">
-              {eyebrow && (
-                <Heading level="h6" className="uppercase tracking-widest text-primary/80 font-bold text-sm">
-                  {eyebrow}
-                </Heading>
-              )}
-              <Heading level="h2" className="text-balance text-foreground">
+            <motion.div {...(animate ? { variants: slideUp } : {})} className="flex flex-col gap-2">
+              {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
+              <Heading level="h2" className="text-foreground">
                 {title}
               </Heading>
             </motion.div>
 
-            {/* Main Paragraphs */}
-            <motion.div {...(animate ? { variants: slideUp } : {})} className="space-y-4">
+            <motion.div {...(animate ? { variants: slideUp } : {})} className="flex flex-col gap-4">
               {paragraphs.map((paragraph, i) => (
-                <Text key={i} variant="body" className="leading-relaxed text-foreground/80">
+                <Text key={i} variant="body">
                   {paragraph}
                 </Text>
               ))}
             </motion.div>
 
-            {/* Mission & Vision Cards */}
             <motion.div
               {...(animate ? { variants: slideUp } : {})}
               className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2"
             >
-              <Card interactive className="p-6 rounded-[1.5rem] border border-border/60 bg-background shadow-sm">
-                <Heading level="h5" as="h3" className="mb-2 text-primary">
+              <Card interactive className="p-md">
+                <Heading level="h5" as="h3" className="text-primary">
                   {mission.title}
                 </Heading>
-                <Text variant="small" className="text-foreground/70 leading-relaxed">
+                <Text variant="small" className="mt-1">
                   {mission.description}
                 </Text>
               </Card>
-              <Card interactive className="p-6 rounded-[1.5rem] border border-border/60 bg-background shadow-sm">
-                <Heading level="h5" as="h3" className="mb-2 text-primary">
+              <Card interactive className="p-md">
+                <Heading level="h5" as="h3" className="text-primary">
                   {vision.title}
                 </Heading>
-                <Text variant="small" className="text-foreground/70 leading-relaxed">
+                <Text variant="small" className="mt-1">
                   {vision.description}
                 </Text>
               </Card>
             </motion.div>
-
-            {/* Founder Quote */}
-            {founderQuote && (
-              <motion.div
-                {...(animate ? { variants: slideUp } : {})}
-                className="relative mt-4 w-full rounded-[2rem] border border-blue-100 bg-[#eff6ff] p-6 sm:p-8 text-start shadow-sm"
-              >
-                <Quote size={32} className="mb-4 text-blue-400 opacity-60" aria-hidden />
-                <Text variant="body" className="italic leading-relaxed text-blue-900/90 font-medium">
-                  "{founderQuote.quote}"
-                </Text>
-                <div className="mt-5">
-                  <Text variant="small" className="font-bold text-blue-900">
-                    {founderQuote.author}
-                  </Text>
-                  {founderQuote.role && (
-                    <Text variant="caption" className="mt-1 block font-semibold uppercase tracking-wider text-blue-700/70">
-                      {founderQuote.role}
-                    </Text>
-                  )}
-                </div>
-              </motion.div>
-            )}
           </TextWrapper>
         </div>
       </Section>

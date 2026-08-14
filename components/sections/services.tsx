@@ -1,6 +1,11 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Section } from "./section-shell";
+import { Heading, Text } from "@/components/ui/typography";
 import { Card, CardImage, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import type { ImageContent } from "./types";
+import { staggerContainer, slideUp } from "@/lib/motion";
 
 export interface ServiceItem {
   image: ImageContent;
@@ -26,27 +31,6 @@ const columnClasses: Record<2 | 3 | 4, string> = {
   4: "sm:grid-cols-2 lg:grid-cols-4",
 };
 
-/**
- * LAYOUT
- * Mobile:  1 column, full-width cards.
- * Tablet:  2 columns.
- * Desktop: `columns` prop (2–4), default 3.
- *
- * DESIGN RULES
- * - Hover lift is inherited from the Card component (soft, not heavy) —
- *   no extra motion is added here.
- * - Each card leads with a full-width image (via `CardImage`) at a fixed
- *   h-48 height with `object-cover`, clipped to the card's rounded top
- *   corners by `Card`'s own `overflow-hidden` — every card stays the
- *   same height regardless of source image dimensions.
- * - RTL: the grid and card content use flex/grid default flow and
- *   `text-start`-based typography (inherited from Card/Typography), so
- *   the whole grid mirrors under dir="rtl" with no extra classes here.
- *
- * USAGE CONSTRAINTS
- * - Keep `description` per service short (1 sentence) — this is a scan
- *   grid, not a detail page. Link to a dedicated service page for depth.
- */
 export function Services({
   id,
   eyebrow,
@@ -54,21 +38,65 @@ export function Services({
   description,
   services,
   columns = 3,
-  animate = false,
+  animate = true,
 }: ServicesContent) {
+  const Container = animate ? motion.div : "div";
+
   return (
-    <Section id={id} eyebrow={eyebrow} title={title} description={description} animate={animate}>
-      <div className={`grid grid-cols-1 gap-6 ${columnClasses[columns]}`}>
-        {services.map((service, i) => (
-          <Card key={i} className="h-full">
-            <CardImage src={service.image.src} alt={service.image.alt} />
-            <CardHeader>
-              <CardTitle>{service.title}</CardTitle>
-              <CardDescription>{service.description}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
+    <div className="relative overflow-hidden">
+      {/* Exact symmetric background gradient matching the About section */}
+      <div className="absolute inset-0 -z-10" aria-hidden>
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
       </div>
-    </Section>
+
+      <Section id={id} className="py-xl md:py-2xl">
+        <Container
+          {...(animate
+            ? {
+                variants: staggerContainer,
+                initial: "hidden",
+                whileInView: "visible",
+                viewport: { once: true, margin: "-50px" },
+              }
+            : {})}
+          className="flex flex-col items-center w-full"
+        >
+          {/* Animated Header Block (Reverted back to default design system typography) */}
+          <motion.div
+            {...(animate ? { variants: slideUp } : {})}
+            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14 gap-3"
+          >
+            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-foreground">
+              {title}
+            </Heading>
+            {description && (
+              <Text variant="body" className="text-muted-foreground">
+                {description}
+              </Text>
+            )}
+          </motion.div>
+
+          {/* Animated Services Grid */}
+          <div className={`grid grid-cols-1 gap-6 w-full ${columnClasses[columns]}`}>
+            {services.map((service, i) => (
+              <motion.div
+                key={i}
+                {...(animate ? { variants: slideUp } : {})}
+                className="h-full"
+              >
+                <Card interactive className="h-full flex flex-col overflow-hidden">
+                  <CardImage src={service.image.src} alt={service.image.alt} />
+                  <CardHeader className="text-center flex flex-col items-center">
+                    <CardTitle>{service.title}</CardTitle>
+                    <CardDescription>{service.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    </div>
   );
 }

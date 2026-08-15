@@ -64,7 +64,9 @@ export function About({
                 initial={animate ? "hidden" : undefined}
                 whileInView={animate ? "visible" : undefined}
                 viewport={{ once: true, margin: "-100px" }}
-                className="flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle"
+                whileHover={{ y: -4, boxShadow: "var(--shadow-hover)" }}
+                transition={{ duration: duration.base, ease: easing }}
+                className="group flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle"
               >
                 {/* Mobile: min-h fallback so the photo has real height when the
                     grid isn't stretching (single column below md).
@@ -73,13 +75,13 @@ export function About({
                     below it doesn't use. */}
                 <motion.div
                   variants={animate ? fadeIn : undefined}
-                  className="relative min-h-[280px] flex-1 md:min-h-0"
+                  className="relative min-h-[280px] flex-1 overflow-hidden md:min-h-0"
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   {founderQuote && (
                     <div

@@ -118,38 +118,44 @@ export const doctorsContent: DoctorsContent = {
       specialization: "Dermatology Specialist",
       description:
         "Founder of Baghdad Medical Center. Specializes in dermatology, hair loss (alopecia), PRP therapy, skin health, diabetes management, and preventive healthcare.",
-    },
+        gender: "male",
+      },
     {
       image: { src: "/baghdad/doctors/Jawad khan.jpg", alt: "Dr. Jawad Khan Jamil" },
       name: "Dr. Jawad Khan Jamil",
       specialization: "General Practitioner (GP)",
       description:
         "Provides comprehensive primary healthcare, diagnosis, preventive medicine, chronic disease management, and family healthcare.",
-    },
+      gender: "male",
+      },
     {
       image: { src: "/baghdad/doctors/Abdullah.png", alt: "Dr. Abdullah" },
       name: "Dr. Abdullah",
       specialization: "Pediatric Specialist",
       description:
         "Provides specialized healthcare for infants, children, vaccinations, growth monitoring, and common childhood illnesses.",
-    },
+      gender: "male",
+      },
     {
       image: { src: "/baghdad/doctors/bassam.png", alt: "Dr. Bassam Ibraheem" },
       name: "Dr. Bassam Ibraheem",
       specialization: "Orthodontic Specialist",
       description: "More than 20 years of experience in braces, bite correction, teeth alignment, and orthodontic treatment.",
+      gender: "male",
     },
     {
       image: { src: "/baghdad/doctors/dentistry-room.png", alt: "Baghdad Medical Center Dentistry Department" },
       name: "Dr. Rana Maryoosh",
       specialization: "Dental Implant Specialist",
       description: "Specialized in dental implants, restorative dentistry, and advanced cosmetic dental procedures.",
+      gender: "female",
     },
     {
       image: { src: "/baghdad/doctors/dentistry-room.png", alt: "Baghdad Medical Center Dentistry Department" },
       name: "Dr. Rishika",
       specialization: "General Dentist",
       description: "Provides preventive, restorative, and cosmetic dental care for patients of all ages.",
+      gender: "female",
     },
   ],
 };
@@ -185,6 +191,16 @@ export const facilitiesContent: FacilitiesContent = {
       description: "Dedicated treatment area for intravenous therapy and supportive medical care.",
     },
     {
+      image: { src: "/baghdad/facilities/children-waiting-area.png", alt: "Children waiting area at Baghdad Medical Center" },
+      label: "Pediatric Care Corner",
+      description: "Welcoming and family-friendly spaces for younger patients.",
+    },
+    {
+      image: { src: "/baghdad/facilities/department-lounge.png", alt: "Department lounge at Baghdad Medical Center" },
+      label: "Department Lounge",
+      description: "Spacious lounges for clinical consultations and patient comfort.",
+    },
+    {
       image: { src: "/baghdad/facilities/relaxing-area.png", alt: "Patient relaxing area at Baghdad Medical Center" },
       label: "Patient Comfort Area",
       description: "Comfortable spaces designed to provide a calm healthcare environment.",
@@ -195,12 +211,16 @@ export const facilitiesContent: FacilitiesContent = {
 export const testimonialsContent: TestimonialsContent = {
   eyebrow: "Patient Stories",
   title: "What Our Patients Say",
+  aggregateScore: {
+    rating: 4.4,
+    totalReviews: "80+",
+    platform: "Google Reviews",
+  },
   testimonials: [
     {
       name: "Muna Mohamed",
       review:
         "الدكتورة يارا متميزة جدًا في عملها، لديها خبرة عالية ودقة واضحة في التشخيص والعلاج. أسلوبها راقٍ وتعاملها لطيف جدًا ويمنح المريضة راحة وثقة. تشرح الحالة بشكل واضح وتهتم بكل التفاصيل، وهذا يدل على حرصها وإخلاصها في عملها. بصراحة، من أفضل الطبيبات اللاتي تعاملت معهن، وأنصح بها بشدة.",
-      // TODO: replace with the exact original Google review date once available.
       date: "2026-05-10",
       rating: 5,
     },
@@ -208,7 +228,6 @@ export const testimonialsContent: TestimonialsContent = {
       name: "جوجو الكعبي",
       review:
         "دكتورة يارا من أروع طبيبات التجميل، دقيقة في عملها وذوقها راقٍ جدًا. تهتم بأدق التفاصيل وتحرص على راحة المراجع. كانت تجربة أكثر من ممتازة، وأنصح الجميع بزيارتها. أسلوبها راقٍ وتعاملها لا يُعلى عليه. شكرًا دكتورة يارا، وإن شاء الله لي زيارات جديدة قادمة ❤️",
-      // TODO: replace with the exact original Google review date once available.
       date: "2026-04-02",
       rating: 5,
     },
@@ -216,7 +235,6 @@ export const testimonialsContent: TestimonialsContent = {
       name: "Sultan Harib",
       review:
         "أخذت باكيج جلسات عند الدكتورة يارا لعلاج الشعر، وما شاء الله خفّ تساقط الشعر وزادت كثافته، وسعر الجلسات مناسب.",
-      // TODO: replace with the exact original Google review date once available.
       date: "2026-01-20",
       rating: 5,
     },
@@ -224,7 +242,6 @@ export const testimonialsContent: TestimonialsContent = {
       name: "Ahmed Habib",
       review:
         "تجربتي عند دكتورة الأسنان كانت ممتازة بكل التفاصيل. تعاملها مع الأسنان احترافي ودقيق، وتشرح كل خطوة بطريقة تريح المريض. المكان نظيف جدًا ومرتب ويعطي انطباعًا بالثقة من أول ما تدخل. الموظفون محترمون، وتعاملهم لطيف وسريع، ويسهّلون جميع الإجراءات. بصراحة كانت تجربة رائعة وأنصح بها بكل تأكيد.",
-      // TODO: replace with the exact original Google review date once available.
       date: "2025-11-15",
       rating: 5,
     },
@@ -232,27 +249,24 @@ export const testimonialsContent: TestimonialsContent = {
       name: "Afreen Naz",
       review:
         "Amazing treatment. I recently had dental treatment with Dr. Rishika, and I must say it was an exceptional experience. From the very beginning, she made me feel comfortable and explained every step of the process. The treatment was smooth, painless, and very effective. Dr. Rishika's professionalism and gentle approach really stood out. I'm beyond happy with the results, and I highly recommend her to anyone looking for a skilled and caring dentist.",
-      // TODO: replace with the exact original Google review date once available.
       date: "2025-09-01",
       rating: 5,
     },
     {
       name: "Waqar Ahmad",
       review: "Good.",
-      // TODO: replace with the exact original Google review date once available.
       date: "2025-01-18",
       rating: 4,
     },
     {
       name: 'MOHAMMAD "mmsir"',
       review: "It's ok 👍",
-      // TODO: replace with the exact original Google review date once available.
       date: "2024-06-10",
       rating: 3,
     },
   ],
   appointmentCta: {
-    label: "View More",
+    label: "View More on Google Reviews",
     href: "https://www.google.com/maps/place/BAGHDAD+MEDICAL+CENTRE/@24.9146055,55.7731613,17z/data=!4m14!1m5!8m4!1e1!2s108076981700144378409!3m1!1e1!3m7!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!8m2!3d24.9146055!4d55.7757416!9m1!1b1!16s%2Fg%2F11clvpfq2k?hl=en-GB&entry=ttu",
   },
 };

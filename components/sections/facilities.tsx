@@ -2,19 +2,18 @@
 
 import { motion } from "framer-motion";
 import { Section } from "./section-shell";
-import { Card, CardImage, CardHeader, CardTitle } from "@/components/ui/card";
+import { Heading, Text } from "@/components/ui/typography";
+import { Card } from "@/components/ui/card";
 import type { ImageContent } from "./types";
 import { staggerContainer, slideUp } from "@/lib/motion";
 
 export interface FacilityItem {
   image: ImageContent;
   label: string;
-  /** Optional description kept for future use (not currently displayed). */
   description?: string;
 }
 
 export interface FacilitiesContent {
-  /** Anchor id for nav links / SEO deep-linking, e.g. "facilities". */
   id?: string;
   eyebrow?: string;
   title: string;
@@ -23,71 +22,101 @@ export interface FacilitiesContent {
   animate?: boolean;
 }
 
-/**
- * LAYOUT
- * Mobile: 2 columns.
- * Tablet: 3 columns.
- * Desktop: 4+ columns (auto-fit minmax grid).
- *
- * DESIGN
- * - Uses the shared Card component.
- * - Each card displays a facility image and title only.
- * - Images maintain equal height across all cards.
- * - Responsive and RTL compatible.
- *
- * MOTION
- * Uses the existing staggerContainer and slideUp animations.
- */
 export function Facilities({
   id,
   eyebrow,
   title,
   description,
   facilities,
-  animate = false,
+  animate = true,
 }: FacilitiesContent) {
-  const GridWrapper = animate ? motion.div : "div";
+  const Container = animate ? motion.div : "div";
+
+  // Creates a balanced 8-item Editorial Bento Grid
+  const getBentoClasses = (index: number) => {
+    switch (index) {
+      case 0:
+        // Main Reception Hero: Spans 2x2 on desktop
+        return "col-span-2 row-span-2 md:col-start-3 md:row-start-1";
+      case 7:
+        // Bottom Banner (Patient Comfort Area): Spans 2 cols on bottom right
+        return "col-span-2 md:col-span-2 md:col-start-3 md:row-start-3";
+      default:
+        // Standard 1x1 cards
+        return "col-span-1 row-span-1";
+    }
+  };
 
   return (
-    <Section
-      id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      tone="muted"
-      animate={animate}
-    >
-      <GridWrapper
-        {...(animate
-          ? {
-              variants: staggerContainer,
-              initial: "hidden",
-              whileInView: "visible",
-              viewport: { once: true, margin: "-80px" },
-            }
-          : {})}
-        className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"
-      >
-        {facilities.map((facility, i) => (
-          <motion.div
-            key={i}
-            {...(animate ? { variants: slideUp } : {})}
-          >
-            <Card className="h-full">
-              <CardImage
-                src={facility.image.src}
-                alt={facility.image.alt}
-              />
+    <div className="relative overflow-hidden">
+      {/* Background Gradient */}
+      <div className="absolute inset-0 -z-10" aria-hidden>
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),rgba(239,246,255,0.5)_40%,rgba(255,241,242,0.7)_100%)] dark:bg-[linear-gradient(to_bottom,var(--color-background),rgba(29,78,216,0.03)_40%,rgba(225,29,72,0.03)_100%)]" />
+      </div>
 
-              <CardHeader>
-                <CardTitle className="text-base">
-                  {facility.label}
-                </CardTitle>
-              </CardHeader>
-            </Card>
+      <Section id={id} className="py-xl md:py-2xl">
+        <Container
+          {...(animate
+            ? {
+                variants: staggerContainer,
+                initial: "hidden",
+                whileInView: "visible",
+                viewport: { once: true, margin: "-50px" },
+              }
+            : {})}
+          className="flex flex-col items-center w-full max-w-7xl mx-auto"
+        >
+          {/* Section Header */}
+          <motion.div
+            {...(animate ? { variants: slideUp } : {})}
+            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-16 gap-3"
+          >
+            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-foreground">
+              {title}
+            </Heading>
+            {description && (
+              <Text variant="body" className="text-muted-foreground text-balance">
+                {description}
+              </Text>
+            )}
           </motion.div>
-        ))}
-      </GridWrapper>
-    </Section>
+
+          {/* Fully Responsive Bento Grid */}
+          <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[250px]">
+            {facilities.map((facility, i) => (
+              <motion.div
+                key={i}
+                {...(animate ? { variants: slideUp } : {})}
+                className={`h-full w-full ${getBentoClasses(i)}`}
+              >
+                <Card className="group relative h-full w-full overflow-hidden border-border/30 rounded-section shadow-sm transition-shadow duration-500 hover:shadow-elevated cursor-pointer">
+                  {/* Edge-to-Edge Image */}
+                  <img
+                    src={facility.image.src}
+                    alt={facility.image.alt}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
+
+                  {/* Dark Overlay Gradient for High Contrast Text */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/30 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+
+                  {/* Label & Accent Line */}
+                  <div className="absolute bottom-0 left-0 flex w-full flex-col justify-end p-4 sm:p-5 md:p-6 transform transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                    <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white tracking-wide drop-shadow-sm">
+                      {facility.label}
+                    </h3>
+                    
+                    {/* Hover Accent Line */}
+                    <div className="mt-2 h-[2px] w-6 bg-white/60 transition-all duration-500 ease-out group-hover:w-12 group-hover:bg-white" />
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    </div>
   );
 }

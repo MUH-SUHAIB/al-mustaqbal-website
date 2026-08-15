@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
-import { Card, CardImage, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import type { ImageContent } from "./types";
 import { staggerContainer, slideUp } from "@/lib/motion";
 
@@ -61,7 +61,7 @@ export function Services({
             : {})}
           className="flex flex-col items-center w-full"
         >
-          {/* Animated Header Block (Reverted back to default design system typography) */}
+          {/* Animated Header Block */}
           <motion.div
             {...(animate ? { variants: slideUp } : {})}
             className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14 gap-3"
@@ -85,9 +85,18 @@ export function Services({
                 {...(animate ? { variants: slideUp } : {})}
                 className="h-full"
               >
-                <Card interactive className="h-full flex flex-col overflow-hidden">
-                  <CardImage src={service.image.src} alt={service.image.alt} />
-                  <CardHeader className="text-center flex flex-col items-center">
+                <Card interactive className="group h-full flex flex-col overflow-hidden">
+                  {/* Matching 4/5 Aspect Ratio Image Wrapper */}
+                  <div className="relative w-full aspect-[4/4] overflow-hidden bg-muted">
+                    <img
+                      src={service.image.src}
+                      alt={service.image.alt}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    />
+                  </div>
+
+                  <CardHeader className="text-center flex flex-col items-center p-5 sm:p-6">
                     <CardTitle>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>

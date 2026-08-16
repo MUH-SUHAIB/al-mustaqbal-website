@@ -9,14 +9,11 @@ const headingStyles: Record<HeadingLevel, string> = {
   h3: "text-2xl md:text-3xl font-semibold leading-snug",
   h4: "text-xl md:text-2xl font-semibold leading-snug",
   h5: "text-lg md:text-xl font-medium leading-snug",
-  // h6 doubles as an "eyebrow" label style — common in medical/trust UI
-  // for small category tags above a heading (e.g. "OUR SERVICES").
   h6: "text-sm md:text-base font-medium uppercase tracking-wide text-muted-foreground",
 };
 
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   level: HeadingLevel;
-  /** Render a different tag than `level` implies, keeping the visual style. Use for correct document outline. */
   as?: HeadingLevel;
   children: ReactNode;
 }

@@ -1,5 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Section } from "./section-shell";
+import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/typography";
+import { staggerContainer, slideUp } from "@/lib/motion";
 
 export interface InsuranceLogo {
   /** Logo image src. Omit to render a placeholder tile with `alt` as the label — useful before real logos are supplied. */
@@ -19,49 +25,71 @@ export interface InsuranceContent {
   animate?: boolean;
 }
 
+function LogoCard({ logo, animate }: { logo: InsuranceLogo; animate: boolean }) {
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <motion.div {...(animate ? { variants: slideUp } : {})} className="h-full">
+      <Card className="group flex h-32 items-center justify-center border-2 p-6 transition-colors duration-base hover:border-primary sm:h-36 sm:p-8">
+        {logo.src && !hasError ? (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            loading="lazy"
+            onError={() => setHasError(true)}
+            className="max-h-14 w-auto max-w-full object-contain transition-transform duration-base group-hover:scale-105 sm:max-h-16"
+          />
+        ) : (
+          <Text variant="small" className="text-center font-medium text-foreground">
+            {logo.alt}
+          </Text>
+        )}
+      </Card>
+    </motion.div>
+  );
+}
+
 /**
  * LAYOUT
  * Mobile:  2 columns.
- * Tablet:  4 columns.
- * Desktop: 6 columns.
+ * Tablet:  3 columns.
+ * Desktop: 5 columns.
+ * Fewer, larger columns than a dense logo strip — each card gets real
+ * breathing room (h-32/h-36, generous padding) instead of being crammed,
+ * which is what reads as "premium" vs. "logo soup."
  *
- * DESIGN RULES
- * - Real logos render grayscale by default and gain color on hover
- *   (`grayscale hover:grayscale-0`) — a common trust-section convention
- *   that keeps the row visually calm and non-competing with brand colors.
- * - Logos without a `src` render as a bordered, muted placeholder tile
- *   showing the insurer's name — so the section looks complete before
- *   real logo artwork is supplied, and swapping in real logos later
- *   requires no layout changes.
- * - No shadows — this stays a plain, quiet trust row.
- * - RTL: grid + centered content mirrors automatically, no directional
- *   classes needed.
+ * DESIGN
+ * - Built on the shared `Card` component, so hover lift + shadow is
+ *   identical to Services/Doctors/Facilities — one consistent hover
+ *   language across the whole site, not a one-off effect.
+ * - `border-2 hover:border-primary` gives a visible, deliberate border
+ *   accent on hover (not just a shadow), plus a slight logo scale-up
+ *   (`group-hover:scale-105`) — two small, coordinated hover cues rather
+ *   than one big flashy one.
+ * - Logos render in full color at rest — no grayscale filter — since a
+ *   dulled resting state reads as less trustworthy for a healthcare
+ *   audience; the hover treatment communicates interactivity instead.
+ * - Cards reveal via the existing `staggerContainer`/`slideUp` variants,
+ *   same pattern as Doctors/Facilities/Testimonials, so the reveal
+ *   timing is consistent site-wide rather than a new animation system.
+ *
+ * FALLBACK
+ * `onError` swaps a broken image for the insurer's name in the same
+ * card shape — the grid never looks broken even if an asset 404s.
  */
 export function Insurance({ id, eyebrow, title, description, logos, animate = false }: InsuranceContent) {
   return (
     <Section id={id} eyebrow={eyebrow} title={title} description={description} animate={animate}>
-      <div className="grid grid-cols-2 items-center gap-6 sm:grid-cols-4 lg:grid-cols-6">
-        {logos.map((logo, i) =>
-          logo.src ? (
-            <img
-              key={i}
-              src={logo.src}
-              alt={logo.alt}
-              loading="lazy"
-              className="mx-auto h-10 w-auto object-contain grayscale opacity-70 transition duration-fast hover:grayscale-0 hover:opacity-100"
-            />
-          ) : (
-            <div
-              key={i}
-              className="flex h-16 w-full items-center justify-center rounded-card border border-dashed border-border bg-muted px-2"
-            >
-              <Text variant="caption" className="text-center">
-                {logo.alt}
-              </Text>
-            </div>
-          )
-        )}
-      </div>
+      <motion.div
+        {...(animate
+          ? { variants: staggerContainer, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-80px" } }
+          : {})}
+        className="grid grid-cols-2 gap-5 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5 lg:gap-8"
+      >
+        {logos.map((logo, i) => (
+          <LogoCard key={i} logo={logo} animate={animate} />
+        ))}
+      </motion.div>
     </Section>
   );
 }

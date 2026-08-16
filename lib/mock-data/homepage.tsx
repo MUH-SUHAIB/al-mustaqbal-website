@@ -278,7 +278,7 @@ export const insuranceContent: InsuranceContent = {
     "We work with a range of trusted health insurance providers to help make your healthcare experience as convenient as possible.",
   logos: [
     { src: "/baghdad/insurance/al-madallah.svg", alt: "Al Madallah" },
-    { src: "/baghdad/insurance/lifeline.svg", alt: "Lifeline" },
+    { src: "/baghdad/insurance/lifeline.png", alt: "Lifeline" },
     { src: "/baghdad/insurance/fmc.svg", alt: "FMC" },
     { src: "/baghdad/insurance/enaya.svg", alt: "Enaya" },
     { src: "/baghdad/insurance/neuron.svg", alt: "Neuron" },

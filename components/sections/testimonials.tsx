@@ -67,6 +67,13 @@ function getRelativeTime(dateString: string): string {
   return diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
 }
 
+// Utility to safely truncate text without cutting words in half
+function truncateText(text: string, maxLength: number) {
+  if (text.length <= maxLength) return text;
+  const lastSpace = text.lastIndexOf(" ", maxLength);
+  return text.substring(0, lastSpace > 0 ? lastSpace : maxLength) + "...";
+}
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-1" aria-label={`${rating} out of 5 stars`}>
@@ -102,6 +109,9 @@ const slideVariants = {
   }),
 };
 
+// Configuration for character limit before truncating
+const MAX_REVIEW_CHARS = 150; 
+
 export function Testimonials({
   id,
   eyebrow = "Patient Stories",
@@ -114,34 +124,34 @@ export function Testimonials({
 }: TestimonialsContent) {
   const [[page, direction], setPage] = useState([0, 0]);
   const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); 
 
-  // Wrap around logic
   const currentIndex = ((page % testimonials.length) + testimonials.length) % testimonials.length;
+  const activeReview = testimonials[currentIndex];
+  
+  const isLongReview = activeReview.review.length > MAX_REVIEW_CHARS;
 
   const paginate = useCallback((newDirection: number) => {
     setPage([page + newDirection, newDirection]);
+    setIsExpanded(false); 
   }, [page]);
 
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || isExpanded) return;
     const timer = setInterval(() => paginate(1), 6500);
     return () => clearInterval(timer);
-  }, [isHovered, paginate]);
+  }, [isHovered, isExpanded, paginate]);
 
-  const activeReview = testimonials[currentIndex];
+  const displayText = (isLongReview && !isExpanded) 
+    ? truncateText(activeReview.review, MAX_REVIEW_CHARS) 
+    : activeReview.review;
 
   return (
     <div className="relative w-full overflow-hidden">
-      {/* 
-        FIX 1: Blending the straight line. 
-        Starts exactly with rgba(255,241,242,0.7) to seamlessly match the end of the Facilities section, 
-        then smoothly transitions into a soft blue.
-      */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(255,241,242,0.7)_0%,rgba(239,246,255,0.6)_40%,rgba(219,234,254,0.4)_100%)] dark:bg-[linear-gradient(to_bottom,rgba(225,29,72,0.03)_0%,rgba(29,78,216,0.03)_40%,transparent_100%)]" aria-hidden="true" />
       
       <Section id={id} eyebrow={eyebrow} title={title} description={description} animate={animate}>
         
-        {/* FIX 2a: Hardcoded Tailwind blue border (border-blue-300) for the badge */}
         {aggregateScore && (
           <motion.div
             {...(animate ? { variants: slideUp, initial: "hidden", whileInView: "visible", viewport: { once: true } } : {})}
@@ -158,15 +168,13 @@ export function Testimonials({
         )}
 
         <div className="relative mx-auto w-full max-w-6xl">
-          
-          {/* FIX 2b: Hardcoded Tailwind blue border (border-blue-200) for the main testimonial card */}
           <motion.div
+            layout
             {...(animate ? { variants: slideUp, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-50px" } } : {})}
-            className="relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-blue-200 bg-white/50 p-8 sm:p-12 md:p-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] backdrop-blur-xl transition-all duration-500 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.15)] hover:border-blue-300 dark:border-blue-800/40 dark:bg-slate-900/50 sm:min-h-[420px]"
+            className="relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-blue-200 bg-white/50 p-8 sm:p-12 md:p-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] backdrop-blur-xl transition-[border,box-shadow,background] duration-500 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.15)] hover:border-blue-300 dark:border-blue-800/40 dark:bg-slate-900/50 sm:min-h-[460px] md:min-h-[480px]"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {/* Arrow Navigation */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -185,11 +193,10 @@ export function Testimonials({
               <ChevronRight className="h-5 w-5 rtl:rotate-180" />
             </motion.button>
 
-            <div className="flex justify-center text-blue-400 mb-4">
+            <motion.div layout className="flex justify-center text-blue-400 mb-4">
               <PremiumQuoteIcon className="h-10 w-10 text-blue-300/60" />
-            </div>
+            </motion.div>
 
-            {/* Slide Content Area */}
             <div className="relative flex-1 flex items-center justify-center overflow-hidden px-8 sm:px-16 my-4">
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
@@ -201,11 +208,26 @@ export function Testimonials({
                   exit="exit"
                   className="w-full flex flex-col items-center text-center max-w-3xl"
                 >
-                  <Text variant="body" className="text-foreground/90 font-medium italic text-lg md:text-2xl leading-relaxed md:leading-loose text-balance" dir="auto">
-                    “{activeReview.review}”
-                  </Text>
+                  {/* FIX: Added min-h-[160px] md:min-h-[180px] to this wrapper so short text takes up the exact same vertical space as 4 lines of text */}
+                  <motion.div layout className="flex flex-col items-center justify-center gap-2 min-h-[160px] md:min-h-[180px] w-full">
+                    <Text variant="body" className="text-foreground/90 font-medium italic text-lg md:text-2xl leading-relaxed md:leading-loose text-balance transition-all duration-300" dir="auto">
+                      “{displayText}”
+                    </Text>
+                    
+                    {isLongReview && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsExpanded(!isExpanded);
+                        }}
+                        className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                      >
+                        {isExpanded ? "Show less" : "Read more"}
+                      </button>
+                    )}
+                  </motion.div>
 
-                  <div className="mt-8 flex flex-col items-center gap-3">
+                  <motion.div layout className="mt-8 flex flex-col items-center gap-3">
                     <StarRating rating={activeReview.rating ?? 5} />
                     <div className="flex items-center gap-4 mt-2">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-blue-600 font-bold text-sm shadow-inner ring-2 ring-white">
@@ -220,13 +242,12 @@ export function Testimonials({
                         </Text>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="mt-8 flex justify-center items-center gap-2.5 z-10">
+            <motion.div layout className="mt-8 flex justify-center items-center gap-2.5 z-10">
               {testimonials.map((_, idx) => {
                 const isActive = idx === currentIndex;
                 return (
@@ -235,6 +256,7 @@ export function Testimonials({
                     onClick={() => {
                       const dir = idx > currentIndex ? 1 : -1;
                       setPage([idx, dir]);
+                      setIsExpanded(false); 
                     }}
                     className="group relative flex items-center justify-center py-2"
                     aria-label={`Go to review ${idx + 1}`}
@@ -249,11 +271,10 @@ export function Testimonials({
                   </button>
                 );
               })}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* FIX 2c: Hardcoded Tailwind blue border & soft hover background for the CTA */}
         <div className="mt-12 flex justify-center">
           <motion.a
             whileHover={{ scale: 1.03 }}

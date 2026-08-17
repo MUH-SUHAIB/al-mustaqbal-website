@@ -60,7 +60,6 @@ export default function Header() {
       className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled 
           ? "top-4 px-4 md:px-8" 
-          /* Dynamically matches the exact starting color of your hero gradient */
           : "top-0 px-0 bg-[var(--color-secondary,#eaf0f6)]"
       }`}
     >
@@ -71,7 +70,7 @@ export default function Header() {
             : "bg-transparent border-transparent shadow-none py-4 md:py-5 px-5 md:px-8 rounded-none"
         }`}
       >
-        {/* Logo - Standard anchor tag forces a true browser refresh */}
+        {/* Logo */}
         <a href={`/${locale}`} className="flex items-center shrink-0 cursor-pointer">
           <Image
             src="/baghdad/logo.png"
@@ -92,7 +91,6 @@ export default function Header() {
               className="relative text-slate-800 hover:text-blue-700 text-sm font-semibold transition-colors py-1 group"
             >
               {link.name}
-              {/* Animated Accent Underline */}
               <span className="absolute inset-x-0 bottom-0 h-[2px] bg-red-400 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out rounded-full" />
             </Link>
           ))}
@@ -100,7 +98,6 @@ export default function Header() {
 
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4">
-          {/* Language Switcher */}
           <Link
             href={`/${nextLocale}`}
             className="flex items-center gap-1 text-slate-600 hover:text-blue-700 text-sm font-semibold transition-colors"
@@ -109,7 +106,6 @@ export default function Header() {
             <span>{nextLocale === "ar" ? "عربي" : "English"}</span>
           </Link>
 
-          {/* Call */}
           <a
             href="tel:+97168861115"
             className="flex items-center gap-2 bg-blue-700 text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-blue-700/20 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 hover:-translate-y-0.5 text-sm"
@@ -118,7 +114,6 @@ export default function Header() {
             <span>Call</span>
           </a>
 
-          {/* WhatsApp */}
           <a
             href="https://wa.me/971563564165"
             target="_blank"
@@ -156,7 +151,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute top-[calc(100%+0.75rem)] left-4 right-4 bg-white/95 backdrop-blur-2xl border border-blue-100/60 shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)] py-5 px-4 flex flex-col gap-1.5 lg:hidden rounded-2xl origin-top max-h-[calc(100vh-6rem)] overflow-y-auto"
+            className="absolute top-[calc(100%+0.75rem)] left-4 right-4 bg-white/95 backdrop-blur-2xl border border-blue-100/60 shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)] py-5 px-4 flex flex-col gap-1.5 lg:hidden rounded-2xl origin-top max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain"
           >
             {navLinks.map((link) => (
               <Link
@@ -171,7 +166,6 @@ export default function Header() {
 
             <div className="w-full h-px bg-blue-50 my-3" />
 
-            {/* Mobile Language Switcher */}
             <Link
               href={`/${nextLocale}`}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -182,7 +176,6 @@ export default function Header() {
             </Link>
 
             <div className="flex flex-col gap-3 mt-2">
-              {/* Mobile Call */}
               <a
                 href="tel:+97168861115"
                 className="flex items-center justify-center gap-2 bg-blue-700 text-white px-5 py-3.5 rounded-xl font-semibold w-full hover:bg-blue-800 shadow-md shadow-blue-700/20 active:scale-[0.98] transition-all duration-200"
@@ -191,7 +184,6 @@ export default function Header() {
                 <span>Call</span>
               </a>
 
-              {/* Mobile WhatsApp */}
               <a
                 href="https://wa.me/971563564165"
                 target="_blank"

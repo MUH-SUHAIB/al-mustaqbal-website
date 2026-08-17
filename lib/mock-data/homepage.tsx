@@ -292,12 +292,53 @@ export const faqContent: FAQContent = {
   title: "Common Questions",
   description: "Answers to what patients ask us most.",
   items: [
-    { question: "Do I need an appointment?", answer: "Walk-ins are welcome, but booking ahead guarantees your preferred time slot." },
-    { question: "Do you accept insurance?", answer: "Yes — see our Insurance section above for a list of accepted providers." },
-    { question: "What are your working hours?", answer: "We're open Saturday through Thursday, 9:00 AM to 9:00 PM." },
-    { question: "Is parking available?", answer: "Yes, free parking is available directly in front of the clinic." },
+    // Row 1 (Short)
+    {
+      question: "Do I need an appointment?",
+      answer: "Walk-ins are welcome, but booking ahead guarantees your preferred time slot with minimal wait time.",
+    },
+    {
+      question: "What are your working hours?",
+      answer: "We are open Saturday through Thursday from 9:00 AM to 9:00 PM, and Friday from 4:00 PM to 9:00 PM.",
+    },
+    // Row 2 (Medium)
+    {
+      question: "Do you accept insurance?",
+      answer: "Yes — we partner with major providers including NextCare, AlMadallah, Al-Buhaira, Neuron, FMC, and Life Line.",
+    },
+    {
+      question: "What should I bring for my first visit?",
+      answer: "Please bring a valid Emirates ID and your digital or physical insurance card (if applicable).",
+    },
+    // Row 3 (Long)
+    {
+      question: "Does insurance cover laser, cosmetic, or Hijama (cupping) treatments?",
+      answer: "No. Insurance covers core consultations and treatments in General Medicine, Dermatology, Dentistry, and Gynecology. Laser, skincare, and Hijama services are direct-pay only.",
+    },
+    {
+      question: "Do you offer Hijama (cupping therapy) and laser treatments?",
+      answer: "Yes, we provide professional Hijama (cupping therapy), cosmetic laser treatments, and advanced skincare procedures.",
+    },
+    // Row 4 (Medium)
+    {
+      question: "What medical specialties do you offer?",
+      answer: "We offer General Medicine, Dentistry, Dermatology, Obstetrics & Gynecology, Pediatrics, and internal diagnostics.",
+    },
+    {
+      question: "Do you offer lab testing and diagnostics on-site?",
+      answer: "Yes, our facility includes an on-site laboratory for routine blood work and essential diagnostic services.",
+    },
   ],
+  support: {
+    title: "Can't find your answer?",
+    description: "Our reception team is ready to help you with anything you need. Reach out to us directly.",
+    whatsappLabel: "Chat on WhatsApp",
+    whatsappLink: "https://wa.me/971563564165",
+    phoneLabel: "Call Clinic",
+    phoneLink: "tel:+971502388626",
+  }
 };
+
 
 export const contactContent: ContactContent = {
   eyebrow: "Contact Us",

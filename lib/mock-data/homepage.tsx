@@ -361,10 +361,13 @@ export const contactContent: ContactContent = {
   mapEmbedSrc: "https://www.google.com/maps?q=24.914790376977315,55.77578987975816&hl=en&z=17&output=embed",
 };
 
+
+
 export const footerContent: FooterContent = {
   clinicName: "Baghdad Medical Center",
   logo: { src: "/baghdad/logo.png", alt: "Baghdad Medical Center" },
   tagline: "Compassionate, patient-centered healthcare for individuals and families in Al Madam, Sharjah.",
+
   quickLinks: [
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
@@ -375,17 +378,35 @@ export const footerContent: FooterContent = {
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
   ],
+
   phone: "06 886 1115",
   phoneHref: "+97168861115",
   mobile: "050 238 8626",
   mobileHref: "+971502388626",
+  whatsapp: "050 238 8626",
+  whatsappHref: "https://wa.me/971502388626",
   email: "info@baghdadmedicalcenter.ae",
-  address: ["Al Madam, Sharjah", "First Abu Dhabi Bank (FAB) Building", "Side Entrance", "First Floor"],
-  socialLinks: [
-    // TODO: replace with the real Baghdad Medical Center Instagram URL once available.
-    { label: "Instagram", href: "#", icon: <Instagram size={16} /> },
-    // TODO: replace with the real Baghdad Medical Center Facebook URL once available.
-    { label: "Facebook", href: "#", icon: <Facebook size={16} /> },
+  
+  address: [
+    "Al Madam, Sharjah",
+    "First Abu Dhabi Bank (FAB) Building",
+    "Side Entrance",
+    "First Floor",
   ],
+  addressHref: "https://maps.google.com/?q=Baghdad+Medical+Center+Al+Madam+Sharjah",
+
+  socialLinks: [
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/baghdad__medical_center/",
+      icon: <Instagram size={18} />,
+    },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/p/Baghdad-Medical-Center-61569953136442/",
+      icon: <Facebook size={18} />,
+    },
+  ],
+
   copyright: `© ${new Date().getFullYear()} Baghdad Medical Center. All rights reserved.`,
 };

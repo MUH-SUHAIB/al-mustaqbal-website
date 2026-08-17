@@ -246,10 +246,10 @@ export const testimonialsContent: TestimonialsContent = {
       rating: 5,
     },
     {
-      name: "Afreen Naz",
+      name: "Ahed Saif",
       review:
-        "Amazing treatment. I recently had dental treatment with Dr. Rishika, and I must say it was an exceptional experience. From the very beginning, she made me feel comfortable and explained every step of the process. The treatment was smooth, painless, and very effective. Dr. Rishika's professionalism and gentle approach really stood out. I'm beyond happy with the results, and I highly recommend her to anyone looking for a skilled and caring dentist.",
-      date: "2025-09-01",
+        "ماشالله المركز بقمه النظافه والي في السربشين اسمها لانا جدا ممتاذه في التعامل والاستقبال والهنديه تبع الليزر اسمها اشنا ماشالله بنصح التجربه",
+      date: "2026-08-10",
       rating: 5,
     },
     {

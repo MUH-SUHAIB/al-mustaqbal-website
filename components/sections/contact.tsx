@@ -39,38 +39,31 @@ export interface ContactContent {
   animate?: boolean;
 }
 
-// ----------------------------------------------------------------------
-// LIVE TIME HOOK (UAE TIMEZONE)
-// ----------------------------------------------------------------------
 function useClinicStatus() {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkStatus = () => {
-      // Force UAE Time calculation
       const uaeTime = new Date(
         new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" })
       );
-      const day = uaeTime.getDay(); // 0=Sun, 5=Fri, 6=Sat
+      const day = uaeTime.getDay();
       const hour = uaeTime.getHours();
       const minute = uaeTime.getMinutes();
       const timeValue = hour + minute / 60;
 
       let open = false;
       if (day === 5) {
-        // Friday: 8:30 AM - 11:00 AM, 3:00 PM - 10:00 PM
         open =
           (timeValue >= 8.5 && timeValue < 11) ||
           (timeValue >= 15 && timeValue < 22);
       } else {
-        // Sat-Thu: 8:30 AM - 10:00 PM
         open = timeValue >= 8.5 && timeValue < 22;
       }
       setIsOpen(open);
     };
 
     checkStatus();
-    // Update live every 60 seconds
     const interval = setInterval(checkStatus, 60000);
     return () => clearInterval(interval);
   }, []);
@@ -78,9 +71,6 @@ function useClinicStatus() {
   return isOpen;
 }
 
-// ----------------------------------------------------------------------
-// ANIMATION VARIANTS
-// ----------------------------------------------------------------------
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -131,8 +121,6 @@ export function Contact({
 
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-transparent via-blue-50/40 to-pink-50/40 dark:via-blue-950/20 dark:to-pink-950/20 py-8 sm:py-16">
-      
-      {/* Absolute Ambient Blobs for soft color bleeding */}
       <div className="pointer-events-none absolute -top-40 left-0 h-[600px] w-[600px] rounded-full bg-blue-300/15 dark:bg-blue-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-pink-300/15 dark:bg-pink-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
 
@@ -148,10 +136,7 @@ export function Contact({
             : {})}
           className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-stretch text-start relative z-10"
         >
-          {/* LEFT COLUMN */}
           <div className="lg:col-span-7 flex flex-col gap-6 lg:gap-8">
-            
-            {/* 1. Instant Connect Action Bar */}
             <ItemWrapper {...(animate ? { variants: itemVariants } : {})}>
               <div className="group p-7 rounded-[32px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-500">
                 <div className="flex items-center gap-2 mb-6">
@@ -162,7 +147,6 @@ export function Contact({
                 </div>
 
                 <div className="flex flex-wrap gap-4">
-                  {/* Landline */}
                   <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
                     <LinkButton
                       href={landlineTel}
@@ -174,7 +158,6 @@ export function Contact({
                     </LinkButton>
                   </motion.div>
 
-                  {/* Mobile */}
                   {mobile && mobileTel && (
                     <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
                       <LinkButton
@@ -188,7 +171,6 @@ export function Contact({
                     </motion.div>
                   )}
 
-                  {/* WhatsApp */}
                   <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
                     <LinkButton
                       href={whatsappUrl}
@@ -205,7 +187,6 @@ export function Contact({
               </div>
             </ItemWrapper>
 
-            {/* 2. Location Glass Card */}
             <ItemWrapper {...(animate ? { variants: itemVariants } : {})}>
               <div className="group p-7 rounded-[32px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-500">
                 <div className="flex items-start gap-5">
@@ -234,7 +215,6 @@ export function Contact({
               </div>
             </ItemWrapper>
 
-            {/* 3. Working Hours Glass Card */}
             <ItemWrapper {...(animate ? { variants: itemVariants } : {})}>
               <div className="group p-7 rounded-[32px] bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-500">
                 <div className="flex items-start gap-5">
@@ -244,8 +224,7 @@ export function Contact({
                   <div className="flex flex-col gap-4 flex-1">
                     <div className="flex items-center justify-between pt-1">
                       <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Working Hours</span>
-                      
-                      {/* --- UPGRADED STYLISH STATUS BADGES --- */}
+
                       {isOpen === null ? null : isOpen ? (
                         <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50/90 dark:bg-emerald-500/10 border border-emerald-400 dark:border-emerald-500/40 px-3.5 py-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
                           <span className="relative flex h-2 w-2">
@@ -280,7 +259,6 @@ export function Contact({
             </ItemWrapper>
           </div>
 
-          {/* RIGHT COLUMN – Premium Map */}
           <ItemWrapper
             {...(animate ? { variants: itemVariants } : {})}
             className="lg:col-span-5 flex flex-col h-full min-h-[380px]"
@@ -324,4 +302,4 @@ export function Contact({
       </Section>
     </div>
   );
-}    
+}

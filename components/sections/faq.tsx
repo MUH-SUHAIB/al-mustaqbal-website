@@ -8,10 +8,6 @@ import { Text } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { staggerContainer, slideUp, duration, easing } from "@/lib/motion";
 
-/* -------------------------------------------------------------------------- */
-/*                                Types & Interfaces                          */
-/* -------------------------------------------------------------------------- */
-
 export interface FAQItem {
   id?: string;
   question: string;
@@ -27,7 +23,6 @@ export interface FAQSupport {
   whatsappLink: string;
 }
 
-// Reverted back to FAQContent to fix your import error
 export interface FAQContent {
   id?: string;
   eyebrow?: string;
@@ -39,10 +34,6 @@ export interface FAQContent {
   animate?: boolean;
   className?: string;
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                Subcomponents                               */
-/* -------------------------------------------------------------------------- */
 
 interface AccordionCardProps {
   item: FAQItem;
@@ -74,7 +65,6 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
 
   return (
     <motion.div {...motionProps} className="group relative h-fit">
-      {/* Dynamic Hover & Active Glow Effect */}
       <div
         className={cn(
           "pointer-events-none absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-blue-400/40 via-indigo-300/30 to-rose-300/40 blur-md transition-opacity duration-300 dark:from-blue-600/30 dark:to-indigo-600/30",
@@ -83,7 +73,6 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
         aria-hidden="true"
       />
 
-      {/* Main Accordion Container */}
       <div
         className={cn(
           "relative overflow-hidden rounded-2xl border bg-white/90 backdrop-blur-md transition-all duration-300 dark:bg-slate-900/90",
@@ -92,7 +81,6 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
             : "border-blue-200/80 hover:border-blue-300 hover:shadow-[0_8px_25px_-8px_rgba(59,130,246,0.12)] dark:border-blue-900/50 dark:hover:border-blue-700"
         )}
       >
-        {/* Toggle Button */}
         <button
           type="button"
           id={buttonId}
@@ -133,7 +121,6 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
           </span>
         </button>
 
-        {/* Collapsible Answer Region */}
         <div
           id={panelId}
           role="region"
@@ -228,10 +215,6 @@ const FAQSupportCTA = memo(function FAQSupportCTA({
   );
 });
 
-/* -------------------------------------------------------------------------- */
-/*                               Main Component                               */
-/* -------------------------------------------------------------------------- */
-
 export function FAQ({
   id,
   eyebrow,
@@ -282,20 +265,11 @@ export function FAQ({
 
   return (
     <div className={cn("relative w-full overflow-hidden", className)}>
-      {/* 
-        Multi-tone Ambient Gradient Background 
-        Starts perfectly transparent at 0% to blend into the section above, 
-        then gently fades into the rose/blue colors.
-      */}
       <div
         className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,241,242,0.5)_15%,rgba(239,246,255,0.6)_45%,rgba(219,234,254,0.3)_80%,transparent_100%)] dark:bg-[linear-gradient(to_bottom,transparent_0%,rgba(30,64,175,0.03)_20%,rgba(30,64,175,0.05)_50%,transparent_100%)]"
         aria-hidden="true"
       />
 
-      {/* 
-        Ambient Blurred Background Accents 
-        Moved slightly down (top-4) and reduced opacity so they don't clip the top edge
-      */}
       <div
         className="pointer-events-none absolute top-4 start-1/4 -z-10 h-72 w-72 rounded-full bg-rose-200/20 blur-3xl dark:bg-rose-900/10"
         aria-hidden="true"

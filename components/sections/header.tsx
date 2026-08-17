@@ -156,7 +156,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute top-[calc(100%+0.75rem)] left-4 right-4 bg-white/95 backdrop-blur-2xl border border-blue-100/60 shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)] py-5 px-4 flex flex-col gap-1.5 lg:hidden rounded-2xl origin-top"
+            className="absolute top-[calc(100%+0.75rem)] left-4 right-4 bg-white/95 backdrop-blur-2xl border border-blue-100/60 shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)] py-5 px-4 flex flex-col gap-1.5 lg:hidden rounded-2xl origin-top max-h-[calc(100vh-6rem)] overflow-y-auto"
           >
             {navLinks.map((link) => (
               <Link

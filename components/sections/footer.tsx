@@ -1,8 +1,14 @@
 "use client";
-
 import React from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Instagram,
+  Facebook,
+} from "lucide-react";
 import { Heading, Text } from "@/components/ui/typography";
 import type { ImageContent, IconContent } from "./types";
 
@@ -52,15 +58,27 @@ export function Footer({
   socialLinks,
   copyright,
 }: FooterContent) {
+  const whatsappUrl = whatsapp
+    ? `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`
+    : whatsappHref;
+
+  const addressUrl = addressHref || "https://maps.google.com/?q=Baghdad+Medical+Center+Al+Madam+Sharjah";
+
+  const socialWithBrand = [
+    ...(socialLinks || []).map(social => ({
+      ...social,
+      isInstagram: social.label.toLowerCase() === "instagram",
+    })),
+  ];
+
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-transparent via-blue-50/40 to-pink-50/40 dark:via-blue-950/20 dark:to-pink-950/20 pt-16 pb-12">
+    <footer className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-pink-50/40 dark:from-slate-950 dark:via-blue-950/20 dark:to-pink-950/20 pt-24 pb-12">
       {/* Background Soft Glow Spheres */}
       <div className="pointer-events-none absolute top-10 left-10 h-[500px] w-[500px] rounded-full bg-blue-300/15 dark:bg-blue-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
       <div className="pointer-events-none absolute bottom-10 right-10 h-[500px] w-[500px] rounded-full bg-pink-300/15 dark:bg-pink-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 items-stretch text-start">
-          
           {/* 1. Brand & Socials Card */}
           <div className="lg:col-span-4 p-8 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 flex flex-col justify-between group">
             <div className="flex flex-col gap-6">
@@ -78,23 +96,14 @@ export function Footer({
             </div>
 
             {socialLinks && socialLinks.length > 0 && (
-              <div className="flex flex-col gap-3 pt-6 border-t border-blue-100/60 dark:border-blue-900/40">
+              <div className="flex items-center gap-3 pt-6 border-t border-blue-100/60 dark:border-blue-900/40">
                 <Heading level="h6" className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0">
                   Follow Us
                 </Heading>
+
                 <div className="flex items-center gap-3">
-                  {socialLinks.map((social, i) => {
-                    const isInstagram = social.label.toLowerCase() === "instagram";
-                    
-                    // Permanent Brand Colors at Rest
-                    const baseStyle = isInstagram
-                      ? "bg-pink-50 dark:bg-pink-500/15 border-pink-200 dark:border-pink-800/60 text-pink-600 dark:text-pink-400"
-                      : "bg-blue-50 dark:bg-blue-500/15 border-blue-200 dark:border-blue-800/60 text-[#1877F2] dark:text-blue-400";
-                      
-                    // Distinct Hover Effects
-                    const hoverStyle = isInstagram
-                      ? "hover:bg-pink-600 hover:text-white hover:border-pink-600 hover:shadow-xl hover:shadow-pink-500/30"
-                      : "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-xl hover:shadow-blue-500/30";
+                  {socialWithBrand.map((social, i) => {
+                    const isInstagram = social.isInstagram;
 
                     return (
                       <motion.a
@@ -105,7 +114,11 @@ export function Footer({
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.12, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-300 ${baseStyle} ${hoverStyle}`}
+                        className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-300 ${
+                          isInstagram
+                            ? "bg-pink-50 dark:bg-pink-500/15 border-pink-200 dark:border-pink-800/60 text-pink-600 dark:text-pink-400 hover:bg-pink-600 hover:text-white hover:border-pink-600 hover:shadow-xl hover:shadow-pink-500/30"
+                            : "bg-blue-50 dark:bg-blue-500/15 border-blue-200 dark:border-blue-800/60 text-[#1877F2] dark:text-blue-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-xl hover:shadow-blue-500/30"
+                        }`}
                       >
                         <span aria-hidden>{social.icon}</span>
                       </motion.a>
@@ -148,9 +161,10 @@ export function Footer({
             </div>
 
             <div className="flex flex-col gap-4">
+              {/* WhatsApp */}
               {whatsapp && (
                 <motion.a
-                  href={whatsappHref ?? `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`}
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group/item flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:text-emerald-600 dark:hover:text-emerald-400"
@@ -162,6 +176,7 @@ export function Footer({
                 </motion.a>
               )}
 
+              {/* Phone */}
               {phone && (
                 <motion.a
                   href={`tel:${phoneHref ?? phone}`}
@@ -174,6 +189,7 @@ export function Footer({
                 </motion.a>
               )}
 
+              {/* Mobile */}
               {mobile && (
                 <motion.a
                   href={`tel:${mobileHref ?? mobile}`}
@@ -186,6 +202,7 @@ export function Footer({
                 </motion.a>
               )}
 
+              {/* Email */}
               {email && (
                 <motion.a
                   href={`mailto:${email}`}
@@ -198,9 +215,10 @@ export function Footer({
                 </motion.a>
               )}
 
+              {/* Address */}
               {address && address.length > 0 && (
                 <motion.a
-                  href={addressHref ?? "https://maps.google.com/?q=Baghdad+Medical+Center+Al+Madam+Sharjah"}
+                  href={addressUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group/item flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300 pt-1 transition-colors hover:text-blue-600 dark:hover:text-blue-400"

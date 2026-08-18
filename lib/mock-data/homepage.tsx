@@ -383,8 +383,8 @@ export const footerContent: FooterContent = {
   phoneHref: "+97168861115",
   mobile: "050 238 8626",
   mobileHref: "+971502388626",
-  whatsapp: "056 356 4165",          // Just the display number
-  whatsappHref: "https://wa.me/971563564165",
+  whatsapp: "056 356 4165",
+  whatsappHref: "https://wa.me/971563564165", // We will make the Footer use this
   email: "info@baghdadmedicalcenter.ae",
   
   address: [

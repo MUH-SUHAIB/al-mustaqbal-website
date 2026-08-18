@@ -58,9 +58,9 @@ export function Footer({
   socialLinks,
   copyright,
 }: FooterContent) {
-  const whatsappUrl = whatsapp
-    ? `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`
-    : whatsappHref;
+  
+  // FIX: Prioritize whatsappHref so the correct UAE link is used instead of auto-generating it
+  const whatsappUrl = whatsappHref || (whatsapp ? `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}` : "");
 
   const addressUrl = addressHref || "https://maps.google.com/?q=Baghdad+Medical+Center+Al+Madam+Sharjah";
 

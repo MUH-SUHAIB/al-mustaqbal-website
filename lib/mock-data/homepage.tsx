@@ -285,6 +285,7 @@ export const insuranceContent: InsuranceContent = {
     { src: "/baghdad/insurance/nextcare.svg", alt: "NextCare" },
     { src: "/baghdad/insurance/al-buhaira.svg", alt: "Al Buhaira" },
   ],
+
 };
 
 export const faqContent: FAQContent = {

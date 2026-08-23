@@ -6,7 +6,8 @@ import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
 import type { ImageContent, IconContent } from "./types";
-import { staggerContainer, slideUp, fadeIn, duration, easing } from "@/lib/motion";
+import { staggerContainer, slideUp, duration, easing } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 export interface AboutHighlight {
   icon: IconContent;
@@ -46,67 +47,51 @@ export function About({
 
   return (
     <div className="relative overflow-hidden">
-      {/* Symmetric fade: background → secondary → background, so it blends
-          into whatever section comes before and after, no hard seam. */}
+      {/* Symmetric fade background */}
       <div className="absolute inset-0 -z-10" aria-hidden>
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
       </div>
 
       <Section id={id} className="py-xl md:py-2xl" align="start">
-        {/* md:items-stretch forces both columns to the SAME height on
-            desktop — the image+quote frame matches the text column exactly. */}
+        {/* md:items-stretch forces both columns to equal height */}
         <div className="grid grid-cols-1 gap-xl md:grid-cols-2 md:gap-2xl md:items-stretch">
-          {/* IMAGE + QUOTE — one merged frame, stretched to match text column height */}
+          {/* IMAGE + QUOTE COLUMN */}
           <div className="order-2 flex w-full md:order-1">
             {image ? (
               <motion.div
-                variants={animate ? staggerContainer : undefined}
-                initial={animate ? "hidden" : undefined}
-                whileInView={animate ? "visible" : undefined}
+                initial={animate ? { opacity: 0, y: 24 } : undefined}
+                whileInView={animate ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: true, margin: "-100px" }}
-                whileHover={{ y: -4, boxShadow: "var(--shadow-hover)" }}
-                transition={{ duration: duration.base, ease: easing }}
-                className="group flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle"
+                transition={{ duration: duration.slow, ease: easing }}
+                // Added glowing shadow classes and hover interactive shadow behavior
+                className={cn(
+                  "group flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle transition-shadow duration-300 ease-in-out",
+                  "drop-shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:drop-shadow-[0_0_25px_rgba(0,0,0,0.2)]"
+                )}
               >
-                {/* Mobile: min-h fallback so the photo has real height when the
-                    grid isn't stretching (single column below md).
-                    Desktop: min-h-0 + flex-1 lets md:items-stretch take over,
-                    so this slot takes exactly whatever space the quote block
-                    below it doesn't use. */}
-                <motion.div
-                  variants={animate ? fadeIn : undefined}
-                  className="relative min-h-[280px] flex-1 overflow-hidden md:min-h-0"
-                >
+                {/* min-h-[280px] on mobile prevents collapse; md:min-h-0 allows grid stretch */}
+                <div className="relative min-h-[280px] flex-1 md:min-h-0">
                   <img
                     src={image.src}
                     alt={image.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                  {founderQuote && (
-                    <div
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(to_bottom,transparent,var(--color-secondary))]"
-                      aria-hidden
-                    />
-                  )}
-                </motion.div>
+                </div>
 
                 {founderQuote && (
-                  <motion.div
-                    variants={animate ? slideUp : undefined}
-                    className="relative bg-secondary px-5 py-4 text-start sm:px-6 sm:py-5"
-                  >
-                    <Quote size={18} className="text-primary opacity-60" aria-hidden />
-                    <Text variant="small" className="mt-1.5 italic leading-snug text-secondary-foreground">
+                  <div className="border-t border-border bg-secondary p-5 text-start sm:p-6">
+                    <Quote size={22} className="text-primary opacity-60" aria-hidden />
+                    <Text variant="small" className="mt-2 italic text-secondary-foreground">
                       “{founderQuote.quote}”
                     </Text>
-                    <div className="mt-2 flex items-baseline gap-2">
+                    <div className="mt-3">
                       <Text variant="small" className="font-semibold text-secondary-foreground">
                         {founderQuote.author}
                       </Text>
-                      {founderQuote.role && <Text variant="caption">— {founderQuote.role}</Text>}
+                      {founderQuote.role && <Text variant="caption">{founderQuote.role}</Text>}
                     </div>
-                  </motion.div>
+                  </div>
                 )}
               </motion.div>
             ) : highlights ? (

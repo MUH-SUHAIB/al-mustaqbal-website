@@ -15,6 +15,7 @@ interface ContactProps {
   id?: string;
   animate?: boolean;
 }
+
 export default function Contact({
   title,
   description,
@@ -101,7 +102,7 @@ export default function Contact({
                   <Clock className="w-4 h-4" /> Working Hours
                 </div>
                 {mounted && (
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${isOpen ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${isOpen ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>
                     {isOpen ? "Open Now" : "Closed Now"}
                   </span>
                 )}
@@ -118,7 +119,7 @@ export default function Contact({
           </div>
 
           {/* Right Column: Map */}
-          <div className="lg:col-span-2 relative bg-slate-200 rounded-2xl overflow-hidden shadow-sm h-[400px] lg:h-auto border border-slate-100 group">
+          <div className="lg:col-span-2 relative bg-slate-200 rounded-2xl overflow-hidden shadow-sm h-[400px] lg:h-auto border border-slate-200 group">
             <iframe
               src={mapEmbedSrc}
               width="100%"
@@ -130,11 +131,31 @@ export default function Contact({
               className="absolute inset-0 w-full h-full"
             ></iframe>
             
-            {/* Open in Google Maps Badge */}
-            <div className="absolute bottom-6 right-6 z-10">
-              <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white text-slate-900 px-5 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all text-sm border border-slate-100">
-                <MapPin className="w-4 h-4 text-blue-600" />
-                Open in Google Maps
+            {/* Open in Google Maps Centered Badge */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 w-auto">
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 bg-white text-slate-800 px-6 py-3 rounded-full font-bold shadow-md hover:shadow-xl hover:scale-105 transition-all text-sm border-2 border-slate-300 hover:border-blue-500 whitespace-nowrap"
+              >
+                {/* Official Google Maps Color Pin */}
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z"
+                    fill="#EA4335"
+                  />
+                  <path
+                    d="M12 11.5C13.3807 11.5 14.5 10.3807 14.5 9C14.5 7.61929 13.3807 6.5 12 6.5C10.6193 6.5 9.5 7.61929 9.5 9C9.5 10.3807 10.6193 11.5 12 11.5Z"
+                    fill="#A50E0E"
+                  />
+                </svg>
+                <span>Open in Google Maps</span>
               </a>
             </div>
           </div>

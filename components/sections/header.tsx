@@ -47,10 +47,7 @@ export default function Header() {
   const navLinks = [
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
-    { name: "Doctors", href: "#doctors" },
     { name: "Facilities", href: "#facilities" },
-    { name: "Reviews", href: "#testimonials" },
-    { name: "Insurance", href: "#insurance" },
     { name: "FAQ", href: "#faq" },
     { name: "Contact", href: "#contact" },
   ];
@@ -70,16 +67,16 @@ export default function Header() {
             : "bg-transparent border-transparent shadow-none py-4 md:py-5 px-5 md:px-8 rounded-none"
         }`}
       >
-        {/* Logo */}
-        <a href={`/${locale}`} className="flex items-center shrink-0 cursor-pointer">
-          <Image
-            src="/baghdad/logo.png"
-            alt="Baghdad Medical Center"
-            width={130}
-            height={45}
-            className="h-auto w-[110px] md:w-[130px] rounded-xl md:rounded-2xl"
-            priority
-          />
+        {/* Logo / Brand Name */}
+        <a href={`/${locale}`} className="flex items-center gap-2 shrink-0 cursor-pointer">
+          <div className="flex flex-col">
+            <span className="font-bold text-slate-900 text-base sm:text-lg leading-tight tracking-tight">
+              Al Mustaqbal
+            </span>
+            <span className="text-[10px] sm:text-xs text-blue-700 font-medium tracking-wide">
+              Medical Fitness Center
+            </span>
+          </div>
         </a>
 
         {/* Desktop Navigation */}
@@ -91,7 +88,7 @@ export default function Header() {
               className="relative text-slate-800 hover:text-blue-700 text-sm font-semibold transition-colors py-1 group"
             >
               {link.name}
-              <span className="absolute inset-x-0 bottom-0 h-[2px] bg-red-400 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out rounded-full" />
+              <span className="absolute inset-x-0 bottom-0 h-[2px] bg-blue-600 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out rounded-full" />
             </Link>
           ))}
         </nav>
@@ -100,14 +97,14 @@ export default function Header() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href={`/${nextLocale}`}
-            className="flex items-center gap-1 text-slate-600 hover:text-blue-700 text-sm font-semibold transition-colors"
+            className="flex items-center gap-1.5 text-slate-600 hover:text-blue-700 text-sm font-semibold transition-colors"
           >
             <Globe className="w-4 h-4" />
             <span>{nextLocale === "ar" ? "عربي" : "English"}</span>
           </Link>
 
           <a
-            href="tel:+97168861115"
+            href="tel:+971544995924"
             className="flex items-center gap-2 bg-blue-700 text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-blue-700/20 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-700/30 transition-all duration-300 hover:-translate-y-0.5 text-sm"
           >
             <Phone className="w-4 h-4" />
@@ -115,7 +112,7 @@ export default function Header() {
           </a>
 
           <a
-            href="https://wa.me/971563564165"
+            href="https://wa.me/971544995924"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-[#25D366]/20 hover:bg-[#20bd5a] hover:shadow-lg hover:shadow-[#25D366]/40 transition-all duration-300 hover:-translate-y-0.5 text-sm"
@@ -128,7 +125,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           type="button"
-          className="lg:hidden p-2 text-slate-800 hover:text-blue-700 transition-colors"
+          className="lg:hidden p-2 text-slate-800 hover:text-blue-700 transition-colors focus:outline-none"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
@@ -169,7 +166,7 @@ export default function Header() {
             <Link
               href={`/${nextLocale}`}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-slate-700 font-semibold p-3 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
+              className="flex items-center gap-2 text-slate-700 font-semibold p-3 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-all"
             >
               <Globe className="w-5 h-5" />
               <span>{nextLocale === "ar" ? "العربية" : "English"}</span>
@@ -177,15 +174,15 @@ export default function Header() {
 
             <div className="flex flex-col gap-3 mt-2">
               <a
-                href="tel:+97168861115"
+                href="tel:+971544995924"
                 className="flex items-center justify-center gap-2 bg-blue-700 text-white px-5 py-3.5 rounded-xl font-semibold w-full hover:bg-blue-800 shadow-md shadow-blue-700/20 active:scale-[0.98] transition-all duration-200"
               >
                 <Phone className="w-5 h-5" />
-                <span>Call</span>
+                <span>Call Us</span>
               </a>
 
               <a
-                href="https://wa.me/971563564165"
+                href="https://wa.me/971544995924"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3.5 rounded-xl font-semibold w-full hover:bg-[#20bd5a] shadow-md shadow-[#25D366]/20 active:scale-[0.98] transition-all duration-200"

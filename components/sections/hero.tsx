@@ -85,7 +85,7 @@ export function Hero({
               </motion.div>
             )}
 
-            {/* Responsive & Accessible CTA Buttons */}
+            {/* CTA Buttons */}
             <motion.div
               {...(animate ? { variants: slideUp } : {})}
               className="mt-4 flex w-full flex-col gap-3 sm:flex-row sm:w-auto md:justify-start"
@@ -114,26 +114,26 @@ export function Hero({
             </motion.div>
           </TextWrapper>
 
-          {/* Responsive Animated Hero Image */}
+          {/* Full-width Entrance Card (Zero Side Gaps, Focused Top Board) */}
           <motion.div
-            initial={animate ? { opacity: 0, scale: 1.06, y: 20 } : undefined}
+            initial={animate ? { opacity: 0, scale: 1.02, y: 20 } : undefined}
             animate={animate ? { opacity: 1, scale: 1, y: 0 } : undefined}
             transition={{ duration: duration.slow, ease: easing }}
             className="relative order-1 md:order-2 flex w-full h-full items-center justify-center"
           >
             <div
-              className="absolute inset-4 -z-10 rounded-[2rem] bg-primary opacity-20 blur-2xl"
+              className="absolute inset-4 -z-10 rounded-[2rem] bg-primary opacity-15 blur-2xl"
               aria-hidden
             />
             <motion.div
-              animate={{ y: [-8, 8, -8] }}
+              animate={{ y: [-6, 6, -6] }}
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="w-full relative group"
+              className="w-full relative group rounded-[2.2rem] border border-slate-200/80 shadow-xl overflow-hidden aspect-[4/5] sm:aspect-[4/4.5] lg:aspect-[4/5] max-h-[520px]"
             >
               <img
                 src={resolvedImage.src}
                 alt={resolvedImage.alt}
-                className="w-full object-cover rounded-[2rem] shadow-xl md:aspect-[4/3] lg:aspect-[1.1/1] transition-transform duration-700 group-hover:scale-[1.02]"
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
               />
             </motion.div>
           </motion.div>

@@ -56,27 +56,27 @@ export default function Header() {
     <header
       className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled 
-          ? "top-4 px-4 md:px-8" 
+          ? "top-3 px-4 md:px-8" 
           : "top-0 px-0 bg-[var(--color-secondary,#eaf0f6)]"
       }`}
     >
       <div
         className={`container mx-auto flex items-center justify-between transition-all duration-500 ease-out ${
           isScrolled
-            ? "bg-white/85 backdrop-blur-xl border border-blue-100/60 shadow-[0_8px_30px_-10px_rgba(59,130,246,0.15)] py-2.5 px-5 md:px-6 rounded-[2rem]"
-            : "bg-transparent border-transparent shadow-none py-4 md:py-5 px-5 md:px-8 rounded-none"
+            ? "bg-white/85 backdrop-blur-xl border border-blue-100/60 shadow-[0_8px_30px_-10px_rgba(59,130,246,0.15)] py-2 px-5 md:px-6 rounded-[2rem]"
+            : "bg-transparent border-transparent shadow-none py-3 md:py-4 px-5 md:px-8 rounded-none"
         }`}
       >
-        {/* Logo / Brand Name */}
-        <a href={`/${locale}`} className="flex items-center gap-2 shrink-0 cursor-pointer">
-          <div className="flex flex-col">
-            <span className="font-bold text-slate-900 text-base sm:text-lg leading-tight tracking-tight">
-              Al Mustaqbal
-            </span>
-            <span className="text-[10px] sm:text-xs text-blue-700 font-medium tracking-wide">
-              Medical Fitness Center
-            </span>
-          </div>
+        {/* Sleek Logo Integration */}
+        <a href={`/${locale}`} className="flex items-center shrink-0 cursor-pointer">
+          <Image
+            src="/Al_mustaqbal/logo.png"
+            alt="Al Mustaqbal Medical Fitness Center"
+            width={120}
+            height={36}
+            className="h-8 sm:h-9 w-auto object-contain"
+            priority
+          />
         </a>
 
         {/* Desktop Navigation */}

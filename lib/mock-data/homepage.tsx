@@ -181,6 +181,7 @@ export const contactContent = {
     { days: "Friday", hours: "Closed" }
   ],
   mapEmbedSrc: "https://maps.google.com/maps?q=24.914767,55.7755581&hl=en&z=18&output=embed",
+  googleMapsUrl: "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9151742,55.7747171,19.22z/data=!4m14!1m7!3m6!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!2sBAGHDAD+MEDICAL+CENTRE!8m2!3d24.9146055!4d55.7757416!16s%2Fg%2F11clvpfq2k!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D",
 };
 
 export const footerContent = {
@@ -192,16 +193,14 @@ export const footerContent = {
     "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
     "Sharjah, United Arab Emirates"
   ],
+  googleMapsUrl: "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9151742,55.7747171,19.22z/data=!4m14!1m7!3m6!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!2sBAGHDAD+MEDICAL+CENTRE!8m2!3d24.9146055!4d55.7757416!16s%2Fg%2F11clvpfq2k!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D",
   quickLinks: [
-    { label: "Our Services", href: "#services" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
     { label: "Facilities", href: "#facilities" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact Us", href: "#contact" }
   ],
-  socialLinks: [
-    { label: "Facebook", href: "#", icon: <Facebook className="w-5 h-5" /> },
-    { label: "Instagram", href: "#", icon: <Instagram className="w-5 h-5" /> },
-    { label: "Twitter", href: "#", icon: <Twitter className="w-5 h-5" /> }
-  ],
+  socialLinks: [],
   copyright: "© 2026 Al Mustaqbal Medical Fitness Examination Center. All rights reserved."
 };

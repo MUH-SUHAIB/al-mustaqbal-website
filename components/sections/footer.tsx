@@ -1,256 +1,101 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Instagram,
-  Facebook,
-} from "lucide-react";
-import { Heading, Text } from "@/components/ui/typography";
-import type { ImageContent, IconContent } from "./types";
+import Link from "next/link";
+import { MapPin, Phone, MessageCircle } from "lucide-react";
 
-export interface FooterLink {
-  label: string;
-  href: string;
-}
-
-export interface FooterSocialLink {
-  label: string;
-  href: string;
-  icon: IconContent;
-}
-
-export interface FooterContent {
+interface FooterProps {
   clinicName: string;
-  logo?: ImageContent;
-  tagline?: string;
-  quickLinks: FooterLink[];
-  phone?: string;
-  phoneHref?: string;
-  mobile?: string;
-  mobileHref?: string;
-  whatsapp?: string;
-  whatsappHref?: string;
-  email?: string;
-  address?: string[];
-  addressHref?: string;
-  socialLinks?: FooterSocialLink[];
+  tagline: string;
+  phone: string;
+  whatsapp: string;
+  address: string[];
+  quickLinks: { label: string; href: string }[];
+  googleMapsUrl?: string;
   copyright: string;
 }
 
-export function Footer({
+export default function Footer({
   clinicName,
-  logo,
   tagline,
-  quickLinks,
   phone,
-  phoneHref,
-  mobile,
-  mobileHref,
   whatsapp,
-  whatsappHref,
-  email,
   address,
-  addressHref,
-  socialLinks,
+  quickLinks,
+  googleMapsUrl = "#",
   copyright,
-}: FooterContent) {
-  
-  // FIX: Prioritize whatsappHref so the correct UAE link is used instead of auto-generating it
-  const whatsappUrl = whatsappHref || (whatsapp ? `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}` : "");
-
-  const addressUrl = addressHref || "https://maps.google.com/?q=Baghdad+Medical+Center+Al+Madam+Sharjah";
-
-  const socialWithBrand = [
-    ...(socialLinks || []).map(social => ({
-      ...social,
-      isInstagram: social.label.toLowerCase() === "instagram",
-    })),
-  ];
-
+}: FooterProps) {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-pink-50/40 dark:from-slate-950 dark:via-blue-950/20 dark:to-pink-950/20 pt-24 pb-12">
-      {/* Background Soft Glow Spheres */}
-      <div className="pointer-events-none absolute top-10 left-10 h-[500px] w-[500px] rounded-full bg-blue-300/15 dark:bg-blue-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
-      <div className="pointer-events-none absolute bottom-10 right-10 h-[500px] w-[500px] rounded-full bg-pink-300/15 dark:bg-pink-800/15 blur-[120px] mix-blend-multiply dark:mix-blend-overlay" />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 items-stretch text-start">
-          {/* 1. Brand & Socials Card */}
-          <div className="lg:col-span-4 p-8 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 flex flex-col justify-between group">
-            <div className="flex flex-col gap-6">
-              {logo && (
-                <div className="inline-block p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-900/50 w-fit">
-                  <img src={logo.src} alt={logo.alt} loading="lazy" className="h-14 w-auto object-contain" />
-                </div>
-              )}
-              <div className="flex flex-col gap-2">
-                <Heading level="h5" as="h3" className="font-semibold tracking-tighter text-foreground">
-                  {clinicName}
-                </Heading>
-                {tagline && <Text variant="small" className="text-muted-foreground leading-relaxed">{tagline}</Text>}
-              </div>
+    <footer className="bg-slate-900 text-slate-300 py-12 md:py-16 border-t border-slate-800">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
+          
+          {/* Brand & Tagline */}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
+              <span className="font-bold text-white text-xl tracking-tight">
+                Al Mustaqbal
+              </span>
+              <span className="text-sm text-blue-400 font-medium tracking-wide">
+                Medical Fitness Center
+              </span>
             </div>
-
-            {socialLinks && socialLinks.length > 0 && (
-              <div className="flex items-center gap-3 pt-6 border-t border-blue-100/60 dark:border-blue-900/40">
-                <Heading level="h6" className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0">
-                  Follow Us
-                </Heading>
-
-                <div className="flex items-center gap-3">
-                  {socialWithBrand.map((social, i) => {
-                    const isInstagram = social.isInstagram;
-
-                    return (
-                      <motion.a
-                        key={i}
-                        href={social.href}
-                        aria-label={social.label}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.12, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-300 ${
-                          isInstagram
-                            ? "bg-pink-50 dark:bg-pink-500/15 border-pink-200 dark:border-pink-800/60 text-pink-600 dark:text-pink-400 hover:bg-pink-600 hover:text-white hover:border-pink-600 hover:shadow-xl hover:shadow-pink-500/30"
-                            : "bg-blue-50 dark:bg-blue-500/15 border-blue-200 dark:border-blue-800/60 text-[#1877F2] dark:text-blue-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-xl hover:shadow-blue-500/30"
-                        }`}
-                      >
-                        <span aria-hidden>{social.icon}</span>
-                      </motion.a>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            <p className="text-sm text-slate-400 leading-relaxed mt-2">
+              {tagline}
+            </p>
           </div>
 
-          {/* 2. Quick Links Card */}
-          <div className="lg:col-span-3 p-8 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 flex flex-col">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500 opacity-80" />
-              <Heading level="h6" className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0">
-                Quick Links
-              </Heading>
-            </div>
-            <nav aria-label="Quick links" className="flex flex-col gap-3">
-              {quickLinks.map((link, i) => (
-                <motion.a
-                  key={i}
-                  href={link.href}
-                  className="group flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span>{link.label}</span>
-                </motion.a>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-white font-semibold mb-6">Quick Links</h3>
+            <ul className="flex flex-col gap-3">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-sm text-slate-400 hover:text-blue-400 transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-            </nav>
+            </ul>
           </div>
 
-          {/* 3. Contact Information Card */}
-          <div className="lg:col-span-5 p-8 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-blue-200/60 dark:border-blue-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 flex flex-col gap-4">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500 opacity-80" />
-              <Heading level="h6" className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0">
-                Contact Information
-              </Heading>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              {/* WhatsApp */}
-              {whatsapp && (
-                <motion.a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/item flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:text-emerald-600 dark:hover:text-emerald-400"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-all duration-300 shadow-sm">
-                    <MessageCircle size={18} aria-hidden />
+          {/* Contact Info with Live Map Link */}
+          <div className="lg:col-span-2">
+            <h3 className="text-white font-semibold mb-6">Contact Information</h3>
+            <ul className="flex flex-col gap-4">
+              <li>
+                <a href={`tel:${phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                  <div className="bg-slate-800 p-2 rounded-full text-blue-400">
+                    <Phone className="w-4 h-4" />
                   </div>
-                  <span className="dir-ltr">{whatsapp}</span>
-                </motion.a>
-              )}
-
-              {/* Phone */}
-              {phone && (
-                <motion.a
-                  href={`tel:${phoneHref ?? phone}`}
-                  className="group/item flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all duration-300">
-                    <Phone size={18} aria-hidden />
+                  {phone}
+                </a>
+              </li>
+              <li>
+                <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                  <div className="bg-slate-800 p-2 rounded-full text-[#25D366]">
+                    <MessageCircle className="w-4 h-4" />
                   </div>
-                  <span className="dir-ltr">{phone}</span>
-                </motion.a>
-              )}
-
-              {/* Mobile */}
-              {mobile && (
-                <motion.a
-                  href={`tel:${mobileHref ?? mobile}`}
-                  className="group/item flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all duration-300">
-                    <Phone size={18} aria-hidden />
+                  {whatsapp} (WhatsApp)
+                </a>
+              </li>
+              <li>
+                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-slate-400 hover:text-white transition-colors group">
+                  <div className="bg-slate-800 p-2 rounded-full text-red-400 mt-0.5 group-hover:bg-red-500/20 group-hover:text-red-300 transition-colors">
+                    <MapPin className="w-4 h-4" />
                   </div>
-                  <span className="dir-ltr">{mobile}</span>
-                </motion.a>
-              )}
-
-              {/* Email */}
-              {email && (
-                <motion.a
-                  href={`mailto:${email}`}
-                  className="group/item flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all duration-300">
-                    <Mail size={18} aria-hidden />
-                  </div>
-                  <span>{email}</span>
-                </motion.a>
-              )}
-
-              {/* Address */}
-              {address && address.length > 0 && (
-                <motion.a
-                  href={addressUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/item flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300 pt-1 transition-colors hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all duration-300">
-                    <MapPin size={18} aria-hidden />
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    {address.map((line, i) => (
-                      <span
-                        key={i}
-                        className={
-                          i === 0
-                            ? "font-semibold text-foreground group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors"
-                            : "text-xs text-slate-500 dark:text-slate-400"
-                        }
-                      >
-                        {line}
-                      </span>
+                  <div className="flex flex-col">
+                    {address.map((line, idx) => (
+                      <span key={idx}>{line}</span>
                     ))}
                   </div>
-                </motion.a>
-              )}
-            </div>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Copyright Bar */}
-        <div className="mt-12 pt-6 border-t border-blue-200/50 dark:border-blue-900/40 text-center">
-          <Text variant="caption" className="text-slate-500 dark:text-slate-400 font-medium">
+        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-slate-500 text-center md:text-left">
             {copyright}
-          </Text>
+          </p>
         </div>
       </div>
     </footer>

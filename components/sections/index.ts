@@ -10,17 +10,8 @@ export type { AboutContent, AboutHighlight } from "./about";
 export { Services } from "./services";
 export type { ServicesContent, ServiceItem } from "./services";
 
-export { Doctors } from "./doctors";
-export type { DoctorsContent, DoctorItem } from "./doctors";
-
 export { Facilities } from "./facilities";
 export type { FacilitiesContent, FacilityItem } from "./facilities";
-
-export { Testimonials } from "./testimonials";
-export type { TestimonialsContent, TestimonialItem } from "./testimonials";
-
-export { Insurance } from "./insurance";
-export type { InsuranceContent, InsuranceLogo } from "./insurance";
 
 export { FAQ } from "./faq";
 export type { FAQContent, FAQItem } from "./faq";

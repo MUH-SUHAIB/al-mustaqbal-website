@@ -4,10 +4,7 @@ import {
   Hero,
   About,
   Services,
-  Doctors,
   Facilities,
-  Testimonials,
-  Insurance,
   FAQ,
   Contact,
   Footer,
@@ -17,10 +14,7 @@ import {
   heroContent,
   aboutContent,
   servicesContent,
-  doctorsContent,
   facilitiesContent,
-  testimonialsContent,
-  insuranceContent,
   faqContent,
   contactContent,
   footerContent,
@@ -28,9 +22,9 @@ import {
 
 export const metadata: Metadata = {
   title:
-    "Baghdad Medical Center — Compassionate Family Healthcare in Al Madam",
+    "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
   description:
-    "Modern diagnostics, calm consultations, and expert doctors in Sharjah. Book your appointment with Baghdad Medical Center today.",
+    "Accredited medical fitness and visa screening services, occupational health examinations, and vaccinations in Al Madam, Sharjah.",
 };
 
 export default function HomePage() {
@@ -50,27 +44,9 @@ export default function HomePage() {
         animate
       />
 
-      <Doctors
-        {...doctorsContent}
-        id="doctors"
-        animate
-      />
-
       <Facilities
         {...facilitiesContent}
         id="facilities"
-        animate
-      />
-
-      <Testimonials
-        {...testimonialsContent}
-        id="testimonials"
-        animate
-      />
-
-      <Insurance
-        {...insuranceContent}
-        id="insurance"
         animate
       />
 

@@ -12,3 +12,7 @@ export { default as Footer } from "./footer";
 export { default as Header } from "./header";
 
 export type { CTAContent, ImageContent, IconContent } from "./types";
+export { RequiredDocuments } from "./required-documents";
+export type { RequiredDocumentsContent, RequiredDocumentItem } from "./required-documents";
+export { Results24h } from "./results-24h";
+export type { Results24hContent, ResultsStep } from "./results-24h";

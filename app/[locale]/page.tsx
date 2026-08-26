@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+ 
+
 
 import {
   Hero,
   About,
   Services,
+  RequiredDocuments,
+  Results24h,
   Facilities,
   FAQ,
   Contact,
@@ -14,6 +18,8 @@ import {
   heroContent,
   aboutContent,
   servicesContent,
+  requiredDocumentsContent,
+  results24hContent,
   facilitiesContent,
   faqContent,
   contactContent,
@@ -43,6 +49,22 @@ export default function HomePage() {
         id="services"
         animate
       />
+
+      <RequiredDocuments 
+        {...requiredDocumentsContent} 
+        id="documents" 
+        animate 
+      />
+
+
+
+<Results24h
+  {...results24hContent}
+  id="results"
+  animate
+/>
+
+
 
       <Facilities
         {...facilitiesContent}

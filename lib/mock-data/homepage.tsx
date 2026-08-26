@@ -1,5 +1,15 @@
 import React from "react";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { 
+  
+  Contact, // <-- Changed from IdCard
+  FileText, 
+  Camera, 
+  Building2, 
+  ClipboardList, 
+  Stamp ,
+  ClipboardCheck, MessageSquareText, Send 
+} from "lucide-react";
+
 
 export const heroContent = {
   badge: "Medical Screening Approved for All Emirates",
@@ -101,6 +111,77 @@ export const servicesContent = {
   ],
 };
 
+// NEW: Required Documents Section Data
+export const requiredDocumentsContent = {
+  eyebrow: "BEFORE YOUR VISIT",
+  title: "Required Documents for Screening",
+  description: "Please bring the following documents to avoid processing delays at reception.",
+  documents: [
+    { 
+      icon: <FileText className="w-6 h-6" />, 
+      title: "Unified Number (UID)", 
+      description: "Old UID or entry permit number" 
+    },
+    { 
+      icon: <Contact className="w-6 h-6" />, 
+      title: "Emirates ID Copy", 
+      description: "Original or clear photocopy" 
+    },
+    { 
+      icon: <FileText className="w-6 h-6" />, 
+      title: "Passport Copy", 
+      description: "Valid passport page copy" 
+    },
+    { 
+      icon: <ClipboardList className="w-6 h-6" />, 
+      title: "Residence / Visa Copy", 
+      description: "Current visa or entry permit" 
+    },
+    { 
+      icon: <Building2 className="w-6 h-6" />, 
+      title: "Company Trade License Copy", 
+      description: "For employment visa cases" 
+    },
+    { 
+      icon: <Camera className="w-6 h-6" />, 
+      title: "Personal Photograph", 
+      description: "Recent passport-size photo" 
+    },
+    { 
+      icon: <Stamp className="w-6 h-6" />, 
+      title: "Occupational Health Card", 
+      description: "Issued by Sharjah Municipality (if renewing)" 
+    },
+  ],
+  note: "* Original documents must be presented at the reception counter."
+};
+
+export const results24hContent = {
+  eyebrow: "FAST & RELIABLE",
+  title: "Results Within 24 Hours",
+  description: "We understand visa and employment timelines matter — that's why we process every examination quickly and communicate results directly to you.",
+  highlight: "Results within 24 hours",
+  highlightSubtext: "Delivered straight to your phone — no need to call or visit again.",
+  steps: [
+    {
+      icon: <ClipboardCheck className="w-6 h-6" />,
+      title: "Complete Your Examination",
+      description: "Finish your medical fitness screening at our center.",
+    },
+    {
+      icon: <Send className="w-6 h-6" />,
+      title: "We Process Your Results",
+      description: "Our medical team reviews and finalizes your report.",
+    },
+    {
+      icon: <MessageSquareText className="w-6 h-6" />,
+      title: "Get Notified by SMS",
+      description: "Your result is sent by SMS to your registered mobile number within 24 hours.",
+    },
+  ],
+};
+
+
 export const facilitiesContent = {
   title: "Our Center",
   description: "A convenient environment for your medical examination",
@@ -169,7 +250,6 @@ export const faqContent = {
     },
   ],
 };
-
 export const contactContent = {
   title: "Visit Our Center",
   description: "Find us at Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
@@ -180,8 +260,10 @@ export const contactContent = {
     { days: "Saturday – Thursday", hours: "8:00 AM – 2:00 PM" },
     { days: "Friday", hours: "Closed" }
   ],
-  mapEmbedSrc: "https://maps.google.com/maps?q=24.914767,55.7755581&hl=en&z=18&output=embed",
-  googleMapsUrl: "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9151742,55.7747171,19.22z/data=!4m14!1m7!3m6!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!2sBAGHDAD+MEDICAL+CENTRE!8m2!3d24.9146055!4d55.7757416!16s%2Fg%2F11clvpfq2k!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D",
+  // Clean embed URL using your exact coordinates (Zoom set to 19 for a close-up)
+  mapEmbedSrc: "https://maps.google.com/maps?q=24.914779512891332,55.775557972450656&hl=en&z=19&output=embed",
+  // Clean external link using your exact coordinates
+  googleMapsUrl: "https://www.google.com/maps/place/24.914779512891332,55.775557972450656",
 };
 
 export const footerContent = {
@@ -193,7 +275,8 @@ export const footerContent = {
     "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
     "Sharjah, United Arab Emirates"
   ],
-  googleMapsUrl: "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9151742,55.7747171,19.22z/data=!4m14!1m7!3m6!1s0x3ef573f609a9bbf7:0x9ebb7b0be900046e!2sBAGHDAD+MEDICAL+CENTRE!8m2!3d24.9146055!4d55.7757416!16s%2Fg%2F11clvpfq2k!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D",
+  // Clean external link using your exact coordinates
+  googleMapsUrl: "https://www.google.com/maps/place/24.914779512891332,55.775557972450656",
   quickLinks: [
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },

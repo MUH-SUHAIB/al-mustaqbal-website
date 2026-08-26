@@ -6,32 +6,14 @@ import { X, MessageCircle, Phone } from "lucide-react";
 import { Heading, Text } from "@/components/ui/typography";
 import { duration, easing } from "@/lib/motion";
 
-// TEMPORARY placeholder contact info for Baghdad Medical Center.
-// Replace with the clinic's real phone number and WhatsApp link.
-const PLACEHOLDER_PHONE_HREF = "tel:+9647701234567";
-const PLACEHOLDER_WHATSAPP_HREF = "https://wa.me/9647701234567";
+const PHONE_HREF = "tel:+971544995924";
+const WHATSAPP_HREF = "https://wa.me/971544995924";
 
 export interface AppointmentModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-/**
- * Appointment booking modal triggered by the Hero's primary CTA. Offers two
- * prominent contact actions (WhatsApp, Call) rather than committing the
- * visitor to one channel immediately.
- *
- * ACCESSIBILITY
- * - `role="dialog"` + `aria-modal="true"` + `aria-labelledby` pointing at
- *   the heading.
- * - Escape key closes the modal; clicking the backdrop closes it; a
- *   labeled close button is always present.
- * - Close button receives focus when the modal opens.
- *
- * RTL
- * - Close button uses `end-4` (logical), not `right-4` — sits correctly
- *   in both LTR and RTL. All text uses `text-center`, direction-agnostic.
- */
 export function AppointmentModal({ isOpen, onClose }: AppointmentModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -62,7 +44,7 @@ export function AppointmentModal({ isOpen, onClose }: AppointmentModalProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: duration.fast, ease: easing }}
         >
-          {/* Backdrop — clicking it closes the modal */}
+          {/* Backdrop */}
           <div className="absolute inset-0 bg-foreground/50 backdrop-blur-sm" aria-hidden onClick={onClose} />
 
           <motion.div
@@ -85,40 +67,42 @@ export function AppointmentModal({ isOpen, onClose }: AppointmentModalProps) {
             </button>
 
             <Heading level="h3" id="appointment-modal-title">
-              Book Your Appointment
+              Contact Al Mustaqbal Center
             </Heading>
             <Text variant="body" className="mt-2">
-              Choose how you&apos;d like to reach us.
+              Choose how you&apos;d like to connect with our team.
             </Text>
 
             <div className="mt-xl flex flex-col gap-4">
               <a
-                href={PLACEHOLDER_WHATSAPP_HREF}
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 rounded-card border border-border bg-background p-md text-start shadow-subtle transition-shadow duration-fast hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary text-primary" aria-hidden>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white" aria-hidden>
                   <MessageCircle size={24} />
                 </span>
                 <span className="flex flex-col">
                   <Text variant="body" className="font-semibold">
                     Chat on WhatsApp
                   </Text>
-                  <Text variant="small">Chat instantly with our reception team.</Text>
+                  <Text variant="small">Instant support from our reception desk.</Text>
                 </span>
               </a>
 
               <a
-                href={PLACEHOLDER_PHONE_HREF}
+                href={PHONE_HREF}
                 className="flex items-center gap-4 rounded-card border border-border bg-background p-md text-start shadow-subtle transition-shadow duration-fast hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary text-primary" aria-hidden>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-700 text-white" aria-hidden>
                   <Phone size={24} />
                 </span>
                 <span className="flex flex-col">
                   <Text variant="body" className="font-semibold">
-                    Call the Clinic
+                    Call the Center
                   </Text>
-                  <Text variant="small">Speak directly with our reception.</Text>
+                  <Text variant="small">+971 54 499 5924</Text>
                 </span>
               </a>
             </div>

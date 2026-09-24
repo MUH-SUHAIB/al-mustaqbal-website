@@ -48,13 +48,8 @@ export function Facilities({
   };
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),rgba(239,246,255,0.5)_40%,rgba(255,241,242,0.7)_100%)] dark:bg-[linear-gradient(to_bottom,var(--color-background),rgba(29,78,216,0.03)_40%,rgba(225,29,72,0.03)_100%)]" />
-      </div>
-
-      <Section id={id} className="py-xl md:py-2xl">
+    <div className="relative overflow-hidden bg-background">
+      <Section id={id} className="py-20 md:py-28">
         <Container
           {...(animate
             ? {
@@ -69,47 +64,47 @@ export function Facilities({
           {/* Section Header */}
           <motion.div
             {...(animate ? { variants: slideUp } : {})}
-            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-16 gap-3"
+            className="flex flex-col items-center text-center max-w-2xl mx-auto mb-12 md:mb-16 gap-4"
           >
-            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
-            <Heading level="h2" className="text-foreground">
+            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
               {title}
             </Heading>
             {description && (
-              <Text variant="body" className="text-muted-foreground text-balance">
+              <Text variant="body" className="text-muted-foreground text-lg text-balance">
                 {description}
               </Text>
             )}
           </motion.div>
 
           {/* Fully Responsive Bento Grid */}
-          <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[250px]">
+          <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[260px]">
             {facilities.map((facility, i) => (
               <motion.div
                 key={i}
                 {...(animate ? { variants: slideUp } : {})}
                 className={`h-full w-full ${getBentoClasses(i)}`}
               >
-                <Card className="group relative h-full w-full overflow-hidden border-border/30 rounded-section shadow-sm transition-shadow duration-500 hover:shadow-elevated cursor-pointer">
+                <Card className="group relative h-full w-full overflow-hidden border-border/50 rounded-[1.5rem] shadow-subtle transition-shadow duration-500 hover:shadow-elevated cursor-pointer bg-card">
                   {/* Edge-to-Edge Image */}
                   <img
                     src={facility.image.src}
                     alt={facility.image.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                   />
 
-                  {/* Dark Overlay Gradient for High Contrast Text */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/30 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+                  {/* Dark Overlay Gradient for High Contrast Text - Replaced slate with deep bottle green/black */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A14]/95 via-[#0A1A14]/40 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
                   {/* Label & Accent Line */}
-                  <div className="absolute bottom-0 left-0 flex w-full flex-col justify-end p-4 sm:p-5 md:p-6 transform transition-transform duration-500 ease-out group-hover:-translate-y-1">
-                    <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white tracking-wide drop-shadow-sm">
+                  <div className="absolute bottom-0 left-0 flex w-full flex-col justify-end p-5 sm:p-6 md:p-7 transform transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-wide drop-shadow-md">
                       {facility.label}
                     </h3>
                     
-                    {/* Hover Accent Line */}
-                    <div className="mt-2 h-[2px] w-6 bg-white/60 transition-all duration-500 ease-out group-hover:w-12 group-hover:bg-white" />
+                    {/* Hover Accent Line - Changed from white to Gold */}
+                    <div className="mt-3 h-[3px] w-8 bg-secondary/80 transition-all duration-500 ease-out group-hover:w-16 group-hover:bg-secondary rounded-full" />
                   </div>
                 </Card>
               </motion.div>

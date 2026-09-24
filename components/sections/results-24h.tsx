@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, MessageSquareText, CheckCircle2 } from "lucide-react";
+import { Clock } from "lucide-react";
 import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
@@ -38,13 +38,8 @@ export function Results24h({
   const Container = animate ? motion.div : "div";
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background — subtle blue tone to differentiate from neighboring sections */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),rgba(37,99,235,0.06)_50%,var(--color-background)_100%)]" />
-      </div>
-
-      <Section id={id} className="py-xl md:py-2xl">
+    <div className="relative overflow-hidden bg-card border-y border-border/40">
+      <Section id={id} className="py-20 md:py-28">
         <Container
           {...(animate
             ? {
@@ -59,37 +54,43 @@ export function Results24h({
           {/* Header */}
           <motion.div
             {...(animate ? { variants: slideUp } : {})}
-            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14 gap-3"
+            className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 md:mb-14 gap-4"
           >
-            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
-            <Heading level="h2" className="text-foreground">
+            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
               {title}
             </Heading>
             {description && (
-              <Text variant="body" className="text-muted-foreground text-balance">
+              <Text variant="body" className="text-muted-foreground text-lg text-balance">
                 {description}
               </Text>
             )}
           </motion.div>
 
-          {/* Big Highlight Banner */}
+          {/* Big Highlight Banner - Now styled as an official primary block */}
           <motion.div
             {...(animate ? { variants: fadeIn } : {})}
-            className="w-full max-w-3xl mb-10 md:mb-14"
+            className="w-full max-w-4xl mb-12 md:mb-16"
           >
-            <div className="relative overflow-hidden rounded-section border border-primary/20 bg-primary/5 px-6 py-8 sm:px-10 sm:py-10 text-center">
+            <div className="relative overflow-hidden rounded-[2rem] bg-primary px-6 py-10 sm:px-12 sm:py-12 text-center shadow-elevated">
+              {/* Decorative background circle */}
               <div
-                className="pointer-events-none absolute -top-10 -end-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"
+                className="absolute -top-20 -end-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl pointer-events-none"
                 aria-hidden
               />
-              <span className="flex items-center justify-center gap-3 text-primary">
-                <Clock size={32} aria-hidden />
-                <span className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+              <div
+                className="absolute -bottom-20 -start-20 h-64 w-64 rounded-full bg-secondary/5 blur-3xl pointer-events-none"
+                aria-hidden
+              />
+              
+              <span className="flex items-center justify-center gap-4 text-secondary relative z-10">
+                <Clock size={36} aria-hidden strokeWidth={2.5} />
+                <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
                   {highlight}
                 </span>
               </span>
               {highlightSubtext && (
-                <Text variant="body" className="mt-3 text-muted-foreground">
+                <Text variant="body" className="mt-4 text-primary-foreground/90 font-medium text-lg relative z-10">
                   {highlightSubtext}
                 </Text>
               )}
@@ -97,21 +98,21 @@ export function Results24h({
           </motion.div>
 
           {/* Process Steps */}
-          <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-3 max-w-5xl">
             {steps.map((step, i) => (
               <motion.div key={i} {...(animate ? { variants: slideUp } : {})} className="h-full">
-                <Card interactive className="group relative flex h-full flex-col items-center gap-4 p-6 text-center">
+                <Card interactive className="group relative flex h-full flex-col items-center gap-5 p-8 text-center bg-background border border-border shadow-subtle hover:shadow-elevated transition-all duration-300 rounded-card">
                   <span
                     aria-hidden
-                    className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-105"
+                    className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/10 text-secondary transition-transform duration-500 group-hover:scale-110 group-hover:bg-secondary/20"
                   >
                     {step.icon}
                   </span>
-                  <div className="flex flex-col gap-1.5">
-                    <Heading level="h5" as="h3" className="text-foreground">
+                  <div className="flex flex-col gap-2">
+                    <Heading level="h5" as="h3" className="text-foreground font-bold text-xl">
                       {step.title}
                     </Heading>
-                    <Text variant="small" className="text-muted-foreground">
+                    <Text variant="small" className="text-muted-foreground leading-relaxed">
                       {step.description}
                     </Text>
                   </div>

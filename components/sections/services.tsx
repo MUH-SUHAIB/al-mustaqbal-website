@@ -14,13 +14,11 @@ export interface ServiceItem {
 }
 
 export interface ServicesContent {
-  /** Anchor id for nav links / SEO deep-linking, e.g. "services". */
   id?: string;
   eyebrow?: string;
   title: string;
   description?: string;
   services: ServiceItem[];
-  /** Max grid columns at desktop width. Grid is always responsive down to 1 column on mobile. */
   columns?: 2 | 3 | 4;
   animate?: boolean;
 }
@@ -43,13 +41,8 @@ export function Services({
   const Container = animate ? motion.div : "div";
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Exact symmetric background gradient matching the About section */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
-      </div>
-
-      <Section id={id} className="py-xl md:py-2xl">
+    <div className="relative overflow-hidden bg-background">
+      <Section id={id} className="py-20 md:py-28">
         <Container
           {...(animate
             ? {
@@ -61,44 +54,41 @@ export function Services({
             : {})}
           className="flex flex-col items-center w-full"
         >
-          {/* Animated Header Block */}
           <motion.div
             {...(animate ? { variants: slideUp } : {})}
-            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14 gap-3"
+            className="flex flex-col items-center text-center max-w-2xl mx-auto mb-12 md:mb-16 gap-4"
           >
-            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
-            <Heading level="h2" className="text-foreground">
+            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-foreground text-3xl md:text-4xl font-bold">
               {title}
             </Heading>
             {description && (
-              <Text variant="body" className="text-muted-foreground">
+              <Text variant="body" className="text-muted-foreground text-lg">
                 {description}
               </Text>
             )}
           </motion.div>
 
-          {/* Animated Services Grid */}
-          <div className={`grid grid-cols-1 gap-6 w-full ${columnClasses[columns]}`}>
+          <div className={`grid grid-cols-1 gap-6 md:gap-8 w-full ${columnClasses[columns]}`}>
             {services.map((service, i) => (
               <motion.div
                 key={i}
                 {...(animate ? { variants: slideUp } : {})}
                 className="h-full"
               >
-                <Card interactive className="group h-full flex flex-col overflow-hidden">
-                  {/* Matching 4/5 Aspect Ratio Image Wrapper */}
-                  <div className="relative w-full aspect-[4/4] overflow-hidden bg-muted">
+                <Card interactive className="group h-full flex flex-col overflow-hidden border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 rounded-card bg-card">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted border-b border-border/50">
                     <img
                       src={service.image.src}
                       alt={service.image.alt}
                       loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                      className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   </div>
 
-                  <CardHeader className="text-center flex flex-col items-center p-5 sm:p-6">
-                    <CardTitle>{service.title}</CardTitle>
-                    <CardDescription>{service.description}</CardDescription>
+                  <CardHeader className="text-center flex flex-col items-center p-6 sm:p-8">
+                    <CardTitle className="text-xl font-bold text-foreground mb-2">{service.title}</CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground leading-relaxed">{service.description}</CardDescription>
                   </CardHeader>
                 </Card>
               </motion.div>

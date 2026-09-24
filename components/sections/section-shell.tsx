@@ -25,14 +25,6 @@ export interface SectionProps {
   children: ReactNode;
 }
 
-/**
- * Layout structure (every section template is built on this):
- * <section> > container (max-w-7xl, responsive px) > optional header block > children
- *
- * This is the ONLY place that defines outer section spacing/width, so every
- * page assembled from these templates shares identical rhythm and never
- * needs a one-off wrapper.
- */
 export function Section({
   id,
   eyebrow,
@@ -53,15 +45,16 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-2xl md:py-3xl",
-        tone === "muted" && "bg-muted",
+        "py-2xl md:py-3xl relative",
+        /* Use muted/60 so the global background watermark shines through */
+        tone === "muted" && "bg-muted/60",
         className
       )}
     >
       <Wrapper
         {...wrapperMotionProps}
         className={cn(
-          "mx-auto max-w-7xl px-md md:px-lg",
+          "mx-auto max-w-7xl px-md md:px-lg relative z-10",
           align === "center" && "text-center"
         )}
       >

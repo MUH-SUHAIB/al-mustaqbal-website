@@ -1,92 +1,86 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "class",
+  darkMode: ["class"],
+
   content: [
-    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
+
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+
     extend: {
       colors: {
-        background: "var(--color-background)",
-        foreground: "var(--color-foreground)",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
 
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+
+        /* Al Mustaqbal Brand Colors */
         primary: {
-          DEFAULT: "var(--color-primary)",
-          hover: "var(--color-primary-hover)",
-          foreground: "var(--color-primary-foreground)",
+          DEFAULT: "#1C4B3A", // Deep Bottle Green
+          foreground: "#FFFFFF",
         },
+
         secondary: {
-          DEFAULT: "var(--color-secondary)",
-          hover: "var(--color-secondary-hover)",
-          foreground: "var(--color-secondary-foreground)",
+          DEFAULT: "#C9A860", // Signature Gold
+          foreground: "#172B23",
         },
+
         muted: {
-          DEFAULT: "var(--color-muted)",
-          foreground: "var(--color-muted-foreground)",
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
+
         accent: {
-          DEFAULT: "var(--color-accent)",
-          hover: "var(--color-accent-hover)",
-          foreground: "var(--color-accent-foreground)",
+          DEFAULT: "#C9A860", // Gold Accent
+          foreground: "#172B23",
         },
-        border: "var(--color-border)",
-      },
 
-      fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-      },
-
-      // Named spacing scale layered on top of Tailwind's default scale.
-      // Use alongside p-4/gap-6 etc. — this is for deliberate "breathing
-      // room" sections, not a full replacement.
-      spacing: {
-        xs: "0.5rem",   // 8px
-        sm: "0.75rem",  // 12px
-        md: "1.25rem",  // 20px
-        lg: "2rem",     // 32px
-        xl: "3rem",     // 48px
-        "2xl": "4rem",  // 64px
-        "3xl": "6rem",  // 96px
+        card: {
+          DEFAULT: "#FFFFFF", // Pure White Cards
+          foreground: "#172B23",
+        },
       },
 
       borderRadius: {
-        button: "var(--radius-button)",
-        card: "var(--radius-card)",
-        section: "var(--radius-section)",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+
+        card: "1rem",
+        section: "1.5rem",
       },
 
       boxShadow: {
-        subtle: "var(--shadow-subtle)",
-        hover: "var(--shadow-hover)",
-        elevated: "var(--shadow-elevated)",
+        subtle:
+          "0 2px 8px -2px rgba(28, 75, 58, 0.05), 0 4px 16px -4px rgba(0, 0, 0, 0.03)",
+
+        elevated:
+          "0 12px 32px -8px rgba(28, 75, 58, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04)",
+
+        "brand-float":
+          "0 10px 35px -12px rgba(28, 75, 58, 0.35)",
       },
 
-      // Timing system for both CSS transitions and Framer Motion
-      // (see lib/motion.ts) — keep these two in sync.
-      transitionDuration: {
-        fast: "200ms",
-        base: "400ms",
-        slow: "600ms",
-      },
-
-      keyframes: {
-        "fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
-        "slide-up": {
-          from: { opacity: "0", transform: "translateY(16px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        "fade-in": "fade-in 0.4s ease-out both",
-        "slide-up": "slide-up 0.4s cubic-bezier(0.16,1,0.3,1) both",
+      transitionTimingFunction: {
+        "brand-out": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
+
   plugins: [],
 };
 

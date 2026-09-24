@@ -4,9 +4,9 @@ import { useState, useId, memo } from "react";
 import { motion, type Variants } from "framer-motion";
 import { ChevronDown, MessageCircle, PhoneCall } from "lucide-react";
 import { Section } from "./section-shell";
-import { Text } from "@/components/ui/typography";
+import { Heading, Text } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import { staggerContainer, slideUp, duration, easing } from "@/lib/motion";
+import { cappedStagger, slideUp, duration, easing } from "@/lib/motion";
 
 export interface FAQItem {
   id?: string;
@@ -52,8 +52,8 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
   animate,
   baseId,
 }: AccordionCardProps) {
-  const panelId = `${baseId}-panel-${index}`;
-  const buttonId = `${baseId}-button-${index}`;
+  const panelId = baseId + "-panel-" + index;
+  const buttonId = baseId + "-button-" + index;
 
   const motionProps = animate
     ? {
@@ -67,18 +67,10 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
     <motion.div {...motionProps} className="group relative h-fit">
       <div
         className={cn(
-          "pointer-events-none absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-blue-400/40 via-indigo-300/30 to-rose-300/40 blur-md transition-opacity duration-300 dark:from-blue-600/30 dark:to-indigo-600/30",
-          isOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-        )}
-        aria-hidden="true"
-      />
-
-      <div
-        className={cn(
-          "relative overflow-hidden rounded-2xl border bg-white/90 backdrop-blur-md transition-all duration-300 dark:bg-slate-900/90",
+          "relative overflow-hidden rounded-2xl border bg-card transition-all duration-300",
           isOpen
-            ? "border-blue-400 shadow-[0_10px_30px_-10px_rgba(59,130,246,0.18)] dark:border-blue-500/80"
-            : "border-blue-200/80 hover:border-blue-300 hover:shadow-[0_8px_25px_-8px_rgba(59,130,246,0.12)] dark:border-blue-900/50 dark:hover:border-blue-700"
+            ? "border-primary/30 shadow-elevated"
+            : "border-border/60 hover:border-primary/30 hover:shadow-subtle"
         )}
       >
         <button
@@ -87,16 +79,16 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={() => onToggle(index)}
-          className="flex w-full items-center justify-between gap-4 p-5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset sm:p-6"
+          className="flex w-full items-center justify-between gap-4 p-5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset sm:p-6"
         >
           <Text
             variant="body"
             as="span"
             className={cn(
-              "min-w-0 pe-2 font-semibold leading-relaxed transition-colors duration-200",
+              "min-w-0 pe-2 font-bold leading-relaxed transition-colors duration-200 text-lg",
               isOpen
-                ? "text-blue-700 dark:text-blue-400"
-                : "text-slate-900 group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-blue-400"
+                ? "text-primary"
+                : "text-foreground group-hover:text-primary"
             )}
           >
             {item.question}
@@ -104,14 +96,14 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
 
           <span
             className={cn(
-              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300",
               isOpen
-                ? "bg-blue-100/80 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300"
-                : "bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-blue-950 dark:group-hover:text-blue-400"
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground group-hover:bg-secondary/20 group-hover:text-secondary"
             )}
           >
             <ChevronDown
-              size={18}
+              size={20}
               aria-hidden="true"
               className={cn(
                 "transition-transform duration-300 ease-out",
@@ -131,10 +123,10 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
           )}
         >
           <div className="min-h-0 overflow-hidden">
-            <div className="border-t border-slate-100 px-5 pb-5 pt-4 sm:px-6 sm:pb-6 dark:border-slate-800/60">
+            <div className="border-t border-border/40 px-5 pb-6 pt-4 sm:px-6 sm:pb-7">
               <Text
-                variant="small"
-                className="leading-relaxed text-slate-600 dark:text-slate-300"
+                variant="body"
+                className="leading-relaxed text-muted-foreground"
               >
                 {item.answer}
               </Text>
@@ -145,6 +137,8 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
     </motion.div>
   );
 });
+
+FAQAccordionCard.displayName = "FAQAccordionCard";
 
 interface FAQSupportCTAProps {
   support: FAQSupport;
@@ -167,63 +161,66 @@ const FAQSupportCTA = memo(function FAQSupportCTA({
   return (
     <motion.div
       {...motionProps}
-      className="relative mt-10 overflow-hidden rounded-2xl border border-blue-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-md sm:mt-12 sm:p-8 dark:border-blue-900/50 dark:bg-slate-900/80"
+      className="relative mt-12 overflow-hidden rounded-[1.5rem] border border-border bg-background p-6 shadow-subtle sm:p-10"
     >
+      {/* Decorative corner blur */}
       <div
-        className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full bg-blue-400/10 blur-2xl dark:bg-blue-600/10"
+        className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl"
         aria-hidden="true"
       />
 
       <div className="relative z-10 flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-start">
         <div className="max-w-xl">
+          <Heading level="h4" className="font-bold text-foreground">
+            {support.title}
+          </Heading>
           <Text
             variant="body"
-            className="font-semibold text-slate-900 dark:text-slate-100"
-          >
-            {support.title}
-          </Text>
-
-          <Text
-            variant="small"
-            className="mt-1.5 leading-relaxed text-slate-600 dark:text-slate-300"
+            className="mt-2 leading-relaxed text-muted-foreground"
           >
             {support.description}
           </Text>
         </div>
 
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:shrink-0 sm:flex-row">
-          <a
-            href={support.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#20bd5a] hover:shadow-lg hover:shadow-[#25D366]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
-          >
-            <MessageCircle size={18} aria-hidden="true" />
-            <span>{support.whatsappLabel}</span>
-          </a>
+          {support.whatsappLink && (
+            <a
+              href={support.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#20bd5a] shadow-subtle hover:shadow-[#25D366]/30"
+            >
+              <MessageCircle size={20} aria-hidden="true" />
+              <span>{support.whatsappLabel}</span>
+            </a>
+          )}
 
-          <a
-            href={support.phoneLink}
-            className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
-          >
-            <PhoneCall size={18} aria-hidden="true" />
-            <span>{support.phoneLabel}</span>
-          </a>
+          {support.phoneLink && (
+            <a
+              href={support.phoneLink}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 shadow-subtle hover:shadow-primary/30"
+            >
+              <PhoneCall size={20} aria-hidden="true" />
+              <span>{support.phoneLabel}</span>
+            </a>
+          )}
         </div>
       </div>
     </motion.div>
   );
 });
 
+FAQSupportCTA.displayName = "FAQSupportCTA";
+
 export function FAQ({
   id,
   eyebrow,
   title,
   description,
-  items,
+  items = [],
   support,
   allowMultiple = false,
-  animate = false,
+  animate = true,
   className,
 }: FAQContent) {
   const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set());
@@ -256,36 +253,19 @@ export function FAQ({
 
   const gridAnimationProps = animate
     ? {
-        variants: staggerContainer as Variants,
+        variants: cappedStagger(items.length) as Variants,
         initial: "hidden",
         whileInView: "visible",
-        viewport: { once: true, margin: "-60px" },
+        viewport: { once: true, margin: "-60px 0px -60px 0px" },
       }
     : {};
 
   return (
-    <div className={cn("relative w-full overflow-hidden", className)}>
-      <div
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,241,242,0.5)_15%,rgba(239,246,255,0.6)_45%,rgba(219,234,254,0.3)_80%,transparent_100%)] dark:bg-[linear-gradient(to_bottom,transparent_0%,rgba(30,64,175,0.03)_20%,rgba(30,64,175,0.05)_50%,transparent_100%)]"
-        aria-hidden="true"
-      />
-
-      <div
-        className="pointer-events-none absolute top-4 start-1/4 -z-10 h-72 w-72 rounded-full bg-rose-200/20 blur-3xl dark:bg-rose-900/10"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-10 end-1/4 -z-10 h-80 w-80 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-900/10"
-        aria-hidden="true"
-      />
-
+    <div className={cn("relative w-full overflow-hidden bg-card border-y border-border/40", className)}>
       <Section
         id={id}
-        eyebrow={eyebrow}
-        title={title}
-        description={description}
         animate={animate}
-        className="border-none bg-transparent"
+        className="py-20 md:py-28 bg-transparent"
       >
         <script
           type="application/ld+json"
@@ -295,24 +275,42 @@ export function FAQ({
         />
 
         <div className="mx-auto w-full max-w-5xl">
+          {/* Section Header */}
+          <motion.div
+            {...(animate ? { variants: slideUp as Variants } : {})}
+            className="flex flex-col items-center text-center max-w-2xl mx-auto mb-12 md:mb-16 gap-4"
+          >
+            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+            {title && (
+              <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
+                {title}
+              </Heading>
+            )}
+            {description && (
+              <Text variant="body" className="text-muted-foreground text-lg text-balance">
+                {description}
+              </Text>
+            )}
+          </motion.div>
+
           <motion.div
             {...gridAnimationProps}
             className="grid gap-4 md:grid-cols-2 lg:gap-5"
           >
             {items.map((item, index) => (
               <FAQAccordionCard
-                key={item.id ?? `${item.question}-${index}`}
+                key={item.id ?? item.question + "-" + index}
                 item={item}
                 index={index}
                 isOpen={openIndexes.has(index)}
                 onToggle={handleToggle}
-                animate={animate}
+                animate={!!animate}
                 baseId={baseId}
               />
             ))}
           </motion.div>
 
-          {support && <FAQSupportCTA support={support} animate={animate} />}
+          {support && <FAQSupportCTA support={support} animate={!!animate} />}
         </div>
       </Section>
     </div>

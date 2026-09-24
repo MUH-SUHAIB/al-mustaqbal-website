@@ -6,7 +6,7 @@ import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
 import type { IconContent } from "./types";
-import { staggerContainer, slideUp } from "@/lib/motion";
+import { cappedStagger, slideUp } from "@/lib/motion";
 
 export interface RequiredDocumentItem {
   icon: IconContent;
@@ -36,20 +36,15 @@ export function RequiredDocuments({
   const Container = animate ? motion.div : "div";
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background gradient — consistent with Services / Facilities */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
-      </div>
-
-      <Section id={id} className="py-xl md:py-2xl">
+    <div className="relative overflow-hidden bg-background">
+      <Section id={id} className="py-20 md:py-28">
         <Container
           {...(animate
             ? {
-                variants: staggerContainer,
+                variants: cappedStagger(documents.length),
                 initial: "hidden",
                 whileInView: "visible",
-                viewport: { once: true, margin: "-50px" },
+                viewport: { once: true, margin: "-50px 0px -50px 0px" },
               }
             : {})}
           className="flex flex-col items-center w-full"
@@ -57,14 +52,14 @@ export function RequiredDocuments({
           {/* Header */}
           <motion.div
             {...(animate ? { variants: slideUp } : {})}
-            className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14 gap-3"
+            className="flex flex-col items-center text-center max-w-2xl mx-auto mb-12 md:mb-16 gap-4"
           >
-            {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
-            <Heading level="h2" className="text-foreground">
+            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+            <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
               {title}
             </Heading>
             {description && (
-              <Text variant="body" className="text-muted-foreground text-balance">
+              <Text variant="body" className="text-muted-foreground text-lg text-balance">
                 {description}
               </Text>
             )}
@@ -76,12 +71,12 @@ export function RequiredDocuments({
               <motion.div key={i} {...(animate ? { variants: slideUp } : {})} className="h-full">
                 <Card
                   interactive
-                  className="group relative flex h-full flex-col gap-4 overflow-hidden p-6 text-start"
+                  className="group relative flex h-full flex-col gap-5 overflow-hidden p-6 sm:p-8 text-start border border-border/60 shadow-subtle hover:shadow-elevated transition-all duration-300 bg-card rounded-card"
                 >
                   {/* Number badge */}
                   <span
                     aria-hidden
-                    className="absolute end-4 top-4 text-xs font-bold tracking-wider text-primary/30 transition-colors duration-300 group-hover:text-primary/60"
+                    className="absolute end-5 top-5 text-sm font-black tracking-wider text-muted-foreground/20 transition-colors duration-300 group-hover:text-secondary/40"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -89,25 +84,25 @@ export function RequiredDocuments({
                   {/* Icon */}
                   <span
                     aria-hidden
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-105"
+                    className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary/10"
                   >
                     {doc.icon}
                   </span>
 
                   {/* Title + description */}
-                  <div className="flex flex-col gap-1.5">
-                    <div className="flex items-start gap-2">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-start gap-2.5">
                       <CheckCircle2
-                        size={16}
-                        className="mt-0.5 shrink-0 text-primary"
+                        size={18}
+                        className="mt-1 shrink-0 text-secondary"
                         aria-hidden
                       />
-                      <Heading level="h5" as="h3" className="text-foreground leading-snug">
+                      <Heading level="h5" as="h3" className="text-foreground font-bold leading-snug">
                         {doc.title}
                       </Heading>
                     </div>
                     {doc.description && (
-                      <Text variant="small" className="text-muted-foreground ps-6">
+                      <Text variant="small" className="text-muted-foreground ps-7 leading-relaxed">
                         {doc.description}
                       </Text>
                     )}
@@ -117,10 +112,10 @@ export function RequiredDocuments({
             ))}
           </div>
 
-          {/* Optional footnote */}
+          {/* Important Footnote Alert Box */}
           {note && (
-            <motion.div {...(animate ? { variants: slideUp } : {})} className="mt-8 w-full max-w-3xl">
-              <Text variant="small" className="text-center text-muted-foreground italic">
+            <motion.div {...(animate ? { variants: slideUp } : {})} className="mt-10 w-full max-w-3xl rounded-xl bg-primary/5 p-4 md:p-5 border border-primary/10 flex items-center justify-center">
+              <Text variant="small" className="text-center text-primary font-semibold text-sm md:text-base">
                 {note}
               </Text>
             </motion.div>

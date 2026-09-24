@@ -46,15 +46,10 @@ export function About({
   const TextWrapper = animate ? motion.div : "div";
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Symmetric fade background */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-background),var(--color-secondary)_50%,var(--color-background)_100%)]" />
-      </div>
-
-      <Section id={id} className="py-xl md:py-2xl" align="start">
-        {/* md:items-stretch forces both columns to equal height */}
-        <div className="grid grid-cols-1 gap-xl md:grid-cols-2 md:gap-2xl md:items-stretch">
+    <div className="relative overflow-hidden bg-card border-y border-border/40">
+      <Section id={id} className="py-20 md:py-28" align="start">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 md:items-stretch">
+          
           {/* IMAGE + QUOTE COLUMN */}
           <div className="order-2 flex w-full md:order-1">
             {image ? (
@@ -63,33 +58,39 @@ export function About({
                 whileInView={animate ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: duration.slow, ease: easing }}
-                // Added glowing shadow classes and hover interactive shadow behavior
                 className={cn(
-                  "group flex w-full flex-col overflow-hidden rounded-section border border-border bg-background shadow-subtle transition-shadow duration-300 ease-in-out",
-                  "drop-shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:drop-shadow-[0_0_25px_rgba(0,0,0,0.2)]"
+                  "group flex w-full flex-col overflow-hidden rounded-section border border-border bg-card shadow-elevated transition-shadow duration-300 ease-in-out"
                 )}
               >
-                {/* min-h-[280px] on mobile prevents collapse; md:min-h-0 allows grid stretch */}
-                <div className="relative min-h-[280px] flex-1 md:min-h-0">
+                <div className="relative min-h-[320px] flex-1 md:min-h-0">
                   <img
                     src={image.src}
                     alt={image.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
 
                 {founderQuote && (
-                  <div className="border-t border-border bg-secondary p-5 text-start sm:p-6">
-                    <Quote size={22} className="text-primary opacity-60" aria-hidden />
-                    <Text variant="small" className="mt-2 italic text-secondary-foreground">
+                  <div className="relative overflow-hidden bg-primary p-6 text-start sm:p-8">
+                    {/* Decorative large background quote icon */}
+                    <div className="absolute -top-4 -right-4 p-4 opacity-5 pointer-events-none">
+                      <Quote size={120} className="text-secondary" />
+                    </div>
+                    
+                    <Quote size={28} className="text-secondary mb-4 relative z-10" aria-hidden />
+                    <Text variant="body" className="italic text-primary-foreground/95 relative z-10 text-lg leading-relaxed font-medium">
                       “{founderQuote.quote}”
                     </Text>
-                    <div className="mt-3">
-                      <Text variant="small" className="font-semibold text-secondary-foreground">
+                    <div className="mt-6 relative z-10">
+                      <Text variant="small" className="font-bold text-white text-base">
                         {founderQuote.author}
                       </Text>
-                      {founderQuote.role && <Text variant="caption">{founderQuote.role}</Text>}
+                      {founderQuote.role && (
+                        <Text variant="caption" className="text-secondary font-semibold tracking-wide uppercase mt-1 block">
+                          {founderQuote.role}
+                        </Text>
+                      )}
                     </div>
                   </div>
                 )}
@@ -99,9 +100,9 @@ export function About({
                 {highlights.map((h, i) => (
                   <div
                     key={i}
-                    className="flex flex-col items-start gap-2 rounded-card border border-border bg-muted p-md text-start"
+                    className="flex flex-col items-start gap-2 rounded-card border border-border bg-muted p-5 text-start"
                   >
-                    <span aria-hidden className="text-primary">
+                    <span aria-hidden className="text-secondary">
                       {h.icon}
                     </span>
                     <Text variant="small" className="font-medium text-foreground">
@@ -110,14 +111,7 @@ export function About({
                   </div>
                 ))}
               </div>
-            ) : (
-              <div
-                className="flex min-h-[400px] w-full items-center justify-center rounded-section border border-dashed border-border bg-muted"
-                aria-hidden
-              >
-                <Text variant="caption">Founder / Clinic Image</Text>
-              </div>
-            )}
+            ) : null}
           </div>
 
           {/* TEXT COLUMN */}
@@ -127,16 +121,16 @@ export function About({
               : {})}
             className="order-1 flex flex-col items-start gap-6 text-start md:order-2 md:py-4"
           >
-            <motion.div {...(animate ? { variants: slideUp } : {})} className="flex flex-col gap-2">
-              {eyebrow && <Heading level="h6">{eyebrow}</Heading>}
-              <Heading level="h2" className="text-foreground">
+            <motion.div {...(animate ? { variants: slideUp } : {})} className="flex flex-col gap-3">
+              {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
+              <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
                 {title}
               </Heading>
             </motion.div>
 
             <motion.div {...(animate ? { variants: slideUp } : {})} className="flex flex-col gap-4">
               {paragraphs.map((paragraph, i) => (
-                <Text key={i} variant="body">
+                <Text key={i} variant="body" className="text-lg text-muted-foreground leading-relaxed">
                   {paragraph}
                 </Text>
               ))}
@@ -144,21 +138,21 @@ export function About({
 
             <motion.div
               {...(animate ? { variants: slideUp } : {})}
-              className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2"
+              className="mt-4 grid w-full grid-cols-1 gap-5 sm:grid-cols-2"
             >
-              <Card interactive className="p-md">
-                <Heading level="h5" as="h3" className="text-primary">
+              <Card interactive className="p-6 border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 bg-background rounded-card">
+                <Heading level="h5" as="h3" className="text-primary font-bold mb-2">
                   {mission.title}
                 </Heading>
-                <Text variant="small" className="mt-1">
+                <Text variant="small" className="text-muted-foreground leading-relaxed">
                   {mission.description}
                 </Text>
               </Card>
-              <Card interactive className="p-md">
-                <Heading level="h5" as="h3" className="text-primary">
+              <Card interactive className="p-6 border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 bg-background rounded-card">
+                <Heading level="h5" as="h3" className="text-primary font-bold mb-2">
                   {vision.title}
                 </Heading>
-                <Text variant="small" className="mt-1">
+                <Text variant="small" className="text-muted-foreground leading-relaxed">
                   {vision.description}
                 </Text>
               </Card>

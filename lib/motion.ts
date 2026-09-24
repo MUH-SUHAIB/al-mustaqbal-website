@@ -7,6 +7,10 @@ import type { Variants } from "framer-motion";
  * - No flashy motion — everything reads as calm, deliberate, "medical".
  * - One shared timing system so every component feels consistent.
  * - Keep these durations in sync with tailwind.config.ts transitionDuration.
+ * - Only the outermost container of a group should drive whileInView;
+ *   children should only carry `variants` and inherit propagation from
+ *   the parent's animate state. This avoids per-item IntersectionObservers
+ *   getting stuck on long grids (documents, FAQ, facilities).
  */
 
 export const duration = {
@@ -37,16 +41,39 @@ export const slideUp: Variants = {
   },
 };
 
-/** Stagger wrapper — apply to a parent, pair children with `slideUp`/`fadeIn`. */
+/**
+ * Stagger wrapper — apply to a parent, pair children with `slideUp`/`fadeIn`.
+ * Tuned so even long grids (7+ items) fully settle in well under a second,
+ * both for real users and for automated/fast screenshot capture tools.
+ */
 export const staggerContainer: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.04,
+      staggerChildren: 0.06,
+      delayChildren: 0.03,
     },
   },
 };
+
+/**
+ * Use this instead of `staggerContainer` for grids that can have many items
+ * (Documents, FAQ, Facilities, Services). Caps the total stagger spread so
+ * item #20 doesn't wait any longer than item #8 — prevents "last items never
+ * finish animating" on long lists.
+ */
+export function cappedStagger(itemCount: number, maxSpread = 0.4): Variants {
+  const perItem = itemCount > 0 ? Math.min(0.06, maxSpread / itemCount) : 0.06;
+  return {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: perItem,
+        delayChildren: 0.03,
+      },
+    },
+  };
+}
 
 /** Soft scale for hoverable elements (cards, images). Not for buttons — see button.tsx. */
 export const scaleHover = {
@@ -54,9 +81,14 @@ export const scaleHover = {
   whileTap: { scale: 0.99 },
 };
 
-/** Standard scroll-reveal props — spread onto a `motion.div`. */
+/**
+ * Standard scroll-reveal props — spread onto a `motion.div`.
+ * margin widened from -80px to -100px 0px -100px 0px so content starts
+ * revealing a bit earlier and has more time to fully settle before it's
+ * likely to be captured or read.
+ */
 export const scrollReveal = {
   initial: "hidden",
   whileInView: "visible",
-  viewport: { once: true, margin: "-80px" },
+  viewport: { once: true, margin: "-100px 0px -100px 0px" },
 };

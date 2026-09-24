@@ -6,27 +6,23 @@ import { cn } from "@/lib/utils";
 import { duration, easing } from "@/lib/motion";
 
 export interface CardProps extends HTMLMotionProps<"div"> {
-  /** Adds the soft-lift hover animation. Turn off for static/decorative cards. */
   interactive?: boolean;
 }
 
-/**
- * Base card surface. Used for services, doctors, testimonials, facilities.
- * Compose with CardImage / CardHeader / CardTitle / CardDescription /
- * CardContent / CardFooter below.
- */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, interactive = true, children, ...props }, ref) => {
     return (
       <motion.div
         ref={ref}
         className={cn(
-          "rounded-card border border-border bg-background shadow-subtle overflow-hidden",
+          /* Visible hairline border + resting shadow so cards read clearly
+             against the warm beige background, even without hover. */
+          "relative rounded-2xl border border-border bg-card overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]",
           className
         )}
         whileHover={
           interactive
-            ? { y: -4, boxShadow: "var(--shadow-hover)" }
+            ? { y: -4, boxShadow: "0 15px 30px -5px rgba(0,0,0,0.08)" }
             : undefined
         }
         transition={{ duration: duration.base, ease: easing }}
@@ -39,7 +35,6 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = "Card";
 
-/** Optional image slot. Fills the card width, clipped to the card's radius. */
 export function CardImage({
   src,
   alt,
@@ -49,12 +44,9 @@ export function CardImage({
   src: string;
   alt: string;
   className?: string;
-  /** Defaults to "lazy" — card images are almost always below the fold. Pass "eager" for a card that renders above the fold. */
   loading?: "lazy" | "eager";
 }) {
   return (
-    // Plain <img> at the design-system layer to stay framework-flexible;
-    // swap for next/image inside actual page components if needed.
     <img
       src={src}
       alt={alt}
@@ -72,59 +64,37 @@ export function CardHeader({
   children: ReactNode;
 }) {
   return (
-    <div className={cn("flex flex-col gap-1 p-md", className)}>
+    <div className={cn("relative flex flex-col gap-1 p-6 pt-8", className)}>
+      {/* The Signature Sharjah Government Gold Accent Line */}
+      <div className="absolute top-0 left-6 h-[3px] w-10 bg-secondary" />
       {children}
     </div>
   );
 }
 
-export function CardTitle({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function CardTitle({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <h3 className={cn("text-lg font-semibold text-foreground", className)}>
+    <h3 className={cn("text-lg font-bold text-foreground", className)}>
       {children}
     </h3>
   );
 }
 
-export function CardDescription({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function CardDescription({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <p className={cn("text-sm text-muted-foreground leading-relaxed", className)}>
+    <p className={cn("text-sm text-muted-foreground leading-relaxed font-medium", className)}>
       {children}
     </p>
   );
 }
 
-export function CardContent({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
-  return <div className={cn("px-md pb-md", className)}>{children}</div>;
+export function CardContent({ className, children }: { className?: string; children: ReactNode }) {
+  return <div className={cn("px-6 pb-6", className)}>{children}</div>;
 }
 
-export function CardFooter({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function CardFooter({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={cn("flex items-center gap-3 px-md pb-md pt-2", className)}>
+    <div className={cn("flex items-center gap-3 px-6 pb-6 pt-2", className)}>
       {children}
     </div>
   );

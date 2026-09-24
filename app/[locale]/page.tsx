@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
- 
-
 
 import {
   Hero,
@@ -35,55 +33,15 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen pt-20">
+    <main className="relative z-0 min-h-screen pt-20">
       <Hero {...heroContent} animate />
-
-      <About
-        {...aboutContent}
-        id="about"
-        animate
-      />
-
-      <Services
-        {...servicesContent}
-        id="services"
-        animate
-      />
-
-      <RequiredDocuments 
-        {...requiredDocumentsContent} 
-        id="documents" 
-        animate 
-      />
-
-
-
-<Results24h
-  {...results24hContent}
-  id="results"
-  animate
-/>
-
-
-
-      <Facilities
-        {...facilitiesContent}
-        id="facilities"
-        animate
-      />
-
-      <FAQ
-        {...faqContent}
-        id="faq"
-        animate
-      />
-
-      <Contact
-        {...contactContent}
-        id="contact"
-        animate
-      />
-
+      <About {...aboutContent} id="about" animate />
+      <Services {...servicesContent} id="services" animate />
+      <RequiredDocuments {...requiredDocumentsContent} id="documents" animate />
+      <Results24h {...results24hContent} id="results" animate />
+      <Facilities {...facilitiesContent} id="facilities" animate />
+      <FAQ {...faqContent} id="faq" animate />
+      <Contact {...contactContent} id="contact" animate />
       <Footer {...footerContent} />
     </main>
   );

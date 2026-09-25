@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { routing, getDirection, type Locale } from "@/i18n/routing";
@@ -44,7 +44,8 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  // Native array validation for next-intl v3 compatibility
+  if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 

@@ -15,7 +15,7 @@ const HERO_IMAGE = {
 };
 
 const PHONE_HREF = "tel:+971544995924";
-const PHONE_DISPLAY = "+971 54 499 5924";
+const PHONE_DISPLAY = "054 499 5924";
 
 export function Hero({ animate = true }: { animate?: boolean }) {
   const t = useTranslations("Hero");
@@ -63,13 +63,14 @@ export function Hero({ animate = true }: { animate?: boolean }) {
               {...(animate ? { variants: slideUp } : {})}
               className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:w-auto md:justify-start"
             >
-              {/* Direct Call Button */}
+              {/* Direct Call Button with dir="ltr" to fix Arabic digit ordering */}
               <a
                 href={PHONE_HREF}
-                className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto min-h-[48px] py-3.5 px-8 rounded-full font-semibold text-base shadow-elevated hover:-translate-y-0.5 transition-all bg-primary text-primary-foreground hover:bg-primary/90 dir-ltr"
+                dir="ltr"
+                className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto min-h-[48px] py-3.5 px-8 rounded-full font-semibold text-base shadow-elevated hover:-translate-y-0.5 transition-all bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Phone size={18} className="text-secondary shrink-0" aria-hidden />
-                <span>Call: {PHONE_DISPLAY}</span>
+                <span>{PHONE_DISPLAY}</span>
               </a>
 
               {/* Our Services Button with Creamy/Gold Compatible Styling */}

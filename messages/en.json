@@ -1,6 +1,207 @@
 {
-  "common": {
-    "clinicName": "Clinic Name",
-    "language": "Language"
+  "Header": {
+    "clinicName": "Al Mustaqbal Medical Fitness Examination Center",
+    "nav": {
+      "about": "About",
+      "services": "Services",
+      "facilities": "Facilities",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "actions": {
+      "call": "Call",
+      "whatsapp": "WhatsApp",
+      "langName": "عربي",
+      "langNameMobile": "العربية"
+    }
+  },
+  "Hero": {
+    "badge": "Medical Screening Approved for All Emirates",
+    "headline": "Al Mustaqbal Medical Fitness Examination Center",
+    "subtitle": "Professional medical fitness and visa screening services in Al Madam, Sharjah.",
+    "primaryCta": "Contact Us",
+    "secondaryCta": "Our Services"
+  },
+  "About": {
+    "title": "About Our Center",
+    "eyebrow": "Medical Fitness Examination Services in Sharjah",
+    "paragraphs": [
+      "Al Mustaqbal Medical Fitness Examination Center provides medical fitness examination and screening services for residence and employment visa requirements, occupational health needs, vaccinations, and related medical examinations in Al Madam, Sharjah.",
+      "We are a government-accredited facility approved for all Emirates, ensuring fast and reliable processing."
+    ],
+    "mission": {
+      "title": "Our Mission",
+      "description": "To provide efficient, accurate, and accessible medical fitness screening services that meet official UAE health authority standards."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "To be the leading and most trusted medical fitness examination center in the Sharjah region."
+    }
+  },
+  "Services": {
+    "title": "Our Services",
+    "description": "Medical fitness, visa screening, vaccination, and occupational health services",
+    "items": {
+      "residency-visa": {
+        "title": "Residence & Visa Medical Screening",
+        "description": "Medical fitness examinations required for residence and employment visa procedures."
+      },
+      "occupational-vaccinations": {
+        "title": "Occupational Vaccinations",
+        "description": "Vaccination services for occupational groups including food handlers, domestic workers, and barbers."
+      },
+      "hepatitis-b-vaccination": {
+        "title": "Hepatitis B Vaccination",
+        "description": "Hepatitis B vaccination services as part of applicable occupational health requirements."
+      },
+      "municipality-screening": {
+        "title": "Municipality Employee Screening",
+        "description": "Medical screening for new municipality employees, including eye testing and vital signs assessment."
+      },
+      "pregnancy-testing": {
+        "title": "Pregnancy Testing for Domestic Workers",
+        "description": "Pregnancy testing services for domestic workers as part of applicable medical examination procedures."
+      },
+      "chest-xray": {
+        "title": "Chest X-Ray",
+        "description": "Chest X-ray examinations provided as part of applicable medical fitness screening procedures."
+      }
+    }
+  },
+  "RequiredDocuments": {
+    "eyebrow": "BEFORE YOUR VISIT",
+    "title": "Required Documents for Screening",
+    "description": "Please bring the following documents to avoid processing delays at reception.",
+    "documents": {
+      "uid": {
+        "title": "Unified Number (UID)",
+        "description": "Old UID or entry permit number"
+      },
+      "eid": {
+        "title": "Emirates ID Copy",
+        "description": "Original or clear photocopy"
+      },
+      "passport": {
+        "title": "Passport Copy",
+        "description": "Valid passport page copy"
+      },
+      "visa": {
+        "title": "Residence / Visa Copy",
+        "description": "Current visa or entry permit"
+      },
+      "tradeLicense": {
+        "title": "Company Trade License Copy",
+        "description": "For employment visa cases"
+      },
+      "photo": {
+        "title": "Personal Photograph",
+        "description": "Recent passport-size photo"
+      },
+      "healthCard": {
+        "title": "Occupational Health Card",
+        "description": "Issued by Sharjah Municipality (if renewing)"
+      }
+    },
+    "note": "* Original documents must be presented at the reception counter."
+  },
+  "Results24h": {
+    "eyebrow": "FAST & RELIABLE",
+    "title": "Results Within 24 Hours",
+    "description": "We understand visa and employment timelines matter — that's why we process every examination quickly and communicate results directly to you.",
+    "highlight": "Results within 24 hours",
+    "highlightSubtext": "Delivered straight to your phone — no need to call or visit again.",
+    "steps": {
+      "step1": {
+        "title": "Complete Your Examination",
+        "description": "Finish your medical fitness screening at our center."
+      },
+      "step2": {
+        "title": "We Process Your Results",
+        "description": "Our medical team reviews and finalizes your report."
+      },
+      "step3": {
+        "title": "Get Notified by SMS",
+        "description": "Your result is sent by SMS to your registered mobile number within 24 hours."
+      }
+    }
+  },
+  "Facilities": {
+    "title": "Our Center",
+    "description": "A convenient environment for your medical examination",
+    "labels": {
+      "reception": "Reception & Information Desk",
+      "waiting": "Waiting Area",
+      "lab": "Blood Testing Area",
+      "xray": "X-Ray Waiting Area",
+      "entrance": "Center Entrance"
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "description": "Important information about your medical fitness examination",
+    "items": [
+      {
+        "question": "What documents are required for the medical examination?",
+        "answer": "Please bring the required documents for your examination, including the old Unified Number, a copy of your Emirates ID, passport copy, residence or visa copy, company trade license copy, a recent personal photograph, and a copy of the Occupation Health Card issued by Sharjah Municipality Medical Fitness Centers."
+      },
+      {
+        "question": "When will I receive my medical results?",
+        "answer": "The medical certificate results will be sent by SMS to the provided mobile number within 24 hours."
+      },
+      {
+        "question": "What are the center's working hours?",
+        "answer": "The center is open Saturday through Thursday from 8:00 AM to 2:00 PM. The center is closed on Friday."
+      },
+      {
+        "question": "Where is Al Mustaqbal Medical Fitness Examination Center located?",
+        "answer": "The center is located in Sharjah, at Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)."
+      },
+      {
+        "question": "Are medical screenings approved for all Emirates?",
+        "answer": "Medical screening at Al Mustaqbal Medical Fitness Examination Center is approved for all Emirates."
+      }
+    ]
+  },
+"Contact": {
+    "title": "Visit Our Center",
+    "description": "Find us at Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
+    "address": "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB), Sharjah, United Arab Emirates",
+    "workingHours": [
+      { "days": "Saturday – Thursday", "hours": "8:00 AM – 2:00 PM" },
+      { "days": "Friday", "hours": "Closed" }
+    ],
+    "labels": {
+      "contactCenter": "Contact Center",
+      "call": "Call",
+      "whatsapp": "WhatsApp Message",
+      "ourLocation": "Our Location",
+      "getDirections": "Get Directions",
+      "workingHours": "Working Hours",
+      "openNow": "Open Now",
+      "closed": "Closed",
+      "openInMaps": "Open in Google Maps"
+    }
+  },
+ "Footer": {
+    "clinicName": "Al Mustaqbal",
+    "clinicType": "Medical Fitness Center",
+    "tagline": "Accredited medical fitness and visa screening services, blood testing, and occupational health examinations in Al Madam, Sharjah.",
+    "quickLinksTitle": "Quick Links",
+    "quickLinks": [
+      { "label": "About Us", "href": "#about" },
+      { "label": "Our Services", "href": "#services" },
+      { "label": "Required Documents", "href": "#documents" },
+      { "label": "Facilities", "href": "#facilities" },
+      { "label": "FAQs", "href": "#faq" }
+    ],
+    "contactTitle": "Contact Information",
+    "whatsappText": "(WhatsApp)",
+    "addressLines": [
+      "Al Madam Roundabout,",
+      "Next to First Abu Dhabi Bank (FAB)",
+      "Sharjah, United Arab Emirates"
+    ],
+    "getDirections": "Get Directions ↗",
+    "copyright": "© 2026 Al Mustaqbal Medical Fitness Center. All rights reserved."
   }
 }

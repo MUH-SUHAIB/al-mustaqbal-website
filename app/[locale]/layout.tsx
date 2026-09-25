@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Inter, Cairo } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
@@ -12,16 +12,17 @@ import { StickyContactButtons } from "@/components/ui/sticky-contact-buttons";
 
 import "../../styles/globals.css";
 
+
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
-
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+const cairo = Cairo({
   subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-plex-arabic",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-cairo",
   display: "swap",
 });
 
@@ -29,12 +30,71 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// Global SEO & OpenGraph / Social Sharing Metadata
 export const metadata: Metadata = {
-  title: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
-  description: "Accredited medical fitness and visa screening services, occupational health examinations, and vaccinations in Al Madam, Sharjah.",
-  robots: { index: true, follow: true },
+  metadataBase: new URL("https://almustaqbalmedical.ae"),
+  title: {
+    default: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
+    template: "%s | Al Mustaqbal Medical",
+  },
+  description:
+    "Accredited medical fitness and visa screening services, blood testing, occupational health examinations, and vaccinations in Al Madam, Sharjah.",
+  keywords: [
+    "Medical Fitness Center Al Madam",
+    "Residency Visa Screening Sharjah",
+    "Visa Medical Test Al Madam",
+    "Medical Examination Center Sharjah",
+    "مركز المستقبل لفحص اللياقة الطبية",
+    "فحص الطبي للاقامة المدام",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   verification: {
     google: "VaDW1PvlVih8sdcM9PWGES_v-J9AQIhBDIJESVW27fY",
+  },
+  // WhatsApp / Facebook OpenGraph Card
+  openGraph: {
+    title: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
+    description:
+      "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.",
+    url: "https://almustaqbalmedical.ae",
+    siteName: "Al Mustaqbal Medical Fitness Examination Center",
+    locale: "en_AE",
+    alternateLocale: ["ar_AE"],
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg", // Put a 1200x630px image in your /public folder
+        width: 1200,
+        height: 630,
+        alt: "Al Mustaqbal Medical Fitness Examination Center Entrance",
+      },
+    ],
+  },
+  // Twitter / X Card
+  twitter: {
+    card: "summary_large_image",
+    title: "Al Mustaqbal Medical Fitness Examination Center",
+    description:
+      "Accredited medical fitness and visa screening services in Al Madam, Sharjah.",
+    images: ["/og-image.jpg"],
+  },
+  // Multilingual SEO Canonical & Alternate hreflang tags
+  alternates: {
+    canonical: "https://almustaqbalmedical.ae",
+    languages: {
+      en: "https://almustaqbalmedical.ae/en",
+      ar: "https://almustaqbalmedical.ae/ar",
+    },
   },
 };
 
@@ -56,20 +116,24 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   const dir = getDirection(locale as Locale);
 
-  // Local SEO Schema for Google Business Profile
+  // Enriched Local Business & Medical Schema for Google Search
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     "name": "Al Mustaqbal Medical Fitness Examination Center",
     "alternateName": "مركز المستقبل لفحص اللياقة الطبية",
+    "url": "https://almustaqbalmedical.ae",
+    "logo": "https://almustaqbalmedical.ae/logo.png",
+    "image": "https://almustaqbalmedical.ae/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
-      "addressLocality": "Sharjah",
+      "addressLocality": "Al Madam",
       "addressRegion": "Sharjah",
       "addressCountry": "AE"
     },
     "telephone": "+971544995924",
+    "priceRange": "$$",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
@@ -78,7 +142,18 @@ export default async function LocaleLayout({
         "closes": "14:00"
       }
     ],
-    "priceRange": "$$"
+    "medicalSpecialty": "Occupational Medicine",
+    "availableService": [
+      {
+        "@type": "MedicalProcedure",
+        "name": "Residency Visa Medical Screening",
+        "alternateName": "فحص اللياقة الطبية للإقامة"
+      },
+      {
+        "@type": "MedicalTest",
+        "name": "Blood Testing and Medical X-Ray"
+      }
+    ]
   };
 
   return (
@@ -90,8 +165,8 @@ export default async function LocaleLayout({
         />
       </head>
       <body 
-        className={`${dir === 'rtl' ? ibmPlexArabic.variable : inter.variable} font-sans antialiased bg-background text-foreground bg-sharjah-pattern`}
-      >
+  className={`${cairo.variable} ${inter.variable} font-sans antialiased bg-background text-foreground bg-sharjah-pattern`}
+>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <Header />

@@ -3,11 +3,14 @@
 import { useState, useId, memo } from "react";
 import { motion, type Variants } from "framer-motion";
 import { ChevronDown, MessageCircle, PhoneCall } from "lucide-react";
+import { useTranslations } from "next-intl";
+
 import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { cappedStagger, slideUp, duration, easing } from "@/lib/motion";
 
+// Type definitions re-exported for index.ts compatibility
 export interface FAQItem {
   id?: string;
   question: string;
@@ -25,10 +28,6 @@ export interface FAQSupport {
 
 export interface FAQContent {
   id?: string;
-  eyebrow?: string;
-  title?: string;
-  description?: string;
-  items: FAQItem[];
   support?: FAQSupport;
   allowMultiple?: boolean;
   animate?: boolean;
@@ -137,7 +136,6 @@ const FAQAccordionCard = memo(function FAQAccordionCard({
     </motion.div>
   );
 });
-
 FAQAccordionCard.displayName = "FAQAccordionCard";
 
 interface FAQSupportCTAProps {
@@ -163,7 +161,6 @@ const FAQSupportCTA = memo(function FAQSupportCTA({
       {...motionProps}
       className="relative mt-12 overflow-hidden rounded-[1.5rem] border border-border bg-background p-6 shadow-subtle sm:p-10"
     >
-      {/* Decorative corner blur */}
       <div
         className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl"
         aria-hidden="true"
@@ -198,7 +195,7 @@ const FAQSupportCTA = memo(function FAQSupportCTA({
           {support.phoneLink && (
             <a
               href={support.phoneLink}
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 shadow-subtle hover:shadow-primary/30"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 shadow-subtle hover:shadow-primary/30 dir-ltr"
             >
               <PhoneCall size={20} aria-hidden="true" />
               <span>{support.phoneLabel}</span>
@@ -209,20 +206,20 @@ const FAQSupportCTA = memo(function FAQSupportCTA({
     </motion.div>
   );
 });
-
 FAQSupportCTA.displayName = "FAQSupportCTA";
 
 export function FAQ({
   id,
-  eyebrow,
-  title,
-  description,
-  items = [],
   support,
   allowMultiple = false,
   animate = true,
   className,
 }: FAQContent) {
+  const t = useTranslations("FAQ");
+  
+  // Extracting the FAQ items dynamically from JSON files
+  const items = t.raw("items") as FAQItem[];
+
   const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set());
   const baseId = useId();
 
@@ -280,17 +277,12 @@ export function FAQ({
             {...(animate ? { variants: slideUp as Variants } : {})}
             className="flex flex-col items-center text-center max-w-2xl mx-auto mb-12 md:mb-16 gap-4"
           >
-            {eyebrow && <Heading level="h6" className="text-secondary uppercase tracking-wider text-sm font-bold">{eyebrow}</Heading>}
-            {title && (
-              <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
-                {title}
-              </Heading>
-            )}
-            {description && (
-              <Text variant="body" className="text-muted-foreground text-lg text-balance">
-                {description}
-              </Text>
-            )}
+            <Heading level="h2" className="text-3xl md:text-4xl font-bold text-foreground">
+              {t("title")}
+            </Heading>
+            <Text variant="body" className="text-muted-foreground text-lg text-balance">
+              {t("description")}
+            </Text>
           </motion.div>
 
           <motion.div
@@ -310,9 +302,12 @@ export function FAQ({
             ))}
           </motion.div>
 
+          {/* Optional Support CTA */}
           {support && <FAQSupportCTA support={support} animate={!!animate} />}
         </div>
       </Section>
     </div>
   );
 }
+
+export default FAQ;

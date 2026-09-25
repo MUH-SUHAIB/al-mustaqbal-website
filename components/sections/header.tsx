@@ -11,7 +11,7 @@ import {
   Phone,
   X,
 } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const PHONE_HREF = "tel:+971544995924";
 const WHATSAPP_HREF = "https://wa.me/971544995924";
@@ -20,6 +20,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const t = useTranslations("Header");
   const locale = useLocale();
   const nextLocale = locale === "en" ? "ar" : "en";
 
@@ -56,11 +57,11 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Facilities", href: "#facilities" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Contact", href: "#contact" },
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.services"), href: "#services" },
+    { name: t("nav.facilities"), href: "#facilities" },
+    { name: t("nav.faq"), href: "#faq" },
+    { name: t("nav.contact"), href: "#contact" },
   ];
 
   const closeMobileMenu = () => {
@@ -84,11 +85,11 @@ export default function Header() {
         <Link
           href={`/${locale}`}
           className="flex shrink-0 items-center"
-          aria-label="Al Mustaqbal Medical Fitness Examination Center"
+          aria-label={t("clinicName")}
         >
           <Image
             src="/Al_mustaqbal/logo.png"
-            alt="Al Mustaqbal Medical Fitness Examination Center"
+            alt={t("clinicName")}
             width={130}
             height={42}
             priority
@@ -111,7 +112,7 @@ export default function Header() {
 
               <span
                 aria-hidden="true"
-                className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-secondary transition-transform duration-300 ease-out group-hover:scale-x-100"
+                className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-secondary transition-transform duration-300 ease-out group-hover:scale-x-100 rtl:origin-right"
               />
             </Link>
           ))}
@@ -123,21 +124,18 @@ export default function Header() {
           <Link
             href={`/${nextLocale}`}
             className="flex items-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium text-white/85 transition-colors duration-200 hover:text-white"
-            aria-label={`Switch language to ${
-              nextLocale === "ar" ? "Arabic" : "English"
-            }`}
           >
             <Globe className="h-4 w-4" aria-hidden="true" />
-            <span>{nextLocale === "ar" ? "عربي" : "English"}</span>
+            <span>{t("actions.langName")}</span>
           </Link>
 
           {/* Call */}
           <a
             href={PHONE_HREF}
-            className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary dir-ltr"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            <span>Call</span>
+            <span>{t("actions.call")}</span>
           </a>
 
           {/* WhatsApp */}
@@ -148,7 +146,7 @@ export default function Header() {
             className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/95 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            <span>WhatsApp</span>
+            <span>{t("actions.whatsapp")}</span>
           </a>
         </div>
 
@@ -157,9 +155,6 @@ export default function Header() {
           type="button"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           className="flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors duration-200 hover:bg-white/10 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary lg:hidden"
-          aria-label={
-            isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
-          }
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-nav-panel"
         >
@@ -209,17 +204,17 @@ export default function Header() {
               className="flex min-h-12 items-center gap-3 rounded-xl px-4 text-base font-medium text-white/90 transition-colors duration-200 hover:bg-white/10 hover:text-white"
             >
               <Globe className="h-5 w-5" aria-hidden="true" />
-              <span>{nextLocale === "ar" ? "العربية" : "English"}</span>
+              <span>{t("actions.langNameMobile")}</span>
             </Link>
 
             {/* Mobile Contact Buttons */}
             <div className="mt-3 grid gap-3">
               <a
                 href={PHONE_HREF}
-                className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-secondary px-5 py-3 font-semibold text-secondary-foreground shadow-sm transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-secondary px-5 py-3 font-semibold text-secondary-foreground shadow-sm transition-all duration-200 hover:brightness-105 active:scale-[0.98] dir-ltr"
               >
                 <Phone className="h-5 w-5" aria-hidden="true" />
-                <span>Call Us</span>
+                <span>{t("actions.call")}</span>
               </a>
 
               <a
@@ -229,7 +224,7 @@ export default function Header() {
                 className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-primary shadow-sm transition-all duration-200 hover:bg-white/95 active:scale-[0.98]"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                <span>WhatsApp</span>
+                <span>{t("actions.whatsapp")}</span>
               </a>
             </div>
           </motion.div>

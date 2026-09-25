@@ -1,15 +1,14 @@
-import { getRequestConfig } from "next-intl/server";
-import { hasLocale } from "next-intl";
-import { routing } from "./routing";
+import { getRequestConfig } from 'next-intl/server';
+import { routing } from './routing';
 
-// Loads messages for the active locale and validates it against
-// the routing config. Falls back to the default locale for any
-// unsupported/malformed locale segment instead of throwing.
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
+
+  // Check if requested locale is included in supported routing.locales
+  const locale =
+    requested && routing.locales.includes(requested as any)
+      ? requested
+      : routing.defaultLocale;
 
   return {
     locale,

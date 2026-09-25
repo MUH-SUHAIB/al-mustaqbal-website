@@ -9,11 +9,10 @@ import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-// Globally constant business details
 const PHONE = "+971 54 499 5924";
 const WHATSAPP = "+971 54 499 5924";
-const MAP_EMBED_SRC = "https://maps.google.com/maps?q=24.914779512891332,55.775557972450656&hl=en&z=19&output=embed";
-const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/24.914779512891332,55.775557972450656";
+const MAP_EMBED_SRC = "https://maps.google.com/maps?q=24.9147795,55.775558&z=17&output=embed";
+const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%84%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9147795,55.775558,17z/data=!4m6!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D";
 
 export function Contact({
   id = "contact",
@@ -24,7 +23,6 @@ export function Contact({
 }) {
   const t = useTranslations("Contact");
   
-  // Extract working hours array from JSON
   const workingHours = t.raw("workingHours") as { days: string; hours: string }[];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -33,17 +31,14 @@ export function Contact({
   useEffect(() => {
     setMounted(true);
     const checkIsOpen = () => {
-      // Get current local time in UAE
       const uaeTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" });
       const date = new Date(uaeTime);
-      const day = date.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
-      const hours = date.getHours(); // 0-23 format
+      const day = date.getDay(); 
+      const hours = date.getHours(); 
 
-      // Friday (5) is Closed
       if (day === 5) {
         setIsOpen(false);
       } else {
-        // Open 8:00 AM (8) to 2:00 PM (14)
         if (hours >= 8 && hours < 14) {
           setIsOpen(true);
         } else {
@@ -53,7 +48,7 @@ export function Contact({
     };
 
     checkIsOpen();
-    const interval = setInterval(checkIsOpen, 60000); // Re-check every minute
+    const interval = setInterval(checkIsOpen, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -82,11 +77,14 @@ export function Contact({
                 <Phone className="w-5 h-5" /> {t("labels.contactCenter")}
               </div>
               <div className="flex flex-col gap-3">
-                <a href={`tel:${PHONE.replace(/\s+/g, '')}`} className="flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-primary/20 dir-ltr">
-                  <Phone className="w-5 h-5" /> {t("labels.call")} {PHONE}
+                <a href={`tel:${PHONE.replace(/\s+/g, '')}`} className="flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-primary/20">
+                  <Phone className="w-5 h-5 shrink-0" />
+                  <span>{t("labels.call")}</span>
+                  <span dir="ltr" className="inline-block">{PHONE}</span>
                 </a>
-                <a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-[#25D366]/20 dir-ltr">
-                  <MessageCircle className="w-5 h-5" /> {t("labels.whatsapp")}
+                <a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-[#25D366]/20">
+                  <MessageCircle className="w-5 h-5 shrink-0" />
+                  <span>{t("labels.whatsapp")}</span>
                 </a>
               </div>
             </Card>
@@ -125,7 +123,7 @@ export function Contact({
                 {workingHours.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center border-b border-border/40 pb-2 last:border-0 last:pb-0">
                     <span className="text-muted-foreground font-medium">{item.days}</span>
-                    <span className="text-foreground font-bold dir-ltr">{item.hours}</span>
+                    <span className="text-foreground font-bold" dir="ltr">{item.hours}</span>
                   </div>
                 ))}
               </div>

@@ -8,7 +8,7 @@ import { Heading, Text } from "@/components/ui/typography";
 // Globally constant business details
 const PHONE = "+971 54 499 5924";
 const WHATSAPP = "+971 54 499 5924";
-const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/24.914779512891332,55.775557972450656";
+const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%84%D9%82%D8%A9+%D8%A7%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9147795,55.775558,17z/data=!4m6!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -72,7 +72,7 @@ export function Footer() {
                   <div className="bg-white/10 p-2.5 rounded-full text-secondary group-hover:bg-secondary group-hover:text-primary transition-colors">
                     <Phone className="w-4 h-4" />
                   </div>
-                  <span className="dir-ltr">{PHONE}</span>
+                  <span dir="ltr" className="inline-block">{PHONE}</span>
                 </a>
               </li>
               <li>
@@ -80,7 +80,7 @@ export function Footer() {
                   <div className="bg-white/10 p-2.5 rounded-full text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors">
                     <MessageCircle className="w-4 h-4" />
                   </div>
-                  <span className="dir-ltr">{WHATSAPP}</span> {t("whatsappText")}
+                  <span dir="ltr" className="inline-block">{WHATSAPP}</span> {t("whatsappText")}
                 </a>
               </li>
               <li>

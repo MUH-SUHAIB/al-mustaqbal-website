@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   title: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
   description: "Accredited medical fitness and visa screening services, occupational health examinations, and vaccinations in Al Madam, Sharjah.",
   robots: { index: true, follow: true },
+  verification: {
+    google: "VaDW1PvlVih8sdcM9PWGES_v-J9AQIhBDIJESVW27fY",
+  },
 };
 
 export default async function LocaleLayout({

@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
-import { Button, LinkButton } from "@/components/ui/button";
-import { AppointmentModal } from "./appointment-modal";
+import { LinkButton } from "@/components/ui/button";
 import { staggerContainer, fadeIn, slideUp, duration, easing } from "@/lib/motion";
 
 const HERO_IMAGE = {
@@ -16,18 +14,17 @@ const HERO_IMAGE = {
   alt: "Al Mustaqbal Medical Fitness Examination Center entrance in Al Madam, Sharjah"
 };
 
+const PHONE_HREF = "tel:+971544995924";
+const PHONE_DISPLAY = "+971 54 499 5924";
+
 export function Hero({ animate = true }: { animate?: boolean }) {
   const t = useTranslations("Hero");
   const TextWrapper = animate ? motion.div : "div";
-  const [isBookingOpen, setBookingOpen] = useState(false);
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background Accents */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(201,168,96,0.1),var(--color-background)_65%)]" />
-        <div className="absolute -top-24 -start-24 h-72 w-72 rounded-full bg-primary opacity-5 blur-3xl" />
-      </div>
+    <div className="relative overflow-hidden bg-background">
+      {/* Clean Background without patterns or stars */}
+      <div className="absolute inset-0 -z-10 bg-background" aria-hidden />
 
       <Section className="pt-xl md:pt-2xl pb-16" align="start">
         <div className="grid grid-cols-1 items-center gap-xl md:grid-cols-2 md:gap-2xl lg:items-stretch">
@@ -66,20 +63,21 @@ export function Hero({ animate = true }: { animate?: boolean }) {
               {...(animate ? { variants: slideUp } : {})}
               className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:w-auto md:justify-start"
             >
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto min-h-[48px] py-3.5 px-8 !rounded-full !font-semibold !text-base shadow-elevated hover:-translate-y-0.5 transition-transform bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => setBookingOpen(true)}
+              {/* Direct Call Button */}
+              <a
+                href={PHONE_HREF}
+                className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto min-h-[48px] py-3.5 px-8 rounded-full font-semibold text-base shadow-elevated hover:-translate-y-0.5 transition-all bg-primary text-primary-foreground hover:bg-primary/90 dir-ltr"
               >
-                {t("primaryCta")}
-              </Button>
+                <Phone size={18} className="text-secondary shrink-0" aria-hidden />
+                <span>Call: {PHONE_DISPLAY}</span>
+              </a>
 
+              {/* Our Services Button with Creamy/Gold Compatible Styling */}
               <LinkButton
                 href="#services"
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto min-h-[48px] py-3.5 px-8 !bg-[#25D366] !text-white hover:!bg-[#20bd5a] !border-none !rounded-full !font-semibold !text-base shadow-subtle hover:-translate-y-0.5 transition-transform"
+                className="w-full sm:w-auto min-h-[48px] py-3.5 px-8 bg-[#FBF7EE] text-primary border border-secondary/40 hover:bg-[#F2EBD9] rounded-full font-semibold text-base shadow-subtle hover:-translate-y-0.5 transition-all"
               >
                 {t("secondaryCta")}
               </LinkButton>
@@ -103,8 +101,6 @@ export function Hero({ animate = true }: { animate?: boolean }) {
           </motion.div>
         </div>
       </Section>
-
-      <AppointmentModal isOpen={isBookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }

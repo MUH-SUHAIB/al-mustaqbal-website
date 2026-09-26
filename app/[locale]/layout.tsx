@@ -12,13 +12,12 @@ import { StickyContactButtons } from "@/components/ui/sticky-contact-buttons";
 
 import "../../styles/globals.css";
 
-
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
+
 const cairo = Cairo({
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -30,73 +29,106 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// Global SEO & OpenGraph / Social Sharing Metadata
-export const metadata: Metadata = {
-  metadataBase: new URL("https://almustaqbalmedical.ae"),
-  title: {
-    default: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
-    template: "%s | Al Mustaqbal Medical",
-  },
-  description:
-    "Accredited medical fitness and visa screening services, blood testing, occupational health examinations, and vaccinations in Al Madam, Sharjah.",
-  keywords: [
-    "Medical Fitness Center Al Madam",
-    "Residency Visa Screening Sharjah",
-    "Visa Medical Test Al Madam",
-    "Medical Examination Center Sharjah",
-    "مركز المستقبل لفحص اللياقة الطبية",
-    "فحص الطبي للاقامة المدام",
-  ],
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+// Dynamic SEO & OpenGraph Metadata based on Locale
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const baseUrl = "https://almustaqbalmedical.ae";
+  const currentUrl = `${baseUrl}/${locale}`;
+  const isAr = locale === "ar";
+
+  // Localized Strings for Metadata
+  const siteTitle = isAr
+    ? "مركز المستقبل لفحص اللياقة الطبية | المدام، الشارقة"
+    : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
+    
+  const siteDescription = isAr
+    ? "المركز المعتمد لفحوصات اللياقة الطبية وتجديد الإقامة في المدام، الشارقة. نتائج سريعة خلال 24 ساعة بأعلى معايير الجودة."
+    : "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.";
+
+  return {
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: siteTitle,
+      template: `%s | ${isAr ? "مركز المستقبل" : "Al Mustaqbal Medical"}`,
+    },
+    description: siteDescription,
+    keywords: [
+      "Medical Fitness Center Al Madam",
+      "Residency Visa Screening Sharjah",
+      "Visa Medical Test Al Madam",
+      "Medical Examination Center Sharjah",
+      "مركز المستقبل لفحص اللياقة الطبية",
+      "فحص الطبي للاقامة المدام",
+    ],
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "VaDW1PvlVih8sdcM9PWGES_v-J9AQIhBDIJESVW27fY",
-  },
-  // WhatsApp / Facebook OpenGraph Card
-  openGraph: {
-    title: "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah",
-    description:
-      "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.",
-    url: "https://almustaqbalmedical.ae",
-    siteName: "Al Mustaqbal Medical Fitness Examination Center",
-    locale: "en_AE",
-    alternateLocale: ["ar_AE"],
-    type: "website",
-    images: [
-      {
-        url: "/og-image.jpg", // Put a 1200x630px image in your /public folder
-        width: 1200,
-        height: 630,
-        alt: "Al Mustaqbal Medical Fitness Examination Center Entrance",
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
-    ],
-  },
-  // Twitter / X Card
-  twitter: {
-    card: "summary_large_image",
-    title: "Al Mustaqbal Medical Fitness Examination Center",
-    description:
-      "Accredited medical fitness and visa screening services in Al Madam, Sharjah.",
-    images: ["/og-image.jpg"],
-  },
-  // Multilingual SEO Canonical & Alternate hreflang tags
-  alternates: {
-    canonical: "https://almustaqbalmedical.ae",
-    languages: {
-      en: "https://almustaqbalmedical.ae/en",
-      ar: "https://almustaqbalmedical.ae/ar",
     },
-  },
-};
+    verification: {
+      google: "VaDW1PvlVih8sdcM9PWGES_v-J9AQIhBDIJESVW27fY",
+    },
+    
+    // Wire up Favicons & Manifest from the public folder
+    manifest: "/site.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+
+    // WhatsApp / Facebook OpenGraph Card
+    openGraph: {
+      title: siteTitle,
+      description: siteDescription,
+      url: currentUrl,
+      siteName: siteTitle,
+      locale: isAr ? "ar_AE" : "en_AE",
+      alternateLocale: isAr ? ["en_AE"] : ["ar_AE"],
+      type: "website",
+      images: [
+        {
+          url: "/og-image.jpg", // Ensure this image is directly in your public/ folder
+          width: 1200,
+          height: 630,
+          alt: siteTitle,
+        },
+      ],
+    },
+    
+    // Twitter / X Card
+    twitter: {
+      card: "summary_large_image",
+      title: siteTitle,
+      description: siteDescription,
+      images: ["/og-image.jpg"],
+    },
+    
+    // Multilingual SEO Canonical & Alternate hreflang tags
+    alternates: {
+      canonical: currentUrl,
+      languages: {
+        en: `${baseUrl}/en`,
+        ar: `${baseUrl}/ar`,
+      },
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -123,7 +155,7 @@ export default async function LocaleLayout({
     "name": "Al Mustaqbal Medical Fitness Examination Center",
     "alternateName": "مركز المستقبل لفحص اللياقة الطبية",
     "url": "https://almustaqbalmedical.ae",
-    "logo": "https://almustaqbalmedical.ae/logo.png",
+    "logo": "https://almustaqbalmedical.ae/favicon-512x512.png", // Updated to use the larger favicon
     "image": "https://almustaqbalmedical.ae/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
@@ -165,8 +197,8 @@ export default async function LocaleLayout({
         />
       </head>
       <body 
-  className={`${cairo.variable} ${inter.variable} font-sans antialiased bg-background text-foreground bg-sharjah-pattern`}
->
+        className={`${cairo.variable} ${inter.variable} font-sans antialiased bg-background text-foreground bg-sharjah-pattern`}
+      >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <Header />

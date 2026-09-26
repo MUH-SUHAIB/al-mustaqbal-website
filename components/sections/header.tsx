@@ -87,14 +87,16 @@ export default function Header() {
           className="flex shrink-0 items-center"
           aria-label={t("clinicName")}
         >
-          <Image
-            src="/Al_mustaqbal/logo.png"
-            alt={t("clinicName")}
-            width={130}
-            height={42}
-            priority
-            className="h-9 w-auto object-contain sm:h-10"
-          />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white p-0.5 shadow-md sm:h-11 sm:w-11">
+            <Image
+              src="/Al_mustaqbal/logo.png"
+              alt={t("clinicName")}
+              width={42}
+              height={42}
+              priority
+              className="h-full w-full rounded-full object-contain"
+            />
+          </div>
         </Link>
 
         {/* Desktop Navigation */}

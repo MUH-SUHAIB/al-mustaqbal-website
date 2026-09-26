@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Heading, Text } from "@/components/ui/typography";
@@ -29,13 +30,24 @@ export function Footer() {
           
           {/* Brand & Tagline */}
           <div className="flex flex-col gap-4 lg:pe-8">
-            <div className="flex flex-col gap-1">
-              <span className="font-extrabold text-white text-2xl tracking-tight">
-                {t("clinicName")}
-              </span>
-              <span className="text-sm text-secondary font-bold tracking-widest uppercase">
-                {t("clinicType")}
-              </span>
+            <div className="flex items-center gap-3.5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white p-0.5 shadow-md">
+                <Image
+                  src="/Al_mustaqbal/logo.png"
+                  alt="Al Mustaqbal Medical Center Logo"
+                  width={48}
+                  height={48}
+                  className="h-full w-full rounded-full object-contain"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-extrabold text-white text-xl md:text-2xl tracking-tight leading-tight">
+                  {t("clinicName")}
+                </span>
+                <span className="text-xs md:text-sm text-secondary font-bold tracking-widest uppercase">
+                  {t("clinicType")}
+                </span>
+              </div>
             </div>
             <Text variant="small" className="text-primary-foreground/70 leading-relaxed mt-2">
               {t("tagline")}

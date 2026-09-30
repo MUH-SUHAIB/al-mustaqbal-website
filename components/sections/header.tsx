@@ -159,6 +159,7 @@ export default function Header() {
           className="flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors duration-200 hover:bg-white/10 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary lg:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-nav-panel"
+          aria-label="Toggle navigation menu"
         >
           {isMobileMenuOpen ? (
             <X className="h-6 w-6" aria-hidden="true" />

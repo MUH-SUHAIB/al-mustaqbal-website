@@ -44,7 +44,7 @@ export async function generateMetadata({
   const siteTitle = isAr
     ? "مركز المستقبل لفحص اللياقة الطبية | المدام، الشارقة"
     : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
-    
+
   const siteDescription = isAr
     ? "المركز المعتمد لفحوصات اللياقة الطبية وتجديد الإقامة في المدام، الشارقة. نتائج سريعة خلال 24 ساعة بأعلى معايير الجودة."
     : "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.";
@@ -78,9 +78,28 @@ export async function generateMetadata({
     verification: {
       google: "VaDW1PvlVih8sdcM9PWGES_v-J9AQIhBDIJESVW27fY",
     },
-    
+
     // Wire up Manifest from the public folder
     manifest: "/site.webmanifest",
+
+    /**
+     * NEW — explicit favicon declarations.
+     * Without this, the page HTML may not contain <link rel="icon"> tags,
+     * so Google has to guess where your favicon is. The 48x48 .ico is
+     * listed first because Google requires favicon sizes that are a
+     * multiple of 48px (48, 96, 144, 192...). The 192x192 PNG also
+     * satisfies that rule.
+     */
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "48x48" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
 
     // WhatsApp / Facebook OpenGraph Card
     openGraph: {
@@ -100,7 +119,7 @@ export async function generateMetadata({
         },
       ],
     },
-    
+
     // Twitter / X Card
     twitter: {
       card: "summary_large_image",
@@ -108,7 +127,7 @@ export async function generateMetadata({
       description: siteDescription,
       images: ["/og-image.jpg"],
     },
-    
+
     // Multilingual SEO Canonical & Alternate hreflang tags
     alternates: {
       canonical: currentUrl,
@@ -145,7 +164,10 @@ export default async function LocaleLayout({
     "name": "Al Mustaqbal Medical Fitness Examination Center",
     "alternateName": "مركز المستقبل لفحص اللياقة الطبية",
     "url": "https://almustaqbalmedical.ae",
-    "logo": "https://almustaqbalmedical.ae/favicon-512x512.png", // Updated to use the larger favicon
+    // FIXED — this previously pointed to /favicon-512x512.png, which does
+    // not exist in your public folder (a broken link in your Google data).
+    // android-chrome-512x512.png does exist.
+    "logo": "https://almustaqbalmedical.ae/android-chrome-512x512.png",
     "image": "https://almustaqbalmedical.ae/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
@@ -186,7 +208,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body 
+      <body
         className={`${cairo.variable} ${inter.variable} font-sans antialiased bg-background text-foreground bg-sharjah-pattern`}
       >
         <NextIntlClientProvider messages={messages}>

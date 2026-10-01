@@ -112,7 +112,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/og-image.jpg", // Ensure this image is directly in your public/ folder
+          url: `${baseUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
           alt: siteTitle,
@@ -125,7 +125,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: siteTitle,
       description: siteDescription,
-      images: ["/og-image.jpg"],
+      images: [`${baseUrl}/og-image.jpg`],
     },
 
     // Multilingual SEO Canonical & Alternate hreflang tags

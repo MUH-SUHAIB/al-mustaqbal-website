@@ -1,9 +1,13 @@
 {
+
   "Header": {
     "clinicName": "Al Mustaqbal Medical Fitness Examination Center",
     "nav": {
+      "home": "Home",
       "about": "About",
       "services": "Services",
+      "documents": "Documents",
+      "results": "Results",
       "facilities": "Facilities",
       "faq": "FAQ",
       "contact": "Contact"
@@ -184,7 +188,7 @@
   },
  "Footer": {
     "clinicName": "Al Mustaqbal",
-    "clinicType": "Medical Fitness Center",
+    "clinicType": "Medical Fitness Examination Center",
     "tagline": "Accredited medical fitness and visa screening services, blood testing, and occupational health examinations in Al Madam, Sharjah.",
     "quickLinksTitle": "Quick Links",
     "quickLinks": [

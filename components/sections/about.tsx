@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Quote } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -45,12 +46,21 @@ export function About({
                 "group flex w-full flex-col overflow-hidden rounded-section border border-border bg-card shadow-elevated transition-shadow duration-300 ease-in-out"
               )}
             >
+              {/**
+               * This section is below the fold on first paint (it comes
+               * after the Hero), so this image should NOT have `priority`.
+               * next/image lazy-loads by default when `priority` is
+               * omitted — exactly what we want here. This replaces the old
+               * manual `loading="lazy"` attribute, which doesn't exist on
+               * next/image (it's handled automatically instead).
+               */}
               <div className="relative min-h-[320px] flex-1 md:min-h-0">
-                <img
+                <Image
                   src={ABOUT_IMAGE.src}
                   alt={t("title")}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
             </motion.div>

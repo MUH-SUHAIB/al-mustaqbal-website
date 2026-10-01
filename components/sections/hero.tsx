@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ShieldCheck, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -93,10 +94,36 @@ export function Hero({ animate = true }: { animate?: boolean }) {
             className="relative order-1 md:order-2 flex w-full h-full items-center justify-center"
           >
             <div className="w-full relative group rounded-section border border-border shadow-elevated overflow-hidden aspect-[4/5] sm:aspect-[4/4.5] lg:aspect-[4/5] max-h-[520px] bg-card">
-              <img
+              {/**
+               * Converted from raw <img> to next/image.
+               *
+               * `fill` makes the image stretch to match its parent's size
+               * (the aspect-ratio div above), so we don't need fixed
+               * width/height numbers — the parent already controls that.
+               *
+               * `priority` tells Next.js to preload this image immediately
+               * instead of lazy-loading it. This is almost certainly your
+               * LCP (Largest Contentful Paint) element — the thing Google
+               * measures to judge page speed — so it should load first,
+               * not last.
+               *
+               * `sizes` tells the browser how wide this image will actually
+               * be rendered at each breakpoint, so it downloads a correctly
+               * sized file instead of always fetching the largest version.
+               * This matches the grid: full width on mobile, half width
+               * (one of two grid columns) from md breakpoint up.
+               *
+               * Next.js automatically re-encodes this to AVIF/WebP and
+               * serves a much smaller file than the original 326KB JPG —
+               * no manual compression needed for this one.
+               */}
+              <Image
                 src={HERO_IMAGE.src}
                 alt={t("headline")}
-                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
               />
             </div>
           </motion.div>

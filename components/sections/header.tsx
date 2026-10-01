@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { staggerContainer, slideUp } from "@/lib/motion";
 
 const PHONE_HREF = "tel:+971544995924";
 const WHATSAPP_HREF = "https://wa.me/971544995924";
@@ -57,8 +58,11 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
+    { name: t("nav.home"), href: `/${locale}` },
     { name: t("nav.about"), href: "#about" },
     { name: t("nav.services"), href: "#services" },
+    { name: t("nav.documents"), href: "#documents" },
+    { name: t("nav.results"), href: "#results" },
     { name: t("nav.facilities"), href: "#facilities" },
     { name: t("nav.faq"), href: "#faq" },
     { name: t("nav.contact"), href: "#contact" },
@@ -70,26 +74,43 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isScrolled ? "px-3 pt-3 sm:px-4 md:px-6 lg:px-8" : "px-0"
       }`}
     >
       <div
-        className={`mx-auto flex w-full items-center justify-between transition-all duration-500 ease-out ${
+        className={`relative mx-auto flex w-full items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isScrolled
-            ? "max-w-[1400px] rounded-2xl border border-secondary/20 bg-primary px-4 py-2.5 shadow-[0_10px_35px_-12px_rgba(28,75,58,0.45)] sm:px-5 md:px-6"
+            ? "max-w-[1400px] rounded-2xl border border-secondary/20 bg-primary px-4 py-2.5 shadow-brand-float sm:px-5 md:px-6"
             : "rounded-none bg-primary px-4 py-3.5 sm:px-5 md:px-8"
         }`}
       >
-        {/* Logo */}
+        {/**
+         * Subtle bottom hairline, visible only in the full-width (unscrolled)
+         * state, to give the bar a more deliberate, finished edge — matches
+         * the same gradient-hairline technique already used in footer.tsx.
+         */}
+        {!isScrolled && (
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-secondary/30 to-transparent"
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Logo + Clinic Name */}
         <Link
           href={`/${locale}`}
-          className="flex shrink-0 items-center"
+          className="flex shrink-0 items-center gap-2.5"
           aria-label={t("clinicName")}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white p-0.5 shadow-md sm:h-11 sm:w-11">
+          {/**
+           * Added a thin permanent gold ring around the logo circle — a
+           * small "official seal" cue that reinforces the government/
+           * accredited feel without changing any brand colors.
+           */}
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white p-0.5 shadow-md ring-2 ring-secondary/40 sm:h-11 sm:w-11">
             <Image
-              src="/Al_mustaqbal/logo.png"
+              src="/Al_mustaqbal/logo-optimized.png"
               alt={t("clinicName")}
               width={42}
               height={42}
@@ -97,31 +118,45 @@ export default function Header() {
               className="h-full w-full rounded-full object-contain"
             />
           </div>
+
+          <span className="hidden text-sm font-bold leading-tight text-white 2xl:block 2xl:text-base">
+               {t("clinicName")}
+           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav
+        {/**
+         * Desktop Navigation — breakpoint moved from `lg` to `xl`.
+         * With 8 nav items now (Home through Contact), showing the full
+         * row at 1024px was going to feel cramped for a "premium" header.
+         * Tablet-range screens now get the mobile menu instead, which is
+         * cleaner than a squeezed single-row nav.
+         */}
+        <motion.nav
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
           aria-label="Main navigation"
-          className="hidden items-center gap-6 lg:flex xl:gap-8"
+          className="hidden items-center gap-5 xl:flex xl:gap-7"
         >
           {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="group relative py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:text-white"
-            >
-              {link.name}
+            <motion.div key={link.name} variants={slideUp}>
+              <Link
+                href={link.href}
+                className="group relative py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:text-white"
+              >
+                {link.name}
 
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-secondary transition-transform duration-300 ease-out group-hover:scale-x-100 rtl:origin-right"
-              />
-            </Link>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-secondary transition-transform duration-300 ease-out group-hover:scale-x-100 rtl:origin-right"
+                />
+              </Link>
+            </motion.div>
           ))}
-        </nav>
+        </motion.nav>
 
         {/* Desktop Actions */}
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           {/* Language */}
           <Link
             href={`/${nextLocale}`}
@@ -131,32 +166,42 @@ export default function Header() {
             <span>{t("actions.langName")}</span>
           </Link>
 
-          {/* Call */}
-          <a
+          {/**
+           * Call + WhatsApp are now motion.a elements using the exact same
+           * whileHover/whileTap scale values as the shared Button/LinkButton
+           * components (components/ui/button.tsx) — so the hover/tap feel
+           * is consistent everywhere on the site, not a one-off here.
+           */}
+          <motion.a
             href={PHONE_HREF}
-            className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary dir-ltr"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm hover:brightness-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary dir-ltr"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             <span>{t("actions.call")}</span>
-          </a>
+          </motion.a>
 
-          {/* WhatsApp */}
-          <a
+          <motion.a
             href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/95 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm hover:bg-white/95 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             <span>{t("actions.whatsapp")}</span>
-          </a>
+          </motion.a>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button — now shown up to `xl` instead of `lg` */}
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors duration-200 hover:bg-white/10 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary lg:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors duration-200 hover:bg-white/10 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary xl:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-nav-panel"
           aria-label="Toggle navigation menu"
@@ -169,7 +214,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation — breakpoint updated to match (xl:hidden) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -178,7 +223,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className={`absolute left-3 right-3 top-[calc(100%+0.75rem)] overflow-y-auto rounded-2xl border border-secondary/20 bg-primary p-4 shadow-[0_20px_45px_-15px_rgba(28,75,58,0.45)] sm:left-4 sm:right-4 lg:hidden ${
+            className={`absolute left-3 right-3 top-[calc(100%+0.75rem)] overflow-y-auto rounded-2xl border border-secondary/20 bg-primary p-4 shadow-[0_20px_45px_-15px_rgba(28,75,58,0.45)] sm:left-4 sm:right-4 xl:hidden ${
               isScrolled ? "max-h-[calc(100dvh-6rem)]" : "max-h-[calc(100dvh-7rem)]"
             }`}
           >

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -86,12 +87,21 @@ export function Services({
                   className="h-full"
                 >
                   <Card interactive className="group h-full flex flex-col overflow-hidden border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 rounded-card bg-card">
+                    {/**
+                     * `sizes` here reflects the actual grid breakpoints:
+                     * 1 column on mobile (full width), 2 columns from sm,
+                     * up to 3 columns from lg (when columns=3, the default).
+                     * This is an approximation since `columns` is a runtime
+                     * prop — good enough for the browser to pick a sensibly
+                     * sized image rather than always grabbing the largest.
+                     */}
                     <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted border-b border-border/50">
-                      <img
+                      <Image
                         src={imgSrc}
                         alt={title}
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                       />
                     </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -26,27 +27,41 @@ export interface FacilitiesContent {
   animate?: boolean;
 }
 
-// Static image mapping aligned with JSON translation keys
+/**
+ * Static image mapping aligned with JSON translation keys.
+ *
+ * `sizes` tells the browser how wide each image really appears, so it
+ * downloads a right-sized file instead of the biggest one:
+ *  - Reception is the large 2x2 tile (half the page on desktop,
+ *    full width on mobile).
+ *  - The others are small tiles (a quarter of the page on desktop,
+ *    half on mobile).
+ */
 const FACILITIES_DATA = [
   {
     key: "reception",
     src: "/Al_mustaqbal/accredited-visa-medical-screening-center-reception.jpg",
+    sizes: "(max-width: 768px) 100vw, 50vw",
   },
   {
     key: "waiting",
     src: "/Al_mustaqbal/al-mustaqbal-medical-fitness-center-waiting-area-sharjah.jpg",
+    sizes: "(max-width: 768px) 50vw, 25vw",
   },
   {
     key: "lab",
     src: "/Al_mustaqbal/services/visa-blood-test-check-up-lahbab-al-madam.jpg",
+    sizes: "(max-width: 768px) 50vw, 25vw",
   },
   {
     key: "xray",
     src: "/Al_mustaqbal/al-mustaqbal-medical-fitness-xray-waiting-room.jpg",
+    sizes: "(max-width: 768px) 50vw, 25vw",
   },
   {
     key: "entrance",
     src: "/Al_mustaqbal/al-mustaqbal-medical-fitness-center-entrance-sharjah.jpg",
+    sizes: "(max-width: 768px) 50vw, 25vw",
   },
 ];
 
@@ -115,12 +130,20 @@ export function Facilities({
                   className={`h-full w-full ${getBentoClasses(i)}`}
                 >
                   <Card className="group relative h-full w-full overflow-hidden border-border/50 rounded-[1.5rem] shadow-subtle transition-shadow duration-500 hover:shadow-elevated cursor-pointer bg-card text-start">
-                    {/* Edge-to-Edge Image */}
-                    <img
+                    {/**
+                     * Edge-to-edge image, converted from a raw <img> to
+                     * next/image. `fill` makes it fill the card, `sizes`
+                     * picks the right download size, and Next.js
+                     * lazy-loads it automatically (these tiles are far
+                     * below the fold, so no `priority`). The old
+                     * loading="lazy" attribute is no longer needed.
+                     */}
+                    <Image
                       src={facility.src}
                       alt={label}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                      fill
+                      sizes={facility.sizes}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                     />
 
                     {/* Dark Overlay Gradient for High Contrast Text */}

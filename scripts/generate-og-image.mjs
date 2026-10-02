@@ -1,11 +1,16 @@
 /**
- * One-time Open Graph image generator.
+ * One-time Open Graph image generator (v2).
  *
- * Builds public/og-image.jpg at 1200x630 (the size WhatsApp, Facebook
- * and X expect) from the existing entrance photo, compressed well under
- * WhatsApp's ~300KB limit. The source photo is only read, never changed.
+ * Builds public/og-image.jpg at 1200x630 from the entrance photo.
+ * v1 used automatic cropping, which picked the floor instead of the
+ * sign. This version crops from a fixed vertical position near the top
+ * of the photo, where the center's sign is.
  *
- * Run once with: node scripts/generate-og-image.mjs
+ * If the sign is still cut off, change TOP_OFFSET_PERCENT:
+ *   - lower number (e.g. 0)  = crop higher up the photo
+ *   - higher number (e.g. 15) = crop lower down the photo
+ *
+ * Run with: node scripts/generate-og-image.mjs
  */
 import sharp from "sharp";
 import path from "path";
@@ -16,14 +21,31 @@ const SOURCE = path.resolve(
 );
 const OUTPUT = path.resolve("public/og-image.jpg");
 
+const WIDTH = 1200;
+const HEIGHT = 630;
+const TOP_OFFSET_PERCENT = 8;
+
 async function run() {
-  await sharp(SOURCE)
-    .resize(1200, 630, { fit: "cover", position: "attention" })
+  // Step 1: scale the photo to 1200px wide, keeping its proportions.
+  const scaled = await sharp(SOURCE)
+    .resize({ width: WIDTH })
+    .toBuffer({ resolveWithObject: true });
+
+  const scaledHeight = scaled.info.height;
+  const maxTop = Math.max(0, scaledHeight - HEIGHT);
+  const top = Math.min(
+    maxTop,
+    Math.round((scaledHeight * TOP_OFFSET_PERCENT) / 100)
+  );
+
+  // Step 2: cut a 1200x630 window starting at that vertical position.
+  await sharp(scaled.data)
+    .extract({ left: 0, top, width: WIDTH, height: HEIGHT })
     .jpeg({ quality: 80, mozjpeg: true })
     .toFile(OUTPUT);
 
   const kb = Math.round(fs.statSync(OUTPUT).size / 1024);
-  console.log(`Created public/og-image.jpg (1200x630, ${kb} KB)`);
+  console.log(`Created public/og-image.jpg (1200x630, ${kb} KB, top offset ${top}px)`);
 }
 
 run().catch((err) => {

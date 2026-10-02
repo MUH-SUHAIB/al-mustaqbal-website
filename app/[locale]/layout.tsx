@@ -12,6 +12,19 @@ import { StickyContactButtons } from "@/components/ui/sticky-contact-buttons";
 
 import "../../styles/globals.css";
 
+/**
+ * The ONE place that defines the site's official address.
+ * Vercel redirects almustaqbalmedical.ae -> www.almustaqbalmedical.ae,
+ * so www is the real, final address. Everything below (canonical,
+ * hreflang, social cards, structured data) is built from this value.
+ * If you ever change your primary domain, change only this line.
+ */
+const BASE_URL = "https://www.almustaqbalmedical.ae";
+
+/** Your Google Business Profile / Google Maps listing. */
+const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/place/%D9%85%D8%B1%D9%83%D8%B2+%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%81%D8%AD%D8%B5+%D8%A7%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9/@24.9147795,55.775558,17z/data=!4m6!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -36,8 +49,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = "https://almustaqbalmedical.ae";
-  const currentUrl = `${baseUrl}/${locale}`;
+  const currentUrl = `${BASE_URL}/${locale}`;
   const isAr = locale === "ar";
 
   // Localized Strings for Metadata
@@ -50,7 +62,7 @@ export async function generateMetadata({
     : "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.";
 
   return {
-    metadataBase: new URL(baseUrl),
+    metadataBase: new URL(BASE_URL),
     title: {
       default: siteTitle,
       template: `%s | ${isAr ? "مركز المستقبل" : "Al Mustaqbal Medical"}`,
@@ -82,14 +94,7 @@ export async function generateMetadata({
     // Wire up Manifest from the public folder
     manifest: "/site.webmanifest",
 
-    /**
-     * NEW — explicit favicon declarations.
-     * Without this, the page HTML may not contain <link rel="icon"> tags,
-     * so Google has to guess where your favicon is. The 48x48 .ico is
-     * listed first because Google requires favicon sizes that are a
-     * multiple of 48px (48, 96, 144, 192...). The 192x192 PNG also
-     * satisfies that rule.
-     */
+    // Explicit favicon declarations (48px multiple required by Google)
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "48x48" },
@@ -112,7 +117,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: `${baseUrl}/og-image.jpg`,
+          url: `${BASE_URL}/og-image.jpg`,
           width: 1200,
           height: 630,
           alt: siteTitle,
@@ -125,15 +130,16 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: siteTitle,
       description: siteDescription,
-      images: [`${baseUrl}/og-image.jpg`],
+      images: [`${BASE_URL}/og-image.jpg`],
     },
 
     // Multilingual SEO Canonical & Alternate hreflang tags
     alternates: {
       canonical: currentUrl,
       languages: {
-        en: `${baseUrl}/en`,
-        ar: `${baseUrl}/ar`,
+        en: `${BASE_URL}/en`,
+        ar: `${BASE_URL}/ar`,
+        "x-default": `${BASE_URL}/en`,
       },
     },
   };
@@ -163,12 +169,9 @@ export default async function LocaleLayout({
     "@type": "MedicalClinic",
     "name": "Al Mustaqbal Medical Fitness Examination Center",
     "alternateName": "مركز المستقبل لفحص اللياقة الطبية",
-    "url": "https://almustaqbalmedical.ae",
-    // FIXED — this previously pointed to /favicon-512x512.png, which does
-    // not exist in your public folder (a broken link in your Google data).
-    // android-chrome-512x512.png does exist.
-    "logo": "https://almustaqbalmedical.ae/android-chrome-512x512.png",
-    "image": "https://almustaqbalmedical.ae/og-image.jpg",
+    "url": `${BASE_URL}/en`,
+    "logo": `${BASE_URL}/android-chrome-512x512.png`,
+    "image": `${BASE_URL}/og-image.jpg`,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
@@ -176,6 +179,15 @@ export default async function LocaleLayout({
       "addressRegion": "Sharjah",
       "addressCountry": "AE"
     },
+    // NEW — map coordinates (same location as your Google Maps listing)
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 24.914767,
+      "longitude": 55.7755581
+    },
+    // NEW — link to your Google Maps / Business Profile listing
+    "hasMap": GOOGLE_MAPS_URL,
+    "sameAs": [GOOGLE_MAPS_URL],
     "telephone": "+971544995924",
     "priceRange": "$$",
     "openingHoursSpecification": [

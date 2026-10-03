@@ -10,16 +10,16 @@ import { Heading, Text } from "@/components/ui/typography";
 import { LinkButton } from "@/components/ui/button";
 import { staggerContainer, fadeIn, slideUp, duration, easing } from "@/lib/motion";
 
-const HERO_IMAGE = {
-  src: "/Al_mustaqbal/al-mustaqbal-medical-fitness-entrance.jpg",
-  alt: "Al Mustaqbal Medical Fitness Examination Center entrance in Al Madam, Sharjah"
-};
+// The image description (alt text) now comes from the "Images.hero" entry
+// in messages/en.json and messages/ar.json, so it is translated per language.
+const HERO_IMAGE_SRC = "/Al_mustaqbal/al-mustaqbal-medical-fitness-entrance.jpg";
 
 const PHONE_HREF = "tel:+971544995924";
 const PHONE_DISPLAY = "054 499 5924";
 
 export function Hero({ animate = true }: { animate?: boolean }) {
   const t = useTranslations("Hero");
+  const tImg = useTranslations("Images");
   const TextWrapper = animate ? motion.div : "div";
 
   return (
@@ -113,13 +113,12 @@ export function Hero({ animate = true }: { animate?: boolean }) {
                * This matches the grid: full width on mobile, half width
                * (one of two grid columns) from md breakpoint up.
                *
-               * Next.js automatically re-encodes this to AVIF/WebP and
-               * serves a much smaller file than the original 326KB JPG —
-               * no manual compression needed for this one.
+               * `alt` now uses the approved description from
+               * "Images.hero" instead of repeating the page headline.
                */}
               <Image
-                src={HERO_IMAGE.src}
-                alt={t("headline")}
+                src={HERO_IMAGE_SRC}
+                alt={tImg("hero")}
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"

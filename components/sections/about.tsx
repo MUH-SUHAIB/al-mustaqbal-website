@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Quote } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -11,10 +10,10 @@ import { Card } from "@/components/ui/card";
 import { staggerContainer, slideUp, duration, easing } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-const ABOUT_IMAGE = {
-  src: "/Al_mustaqbal/al-mustaqbal-medical-fitness-center-al-madam-sharjah.jpg",
-  alt: "Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah"
-};
+// The image description (alt text) now comes from the "Images.about" entry
+// in messages/en.json and messages/ar.json, so it is translated per language.
+const ABOUT_IMAGE_SRC =
+  "/Al_mustaqbal/al-mustaqbal-medical-fitness-center-al-madam-sharjah.jpg";
 
 export function About({
   id,
@@ -24,6 +23,7 @@ export function About({
   animate?: boolean;
 }) {
   const t = useTranslations("About");
+  const tImg = useTranslations("Images");
   const TextWrapper = animate ? motion.div : "div";
 
   // Since we structured paragraphs as an array in the JSON file
@@ -53,11 +53,14 @@ export function About({
                * omitted — exactly what we want here. This replaces the old
                * manual `loading="lazy"` attribute, which doesn't exist on
                * next/image (it's handled automatically instead).
+               *
+               * `alt` now uses the approved description from
+               * "Images.about" instead of repeating the section title.
                */}
               <div className="relative min-h-[320px] flex-1 md:min-h-0">
                 <Image
-                  src={ABOUT_IMAGE.src}
-                  alt={t("title")}
+                  src={ABOUT_IMAGE_SRC}
+                  alt={tImg("about")}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"

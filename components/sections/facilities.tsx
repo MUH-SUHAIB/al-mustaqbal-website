@@ -70,6 +70,9 @@ export function Facilities({
   animate = true,
 }: FacilitiesContent) {
   const t = useTranslations("Facilities");
+  // Approved image descriptions live in the "Images.facilities" block
+  // of messages/en.json and messages/ar.json.
+  const tImg = useTranslations("Images");
   const Container = animate ? motion.div : "div";
 
   // Creates a balanced Bento Grid
@@ -122,6 +125,8 @@ export function Facilities({
           <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[260px]">
             {FACILITIES_DATA.map((facility, i) => {
               const label = t(`labels.${facility.key}`);
+              // Approved description for this photo (not the visible label)
+              const imgAlt = tImg(`facilities.${facility.key}`);
 
               return (
                 <motion.div
@@ -140,7 +145,7 @@ export function Facilities({
                      */}
                     <Image
                       src={facility.src}
-                      alt={label}
+                      alt={imgAlt}
                       fill
                       sizes={facility.sizes}
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"

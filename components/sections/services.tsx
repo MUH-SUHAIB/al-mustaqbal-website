@@ -9,12 +9,14 @@ import { Heading, Text } from "@/components/ui/typography";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { staggerContainer, slideUp } from "@/lib/motion";
 
-// Static mapping for service images to match the JSON keys in ar.json and en.json
+// Static mapping for service images to match the JSON keys in ar.json and en.json.
+// The municipality card now uses its own dedicated image instead of sharing
+// the occupational vaccinations photo.
 const SERVICE_IMAGES: Record<string, string> = {
   "residency-visa": "/Al_mustaqbal/services/residency-visa-medical-checkup-clinic.jpg",
   "occupational-vaccinations": "/Al_mustaqbal/services/visa-occupational-health-examination-center-al-madam-lahbab.jpg",
   "hepatitis-b-vaccination": "/Al_mustaqbal/services/uae-visa-medical-screening-blood-test-department.jpg",
-  "municipality-screening": "/Al_mustaqbal/services/visa-occupational-health-examination-center-al-madam-lahbab.jpg",
+  "municipality-screening": "/Al_mustaqbal/services/municipality-employee-medical-screening-al-madam.jpg",
   "pregnancy-testing": "/Al_mustaqbal/services/visa-blood-test-check-up-lahbab-al-madam.jpg",
   "chest-xray": "/Al_mustaqbal/services/visa-medical-fitness-xray-al-mdam.jpg",
 };
@@ -29,6 +31,9 @@ export function Services({
   animate?: boolean;
 }) {
   const t = useTranslations("Services");
+  // Approved image descriptions live in the "Images.services" block
+  // of messages/en.json and messages/ar.json.
+  const tImg = useTranslations("Images");
   const Container = animate ? motion.div : "div";
 
   const columnClasses: Record<2 | 3 | 4, string> = {
@@ -79,6 +84,8 @@ export function Services({
               const title = t(`items.${key}.title`);
               const description = t(`items.${key}.description`);
               const imgSrc = SERVICE_IMAGES[key];
+              // Approved description for this photo (not the card title)
+              const imgAlt = tImg(`services.${key}`);
 
               return (
                 <motion.div
@@ -98,7 +105,7 @@ export function Services({
                     <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted border-b border-border/50">
                       <Image
                         src={imgSrc}
-                        alt={title}
+                        alt={imgAlt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"

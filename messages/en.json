@@ -207,5 +207,24 @@
     ],
     "getDirections": "Get Directions ↗",
     "copyright": "© 2026 Al Mustaqbal Medical Fitness Center. All rights reserved."
+  },
+  "Images": {
+    "hero": "Entrance of Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah, with the Sharjah Municipality sign and Sharjah Health Authority accreditation",
+    "about": "Promotional banner for Al Mustaqbal Medical Fitness Examination Center displayed outside the center's entrance in Al Madam, Sharjah",
+    "services": {
+      "residency-visa": "Medical staff member reviewing a file in an examination room during a residence visa medical screening at Al Mustaqbal Medical Fitness Examination Center",
+      "occupational-vaccinations": "Examination room for occupational vaccinations for food handlers, domestic workers and barbers at Al Mustaqbal Medical Fitness Examination Center, Al Madam",
+      "hepatitis-b-vaccination": "Hepatitis B vaccination service at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "municipality-screening": "Eye testing and vital signs tools illustrating municipality employee medical screening at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "pregnancy-testing": "Laboratory area with blood sample tubes used for pregnancy testing for domestic workers at Al Mustaqbal Medical Fitness Examination Center",
+      "chest-xray": "Technician positioning a patient for a chest X-ray at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah"
+    },
+    "facilities": {
+      "reception": "Reception and information desk at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "waiting": "Waiting area with seating at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "lab": "Blood testing area with sample tubes and a sampling chair at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "xray": "X-ray waiting area with seating at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
+      "entrance": "Glass entrance doors of Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah"
+    }
   }
 }

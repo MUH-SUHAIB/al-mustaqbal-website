@@ -8,14 +8,10 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  typescript: {
-    // Ignore TypeScript errors during production build on Vercel
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Ignore ESLint errors during production build
-    ignoreDuringBuilds: true,
-  },
+  // Type errors and lint errors now stop the build instead of being ignored.
+  // This means a real mistake can no longer be deployed to the live site
+  // without a warning. (Verified first: `tsc` reports no errors and
+  // `next lint` reports only one harmless warning.)
 };
 
 export default withNextIntl(nextConfig);

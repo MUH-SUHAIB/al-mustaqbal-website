@@ -35,27 +35,6 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = "Card";
 
-export function CardImage({
-  src,
-  alt,
-  className,
-  loading = "lazy",
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  loading?: "lazy" | "eager";
-}) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading={loading}
-      className={cn("h-48 w-full object-cover", className)}
-    />
-  );
-}
-
 export function CardHeader({
   className,
   children,

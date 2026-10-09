@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://almustaqbalmedical.ae/sitemap.xml",
+    sitemap: "https://www.almustaqbalmedical.ae/sitemap.xml",
   };
 }

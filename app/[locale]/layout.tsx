@@ -58,8 +58,8 @@ export async function generateMetadata({
     : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
 
   const siteDescription = isAr
-    ? "المركز المعتمد لفحوصات اللياقة الطبية وتجديد الإقامة في المدام، الشارقة. نتائج سريعة خلال 24 ساعة بأعلى معايير الجودة."
-    : "Accredited residency visa medical screening, blood testing, and X-ray services in Al Madam, Sharjah. Results within 24 hours.";
+    ? "فحص اللياقة الطبية للإقامة، وفحوصات العمالة المنزلية، وفحوصات موظفي بلدية الشارقة في المدام، الشارقة. النتائج خلال 24 ساعة، دون حجز مسبق."
+    : "Residency visa, domestic worker and Sharjah Municipality employee medical tests in Al Madam, Sharjah. Results within 24 hours. Walk-ins welcome.";
 
   return {
     metadataBase: new URL(BASE_URL),

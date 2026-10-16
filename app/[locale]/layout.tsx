@@ -59,7 +59,7 @@ export async function generateMetadata({
 
   const siteDescription = isAr
     ? "فحص اللياقة الطبية للإقامة، وفحوصات العمالة المنزلية، وفحوصات موظفي بلدية الشارقة في المدام، الشارقة. النتائج خلال 24 ساعة، دون حجز مسبق."
-    : "Residency visa, domestic worker and Sharjah Municipality employee medical tests in Al Madam, Sharjah. Results within 24 hours. Walk-ins welcome.";
+    : "Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah, offers residency visa medical tests, municipality employee medical fitness examinations, pregnancy tests for domestic workers, chest X-rays and Hepatitis B vaccination.";
 
   return {
     metadataBase: new URL(BASE_URL),
@@ -202,7 +202,7 @@ export default async function LocaleLayout({
     "availableService": [
       {
         "@type": "MedicalProcedure",
-        "name": "Residency Visa Medical Screening",
+        "name": "Residency Visa Medical Test",
         "alternateName": "فحص اللياقة الطبية للإقامة"
       },
       {

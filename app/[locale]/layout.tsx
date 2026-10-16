@@ -58,8 +58,8 @@ export async function generateMetadata({
     : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
 
   const siteDescription = isAr
-    ? "فحص اللياقة الطبية للإقامة في المدام، الشارقة. يستقبل مركز المستقبل المراجعين دون حجز مسبق، بالقرب من دوار المدام وبنك أبوظبي الأول. للاستفسار: 054 499 5924."
-    : "Residency visa medical fitness tests in Al Madam, Sharjah. Walk-ins welcome. Near Al Madam Roundabout, next to FAB Bank. Call 054 499 5924.";
+    ? "فحص اللياقة الطبية للإقامة، وفحوصات العمالة المنزلية، وفحوصات موظفي بلدية الشارقة في المدام، الشارقة. النتائج خلال 24 ساعة، دون حجز مسبق."
+    : "Residency visa, domestic worker and Sharjah Municipality employee medical tests in Al Madam, Sharjah. Results within 24 hours. Walk-ins welcome.";
 
   return {
     metadataBase: new URL(BASE_URL),

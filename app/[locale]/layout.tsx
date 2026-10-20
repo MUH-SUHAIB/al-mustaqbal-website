@@ -58,7 +58,7 @@ export async function generateMetadata({
     : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
 
   const siteDescription = isAr
-    ? "فحص اللياقة الطبية للإقامة، وفحوصات العمالة المنزلية، وفحوصات موظفي بلدية الشارقة في المدام، الشارقة. النتائج خلال 24 ساعة، دون حجز مسبق."
+    ? "يقدم مركز المستقبل لفحص اللياقة الطبية في المدام، الشارقة، فحوصات الإقامة واللياقة الطبية للوظيفة، وفحوصات موظفي البلدية، وفحص الحمل للعمالة المنزلية، وأشعة الصدر ولقاح التهاب الكبد الوبائي (ب)."
     : "Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah, offers residency visa medical tests, municipality employee medical fitness examinations, pregnancy tests for domestic workers, chest X-rays and Hepatitis B vaccination.";
 
   return {

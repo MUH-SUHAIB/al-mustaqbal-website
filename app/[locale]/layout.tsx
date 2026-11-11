@@ -10,6 +10,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/sections/header";
 import { StickyContactButtons } from "@/components/ui/sticky-contact-buttons";
 
+import { GOOGLE_MAPS_URL } from "@/lib/clinic-location";
+
 import "../../styles/globals.css";
 
 /**
@@ -21,9 +23,6 @@ import "../../styles/globals.css";
  */
 const BASE_URL = "https://www.almustaqbalmedical.ae";
 
-/** Your Google Business Profile / Google Maps listing. */
-const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps/place/%D9%85%D8%B1%D9%83%D8%B2+%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%81%D8%AD%D8%B5+%D8%A7%D9%84%D9%84%D9%8A%D8%A7%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9/@24.9147795,55.775558,17z/data=!4m6!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,8 +57,8 @@ export async function generateMetadata({
     : "Al Mustaqbal Medical Fitness Examination Center | Al Madam, Sharjah";
 
   const siteDescription = isAr
-    ? "يقدم مركز المستقبل لفحص اللياقة الطبية في المدام، الشارقة، فحوصات الإقامة واللياقة الطبية للوظيفة، وفحوصات موظفي البلدية، وفحص الحمل للعمالة المنزلية، وأشعة الصدر ولقاح التهاب الكبد الوبائي (ب)."
-    : "Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah, offers residency visa medical tests, municipality employee medical fitness examinations, pregnancy tests for domestic workers, chest X-rays and Hepatitis B vaccination.";
+    ? "يقدم مركز المستقبل لفحص اللياقة الطبية في المدام، الشارقة، فحوصات اللياقة الطبية للإقامة المعتمدة لجميع الإمارات."
+    : "Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah, offers residency medical fitness tests approved for all Emirates.";
 
   return {
     metadataBase: new URL(BASE_URL),

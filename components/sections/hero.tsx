@@ -62,7 +62,7 @@ export function Hero({ animate = true }: { animate?: boolean }) {
             {/* CTA Buttons */}
             <motion.div
               {...(animate ? { variants: slideUp } : {})}
-              className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:w-auto md:justify-start"
+              className="mt-6 flex w-full flex-col gap-3 max-md:pe-8 sm:flex-row sm:w-auto md:justify-start"
             >
               {/* Direct Call Button with dir="ltr" to fix Arabic digit ordering */}
               <a

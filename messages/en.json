@@ -22,7 +22,7 @@
   "Hero": {
     "badge": "Medical Fitness & Examination Services",
     "headline": "Al Mustaqbal Medical Fitness Examination Center",
-    "subtitle": "Residency visa medical tests and medical fitness examinations in Al Madam, Sharjah.",
+    "subtitle": "We provide residency medical fitness examinations and related tests in Al Madam, Sharjah. Our medical test is approved for all Emirates.",
     "primaryCta": "Contact Us",
     "secondaryCta": "Our Services"
   },
@@ -158,7 +158,7 @@
       },
       {
         "question": "Are the center's medical test results accepted across all UAE Emirates?",
-        "answer": "Medical test approved for all Emirates"
+        "answer": "Medical test results from Al Mustaqbal Medical Fitness Examination Center are approved for all Emirates."
       }
     ]
   },
@@ -167,7 +167,14 @@
     "description": "Find us at Al Madam Roundabout, next to First Abu Dhabi Bank (FAB)",
     "address": "Al Madam Roundabout, next to First Abu Dhabi Bank (FAB), Sharjah, United Arab Emirates",
     "workingHours": [
-      { "days": "Saturday – Thursday", "hours": "8:00 AM – 2:00 PM" },
+      {
+        "days": "Saturday – Thursday",
+        "hours": "8:00 AM – 2:00 PM",
+        "opens": "8:00",
+        "openingPeriod": "AM",
+        "closes": "2:00",
+        "closingPeriod": "PM"
+      },
       { "days": "Friday", "hours": "Closed" }
     ],
     "labels": {
@@ -179,12 +186,14 @@
       "workingHours": "Working Hours",
       "openNow": "Open Now",
       "closed": "Closed",
-      "openInMaps": "Open in Google Maps"
+      "openInMaps": "Open in Google Maps",
+      "mapTitle": "Location of Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah"
     }
   },
  "Footer": {
     "clinicName": "Al Mustaqbal",
     "clinicType": "Medical Fitness Examination Center",
+    "logoAlt": "Al Mustaqbal Medical Fitness Examination Center logo",
     "tagline": "Medical fitness examinations, residency visa medical tests, and related medical services in Al Madam, Sharjah.",
     "quickLinksTitle": "Quick Links",
     "quickLinks": [
@@ -214,7 +223,7 @@
       "municipality-screening": "Eye testing and vital signs equipment illustrating municipality employee medical fitness examinations at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
       "pregnancy-testing": "Laboratory area with blood sample tubes used for pregnancy testing for domestic workers at Al Mustaqbal Medical Fitness Examination Center",
       "chest-xray": "Technician positioning a patient for a chest X-ray at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
-      "occupational-health-card": "Examination room with an examination couch, weighing scale, and vital signs equipment."
+      "occupational-health-card": "Illustration of an occupational health card and medical examination items for Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah."
     },
     "facilities": {
       "reception": "Reception and information desk at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
@@ -223,5 +232,11 @@
       "xray": "X-ray waiting area with seating at Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah",
       "entrance": "Glass entrance doors of Al Mustaqbal Medical Fitness Examination Center in Al Madam, Sharjah"
     }
+  },
+  "StickyContact": {
+    "whatsappLabel": "Chat on WhatsApp",
+    "whatsappTooltip": "WhatsApp Us",
+    "callLabel": "Call Center",
+    "callTooltip": "Call Us"
   }
 }

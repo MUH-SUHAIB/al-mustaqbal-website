@@ -2,17 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { Phone, MessageCircle, MapPin, Clock, ExternalLink } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Section } from "./section-shell";
 import { Heading, Text } from "@/components/ui/typography";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { isClinicOpen } from "@/lib/clinic-hours";
+import { GOOGLE_MAPS_URL } from "@/lib/clinic-location";
 
 const PHONE = "+971 54 499 5924";
+const PHONE_DISPLAY = "054 499 5924";
 const WHATSAPP = "+971 54 499 5924";
 const MAP_EMBED_SRC = "https://maps.google.com/maps?q=24.9147795,55.775558&z=17&output=embed";
-const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84+%D9%84%D9%84%D9%8A%D8%A7%D9%84%D9%82%D8%A9+%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%E2%80%AD/@24.9147795,55.775558,17z/data=!4m6!3m5!1s0x3ef575000d86e721:0xa1486a7754c5f16c!8m2!3d24.914767!4d55.7755581!16s%2Fg%2F11m5llqxx1?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D";
 
 export function Contact({
   id = "contact",
@@ -22,34 +24,40 @@ export function Contact({
   animate?: boolean;
 }) {
   const t = useTranslations("Contact");
+  const isAr = useLocale() === "ar";
   
-  const workingHours = t.raw("workingHours") as { days: string; hours: string }[];
+  const workingHours = t.raw("workingHours") as {
+    days: string;
+    hours: string;
+    opens?: string;
+    openingPeriod?: string;
+    closes?: string;
+    closingPeriod?: string;
+  }[];
 
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    let timer: ReturnType<typeof setTimeout>;
     const checkIsOpen = () => {
-      const uaeTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" });
-      const date = new Date(uaeTime);
-      const day = date.getDay(); 
-      const hours = date.getHours(); 
-
-      if (day === 5) {
-        setIsOpen(false);
-      } else {
-        if (hours >= 8 && hours < 14) {
-          setIsOpen(true);
-        } else {
-          setIsOpen(false);
-        }
+      setIsOpen(isClinicOpen());
+      timer = setTimeout(checkIsOpen, 60000 - (Date.now() % 60000));
+    };
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        clearTimeout(timer);
+        checkIsOpen();
       }
     };
 
     checkIsOpen();
-    const interval = setInterval(checkIsOpen, 60000);
-    return () => clearInterval(interval);
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
   }, []);
 
   return (
@@ -80,7 +88,7 @@ export function Contact({
                 <a href={`tel:${PHONE.replace(/\s+/g, '')}`} className="flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-primary/20">
                   <Phone className="w-5 h-5 shrink-0" />
                   <span>{t("labels.call")}</span>
-                  <span dir="ltr" className="inline-block">{PHONE}</span>
+                  <bdi dir="ltr" className="inline-block">{PHONE_DISPLAY}</bdi>
                 </a>
                 <a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 px-4 rounded-xl font-semibold hover:-translate-y-0.5 transition-transform shadow-sm hover:shadow-[#25D366]/20">
                   <MessageCircle className="w-5 h-5 shrink-0" />
@@ -104,13 +112,13 @@ export function Contact({
 
             {/* Working Hours with Dynamic Badge */}
             <Card interactive={false} className="p-6 md:p-8 flex flex-col gap-5 border border-border/60 shadow-subtle bg-card rounded-card">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-secondary text-sm font-bold uppercase tracking-wider">
                   <Clock className="w-5 h-5" /> {t("labels.workingHours")}
                 </div>
                 {mounted && (
                   <span className={cn(
-                    "text-xs font-bold px-3 py-1.5 rounded-full border",
+                    "text-xs font-bold px-3 py-1.5 rounded-full border whitespace-nowrap",
                     isOpen 
                       ? "bg-green-50 text-green-700 border-green-200" 
                       : "bg-red-50 text-red-700 border-red-200"
@@ -121,9 +129,17 @@ export function Contact({
               </div>
               <div className="flex flex-col gap-3 mt-1">
                 {workingHours.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                  <div key={idx} className="flex flex-wrap justify-between items-center gap-x-4 gap-y-1 border-b border-border/40 pb-2 last:border-0 last:pb-0">
                     <span className="text-muted-foreground font-medium">{item.days}</span>
-                    <span className="text-foreground font-bold" dir="ltr">{item.hours}</span>
+                    <span className="text-foreground font-bold" dir={isAr ? "rtl" : "ltr"}>
+                      {isAr && item.opens && item.closes ? (
+                        <span className="inline-flex flex-wrap items-center gap-x-1 gap-y-0.5">
+                          <span className="whitespace-nowrap"><bdi dir="ltr">{item.opens}</bdi>{" "}{item.openingPeriod}</span>
+                          <span>–</span>
+                          <span className="whitespace-nowrap"><bdi dir="ltr">{item.closes}</bdi>{" "}{item.closingPeriod}</span>
+                        </span>
+                      ) : item.hours}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -134,6 +150,7 @@ export function Contact({
           <div className="lg:col-span-2 relative bg-card rounded-[1.5rem] overflow-hidden shadow-subtle h-[500px] lg:h-auto border border-border/60 group">
             <iframe
               src={MAP_EMBED_SRC}
+              title={t("labels.mapTitle")}
               width="100%"
               height="100%"
               style={{ border: 0 }}

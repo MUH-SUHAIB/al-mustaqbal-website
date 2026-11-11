@@ -19,7 +19,7 @@ const SERVICE_IMAGES: Record<string, string> = {
   "municipality-screening": "/Al_mustaqbal/services/municipality-employee-medical-screening-al-madam.jpg",
   "pregnancy-testing": "/Al_mustaqbal/services/visa-blood-test-check-up-lahbab-al-madam.jpg",
   "chest-xray": "/Al_mustaqbal/services/visa-medical-fitness-xray-al-mdam.jpg",
-  "occupational-health-card": "/Al_mustaqbal/services/visa-occupational-health-examination-center-al-madam-lahbab.jpg",
+  "occupational-health-card": "/Al_mustaqbal/services/occupational-health-card.webp",
 };
 
 export function Services({

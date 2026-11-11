@@ -7,9 +7,7 @@ import {
   FileText, 
   Contact, 
   ClipboardList, 
-  Building2, 
-  Camera, 
-  Stamp 
+  Building2,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -37,13 +35,11 @@ export interface RequiredDocumentsContent {
 }
 
 const DOCUMENT_ITEMS = [
-  { key: "uid", icon: <FileText className="w-6 h-6" /> },
   { key: "eid", icon: <Contact className="w-6 h-6" /> },
   { key: "passport", icon: <FileText className="w-6 h-6" /> },
   { key: "visa", icon: <ClipboardList className="w-6 h-6" /> },
   { key: "tradeLicense", icon: <Building2 className="w-6 h-6" /> },
-  { key: "photo", icon: <Camera className="w-6 h-6" /> },
-  { key: "healthCard", icon: <Stamp className="w-6 h-6" /> },
+  { key: "sponsorEid", icon: <Contact className="w-6 h-6" /> },
 ];
 
 export function RequiredDocuments({
@@ -84,16 +80,16 @@ export function RequiredDocuments({
           </motion.div>
 
           {/* Documents Grid */}
-          <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex w-full flex-wrap justify-center gap-5">
             {DOCUMENT_ITEMS.map((doc, i) => {
               const title = t(`documents.${doc.key}.title`);
               const description = t(`documents.${doc.key}.description`);
 
               return (
-                <motion.div key={doc.key} {...(animate ? { variants: slideUp } : {})} className="h-full">
+                <motion.div key={doc.key} {...(animate ? { variants: slideUp } : {})} className="flex w-full min-w-0 sm:w-[calc((100%_-_1.25rem)/2)] lg:w-[calc((100%_-_2.5rem)/3)]">
                   <Card
                     interactive
-                    className="group relative flex h-full flex-col gap-5 overflow-hidden p-6 sm:p-8 text-start border border-border/60 shadow-subtle hover:shadow-elevated transition-all duration-300 bg-card rounded-card"
+                    className="group relative flex w-full flex-col gap-5 overflow-hidden p-6 sm:p-8 text-start border border-border/60 shadow-subtle hover:shadow-elevated transition-all duration-300 bg-card rounded-card"
                   >
                     {/* Number badge */}
                     <span

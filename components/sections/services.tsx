@@ -19,6 +19,7 @@ const SERVICE_IMAGES: Record<string, string> = {
   "municipality-screening": "/Al_mustaqbal/services/municipality-employee-medical-screening-al-madam.jpg",
   "pregnancy-testing": "/Al_mustaqbal/services/visa-blood-test-check-up-lahbab-al-madam.jpg",
   "chest-xray": "/Al_mustaqbal/services/visa-medical-fitness-xray-al-mdam.jpg",
+  "occupational-health-card": "/Al_mustaqbal/services/visa-occupational-health-examination-center-al-madam-lahbab.jpg",
 };
 
 export function Services({
@@ -37,9 +38,9 @@ export function Services({
   const Container = animate ? motion.div : "div";
 
   const columnClasses: Record<2 | 3 | 4, string> = {
-    2: "sm:grid-cols-2",
-    3: "sm:grid-cols-2 lg:grid-cols-3",
-    4: "sm:grid-cols-2 lg:grid-cols-4",
+    2: "sm:w-[calc((100%_-_1.5rem)/2)] md:w-[calc((100%_-_2rem)/2)]",
+    3: "sm:w-[calc((100%_-_1.5rem)/2)] md:w-[calc((100%_-_2rem)/2)] lg:w-[calc((100%_-_4rem)/3)]",
+    4: "sm:w-[calc((100%_-_1.5rem)/2)] md:w-[calc((100%_-_2rem)/2)] lg:w-[calc((100%_-_6rem)/4)]",
   };
 
   const serviceKeys = [
@@ -49,6 +50,7 @@ export function Services({
     "municipality-screening",
     "pregnancy-testing",
     "chest-xray",
+    "occupational-health-card",
   ];
 
   return (
@@ -79,7 +81,7 @@ export function Services({
           </motion.div>
 
           {/* Services Grid */}
-          <div className={`grid grid-cols-1 gap-6 md:gap-8 w-full ${columnClasses[columns]}`}>
+          <div className="flex w-full flex-wrap justify-center gap-6 md:gap-8">
             {serviceKeys.map((key) => {
               const title = t(`items.${key}.title`);
               const description = t(`items.${key}.description`);
@@ -91,9 +93,9 @@ export function Services({
                 <motion.div
                   key={key}
                   {...(animate ? { variants: slideUp } : {})}
-                  className="h-full"
+                  className={`flex w-full min-w-0 ${columnClasses[columns]}`}
                 >
-                  <Card interactive className="group h-full flex flex-col overflow-hidden border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 rounded-card bg-card">
+                  <Card interactive className="group w-full flex flex-col overflow-hidden border border-border shadow-subtle hover:shadow-elevated transition-shadow duration-300 rounded-card bg-card">
                     {/**
                      * `sizes` here reflects the actual grid breakpoints:
                      * 1 column on mobile (full width), 2 columns from sm,
